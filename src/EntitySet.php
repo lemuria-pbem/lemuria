@@ -1,0 +1,352 @@
+<?php
+declare (strict_types = 1);
+namespace Lemuria;
+
+use Lemuria\Exception\EntitySetException;
+use Lemuria\Exception\LemuriaException;
+use Lemuria\Exception\UnserializeEntitySetException;
+
+/**
+ * A simple set of entities.
+ */
+abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
+{
+	/**
+	 * @var Collector
+	 */
+	private $collector;
+
+	/**
+	 * @var int[]
+	 */
+	private $indices = [];
+
+	/**
+	 * @var array(int=>Id)
+	 */
+	private $entities = [];
+
+	/**
+	 * @var int
+	 */
+	private $index = 0;
+
+	/**
+	 * @var int
+	 */
+	private $count = 0;
+
+	/**
+	 * Init the set for a Collector.
+	 *
+	 * @param Collector|null $collector
+	 */
+	public function __construct(Collector $collector = null) {
+		$this->collector = $collector;
+	}
+
+	/**
+	 * Check if an offset is in the set.
+	 *
+	 * @param int $offset
+	 * @return bool
+	 */
+	public function offsetExists($offset): bool {
+		return $offset >= 0 && $offset < $this->count;
+	}
+
+	/**
+	 * Get an entity from the set.
+	 *
+	 * @param int $offset
+	 * @return Entity
+	 * @throws \OutOfBoundsException
+	 */
+	public function offsetGet($offset): Entity {
+		if ($this->offsetExists($offset)) {
+			return $this->get($this->entities[$this->indices[$offset]]);
+		}
+		throw new \OutOfBoundsException();
+	}
+
+	/**
+	 * Not implemented.
+	 *
+	 * @param int $offset
+	 * @param mixed $entity
+	 * @throws LemuriaException
+	 */
+	public function offsetSet($offset, $entity): void {
+		throw new LemuriaException('Setting via ArrayAccess is intentionally not implemented.');
+	}
+
+	/**
+	 * Remove an entity from the set.
+	 *
+	 * @param int $offset
+	 * @throws \OutOfBoundsException
+	 */
+	public function offsetUnset($offset): void {
+		if ($this->offsetExists($offset)) {
+			$this->removeEntity($this->entities[$this->indices[$offset]]);
+		} else {
+			throw new \OutOfBoundsException();
+		}
+	}
+
+	/**
+	 * Get the number of items in the set.
+	 *
+	 * @return int
+	 */
+	public function count(): int {
+		return $this->count;
+	}
+
+	/**
+	 * Get the current entity of the iterator.
+	 *
+	 * @return Entity|null
+	 */
+	public function current(): ?Entity {
+		$key = $this->key();
+		return $key ? $this->get($this->entities[$key]) : null;
+	}
+
+	/**
+	 * Get the current key of the iterator.
+	 *
+	 * @return int|null
+	 */
+	public function key(): ?int {
+		return $this->indices[$this->index] ?? null;
+	}
+
+	/**
+	 * Increment the iterator.
+	 */
+	public function next(): void {
+		$this->index++;
+	}
+
+	/**
+	 * Rewind the iterator.
+	 */
+	public function rewind(): void {
+		$this->index = 0;
+	}
+
+	/**
+	 * Check if the iterator's current item is valid.
+	 *
+	 * @return bool
+	 */
+	public function valid(): bool {
+		return $this->index < $this->count;
+	}
+
+	/**
+	 * Get a plain data array of the model's data.
+	 *
+	 * @return array
+	 */
+	public function serialize(): array {
+		$data = [];
+		foreach ($this->entities as $id /* @var Id $id */) {
+			$data[] = $id->Id();
+		}
+		return $data;
+	}
+
+	/**
+	 * Restore the model's data from serialized data.
+	 *
+	 * @param array $data
+	 * @return Serializable
+	 */
+	public function unserialize(array $data): Serializable {
+		if ($this->count > 0) {
+			$this->clear();
+		}
+
+		foreach ($data as $id) {
+			if (!is_int($id)) {
+				throw new UnserializeEntitySetException();
+			}
+			$this->addEntity(new Id($id));
+		}
+		return $this;
+	}
+
+	/**
+	 * Check if an entity belongs to the set.
+	 *
+	 * @param Id $id
+	 * @return bool
+	 */
+	public function has(Id $id): bool {
+		return isset($this->entities[$id->Id()]);
+	}
+
+	/**
+	 * Clear the set.
+	 *
+	 * @return self
+	 */
+	public function clear(): self {
+		$this->indices  = [];
+		$this->entities = [];
+		$this->index    = 0;
+		$this->count    = 0;
+		return $this;
+	}
+
+	/**
+	 * Set the Collector in all entities.
+	 */
+	public function addCollectorsToAll(): self {
+		if ($this->hasCollector()) {
+			foreach ($this->entities as $id/* @var Id $id */) {
+				/* @var Collectible $collectible */
+				$collectible = $this->get($id);
+				$collectible->addCollector($this->collector());
+			}
+		}
+		return $this;
+	}
+
+	/**
+	 * Get an Entity by ID.
+	 *
+	 * @param Id $id
+	 * @return Entity
+	 */
+	abstract protected function get(Id $id): Entity;
+
+	/**
+	 * Check if a Collector is set.
+	 *
+	 * @return bool
+	 */
+	protected function hasCollector(): bool {
+		return $this->collector instanceof Collector;
+	}
+
+	/**
+	 * Get the Collector.
+	 *
+	 * @return Collector
+	 */
+	protected function collector(): Collector {
+		return $this->collector;
+	}
+
+	/**
+	 * Get the first Entity.
+	 *
+	 * @return Id|null
+	 */
+	protected function first(): ?Id {
+		if ($this->count > 0) {
+			return $this->entities[$this->indices[0]];
+		}
+		return null;
+	}
+
+	/**
+	 * Add an entity's ID to the set.
+	 *
+	 * @param Id $id
+	 */
+	protected function addEntity(Id $id): void {
+		if (!isset($this->entities[$id->Id()])) {
+			$this->entities[$id->Id()] = $id;
+			$this->indices[]           = $id->Id();
+			$this->count++;
+		}
+	}
+
+	/**
+	 * Remove an entity's ID from the set.
+	 *
+	 * @param Id $id
+	 * @throws EntitySetException The entity is not part of the set.
+	 */
+	protected function removeEntity(Id $id): void {
+		if (!isset($this->entities[$id->Id()])) {
+			throw new EntitySetException($id);
+		}
+
+		unset($this->entities[$id->Id()]);
+		$this->indices = array_keys($this->entities);
+		$this->count--;
+		if ($this->index >= $this->count) {
+			if ($this->count <= 0) {
+				$this->index = 0;
+			} else {
+				$this->index--;
+			}
+		}
+	}
+
+	/**
+	 * Change position of two entities given by their ID.
+	 *
+	 * @param Id $entity
+	 * @param Id $position
+	 * @param int $reorder
+	 * @throws EntitySetException One of the entities is not part of the set.
+	 */
+	protected function reorderEntity(Id $entity, Id $position, int $reorder = Reorder::FLIP): void {
+		$e = $entity->Id();
+		if (!isset($this->entities[$e])) {
+			throw new EntitySetException($entity);
+		}
+		$p = $position->Id();
+		if (!isset($this->entities[$p])) {
+			throw new EntitySetException($position);
+		}
+
+		$newIndices  = [];
+		$newEntities = [];
+		foreach ($this->entities as $i => $id) {
+			if ($i === $e) {
+				if ($reorder === Reorder::FLIP) {
+					$newEntities[$p] = $position;
+					$newIndices[]    = $p;
+				}
+			} elseif ($i === $p) {
+				if ($reorder <= Reorder::BEFORE) {
+					$newEntities[$e] = $entity;
+					$newIndices[]    = $e;
+					$newEntities[$p] = $position;
+					$newIndices[]    = $p;
+				} elseif ($reorder >= Reorder::AFTER) {
+					$newEntities[$p] = $position;
+					$newIndices[]    = $p;
+					$newEntities[$e] = $entity;
+					$newIndices[]    = $e;
+				} else {
+					$newEntities[$e] = $entity;
+					$newIndices[]    = $e;
+				}
+			} else {
+				$newEntities[$i] = $id;
+				$newIndices[]    = $i;
+			}
+		}
+		$this->entities = $newEntities;
+		$this->indices  = $newIndices;
+		$this->index    = 0;
+	}
+
+	/**
+	 * Sort the set using specified order.
+	 *
+	 * @param EntityOrder $order
+	 */
+	protected function sortUsing(EntityOrder $order): void {
+		$this->indices = $order->sort($this);
+		$this->rewind();
+	}
+}

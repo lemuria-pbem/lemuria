@@ -1,0 +1,35 @@
+{
+	"name": "lemuria-pbem/lemuria",
+	"description": "This library is part of the PbeM Lemuria. It contains common code.",
+	"type": "library",
+	"keywords": [
+		"eressea",
+		"fantasya",
+		"game",
+		"lemuria",
+		"pbem"
+	],
+	"time": "2020-07-04",
+	"license": "GPL-3.0",
+	"authors": [
+		{
+			"name": "Sascha Ternes",
+			"email": "lemuria@online.de"
+		}
+	],
+
+	"require": {
+		"php": "~7.4",
+		"monolog/monolog": "~2.1"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~9.2"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"Lemuria\\": "src/",
+			"Lemuria\\Tests\\": "tests/"
+		}
+	}
+}
