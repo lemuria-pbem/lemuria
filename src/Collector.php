@@ -7,14 +7,6 @@ namespace Lemuria;
  */
 interface Collector extends Identifiable
 {
-	const CONSTRUCTION = 'Construction';
-
-	const PARTY = 'Party';
-
-	const REGION = 'Region';
-
-	const VESSEL = 'Vessel';
-
 	/**
 	 * This method will be called by the Catalog after loading is finished; the Collector can initialize its collections
 	 * then.

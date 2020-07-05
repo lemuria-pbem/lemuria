@@ -1,16 +1,14 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria\Exception;
+namespace Lemuria\Model\Exception;
 
-use DomainException;
-
-use Lemuria\Location;
+use Lemuria\Model\Location;
 
 /**
  * A MapException is throw when a region is not part of a world.
  */
-final class MapException extends DomainException {
-
+final class MapException extends ModelException
+{
 	/**
 	 * @param Location $location
 	 */

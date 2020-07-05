@@ -1,13 +1,13 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria\Exception;
+namespace Lemuria\Model\Exception;
 
 use Lemuria\Identifiable;
 
 /**
  * This exception is thrown when an entity is registered twice.
  */
-class DuplicateIdException extends \DomainException
+class DuplicateIdException extends ModelException
 {
 	/**
 	 * @param Identifiable $identifiable

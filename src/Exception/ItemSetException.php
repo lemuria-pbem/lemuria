@@ -8,8 +8,8 @@ use Lemuria\Item;
 /**
  * This exception is thrown by the ItemSet class.
  */
-class ItemSetException extends \InvalidArgumentException {
-
+class ItemSetException extends \InvalidArgumentException
+{
 	/**
 	 * Create an exception for an item that is not contained in an item set.
 	 *

@@ -9,6 +9,9 @@ use Lemuria\Exception\IdException;
  */
 final class Id
 {
+	/**
+	 * @var int
+	 */
 	private int $id;
 
 	/**

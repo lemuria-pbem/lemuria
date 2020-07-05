@@ -1,8 +1,9 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
 use Lemuria\Exception\SingletonException;
+use Lemuria\Singleton;
 
 /**
  * A builder creates singleton objects.
@@ -11,8 +12,6 @@ interface Builder
 {
 	/**
 	 * Create a singleton.
-	 *
-	 * This is a convenient wrapper for create().
 	 *
 	 * @param string $class
 	 * @return Singleton

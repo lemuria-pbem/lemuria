@@ -3,4 +3,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectResources">
+    <resource url="https://schema.phpunit.de/7.3/phpunit.xsd" location="$PROJECT_DIR$/doc/phpunit.xsd" />
+  </component>
 </project>

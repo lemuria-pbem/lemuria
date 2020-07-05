@@ -1,8 +1,8 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
-use Serializable;
+use Lemuria\Serializable;
 
 /**
  * Coordinates define the two-dimensional location on a map of Lemuria.

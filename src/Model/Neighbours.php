@@ -1,16 +1,16 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
 /**
  * A helper class that encapsulates the neighbour locations of a location.
  */
-class Neighbours implements \ArrayAccess {
-
+class Neighbours implements \ArrayAccess
+{
 	/**
 	 * @var array(string=>Location)
 	 */
-	private $locations = [];
+	private array $locations = [];
 
 	/**
 	 * Check if a location in the specified direction exists.

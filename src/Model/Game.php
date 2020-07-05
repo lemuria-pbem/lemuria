@@ -1,6 +1,6 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
 /**
  * A Game instance handles persistence of game data.

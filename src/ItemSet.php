@@ -13,24 +13,24 @@ use Lemuria\Exception\UnserializeItemSetException;
 abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
 	/**
-	 * @var [string]
+	 * @var string[]
 	 */
-	private $indices = [];
+	private array $indices = [];
 
 	/**
 	 * @var array(string=>Item)
 	 */
-	private $items = [];
+	private array $items = [];
 
 	/**
 	 * @var int
 	 */
-	private $index = 0;
+	private int $index = 0;
 
 	/**
 	 * @var int
 	 */
-	private $count = 0;
+	private int $count = 0;
 
 	/**
 	 * Check if an item is in the set.
@@ -179,7 +179,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 *
 	 * @return ItemSet
 	 */
-	public function clear(): self {
+	public function clear(): ItemSet {
 		$this->indices = [];
 		$this->items   = [];
 		$this->index   = 0;
@@ -193,7 +193,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 * @param ItemSet $set
 	 * @return ItemSet
 	 */
-	public function fill(ItemSet $set): self {
+	public function fill(ItemSet $set): ItemSet {
 		foreach ($set->items as $item) {
 			if (!$this->isValidItem($item)) {
 				throw new ItemSetFillException($item, $this);

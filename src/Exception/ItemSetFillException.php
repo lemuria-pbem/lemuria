@@ -9,8 +9,8 @@ use Lemuria\ItemSet;
 /**
  * This exception is thrown by the ItemSet class.
  */
-class ItemSetFillException extends \InvalidArgumentException {
-
+class ItemSetFillException extends \InvalidArgumentException
+{
 	/**
 	 * Create an exception for an item set that is filled with wrong item type.
 	 *

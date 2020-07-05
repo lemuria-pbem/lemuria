@@ -1,13 +1,13 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria\Exception;
+namespace Lemuria\Model\Exception;
 
 use Lemuria\Id;
 
 /**
  * This exception is thrown when an entity is not registered.
  */
-class NotRegisteredException extends \DomainException
+class NotRegisteredException extends ModelException
 {
 	/**
 	 * @param Id $id

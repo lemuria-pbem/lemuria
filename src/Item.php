@@ -14,12 +14,12 @@ abstract class Item
 	/**
 	 * @var Singleton
 	 */
-	private $object;
+	private Singleton $object;
 
 	/**
 	 * @var int
 	 */
-	private $count;
+	private int $count;
 
 	/**
 	 * Init the item.

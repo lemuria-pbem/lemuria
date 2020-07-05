@@ -12,7 +12,7 @@ trait CollectibleTrait
 	/**
 	 * @var array(string=>Collector)
 	 */
-	private $collectors = [];
+	private array $collectors = [];
 
 	/**
 	 * Set a Collector.

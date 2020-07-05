@@ -7,8 +7,8 @@ use Lemuria\Id;
 /**
  * This exception is thrown by the EntitySet class.
  */
-class EntitySetException extends \InvalidArgumentException {
-
+class EntitySetException extends \InvalidArgumentException
+{
 	/**
 	 * @param Id $id
 	 */

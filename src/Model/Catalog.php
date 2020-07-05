@@ -1,9 +1,11 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
-use Lemuria\Exception\DuplicateIdException;
-use Lemuria\Exception\NotRegisteredException;
+use Lemuria\Id;
+use Lemuria\Identifiable;
+use Lemuria\Model\Exception\DuplicateIdException;
+use Lemuria\Model\Exception\NotRegisteredException;
 
 /**
  * The catalog registers all entities and is used to ensure that IDs are only used once per namespace.
@@ -14,7 +16,7 @@ interface Catalog
 
 	public const UNITS = 200;
 
-	public const REGIONS = 300;
+	public const LOCATIONS = 300;
 
 	public const CONSTRUCTIONS = 400;
 
@@ -57,34 +59,34 @@ interface Catalog
 	/**
 	 * Load game data into catalog.
 	 *
-	 * @return self
+	 * @return Catalog
 	 */
-	public function load(): self;
+	public function load(): Catalog;
 
 	/**
 	 * Save game data from catalog.
 	 *
-	 * @return self
+	 * @return Catalog
 	 */
-	public function save(): self;
+	public function save(): Catalog;
 
 	/**
 	 * Register an entity.
 	 *
 	 * @param Identifiable $identifiable
-	 * @return self
+	 * @return Catalog
 	 * @throws DuplicateIdException
 	 */
-	public function register(Identifiable $identifiable): self;
+	public function register(Identifiable $identifiable): Catalog;
 
 	/**
 	 * Remove an entity.
 	 *
 	 * @param Identifiable $identifiable
-	 * @return self
+	 * @return Catalog
 	 * @throws NotRegisteredException
 	 */
-	public function remove(Identifiable $identifiable): self;
+	public function remove(Identifiable $identifiable): Catalog;
 
 	/**
 	 * Reserve the next ID that is available for a namespace.

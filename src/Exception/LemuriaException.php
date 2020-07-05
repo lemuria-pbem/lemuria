@@ -5,8 +5,8 @@ namespace Lemuria\Exception;
 /**
  * This exception is thrown when the program runs into a potential implementation bug.
  */
-class LemuriaException extends \LogicException {
-
+class LemuriaException extends \LogicException
+{
 	/**
 	 * @param string $message
 	 * @param \Throwable|null $previous

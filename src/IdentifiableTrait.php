@@ -10,7 +10,7 @@ trait IdentifiableTrait
 	/**
 	 * @var Id
 	 */
-	private $id;
+	private Id $id;
 
 	/**
 	 * Get the ID.

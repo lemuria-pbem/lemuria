@@ -8,6 +8,12 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+use Lemuria\Model\Builder;
+use Lemuria\Model\Calendar;
+use Lemuria\Model\Catalog;
+use Lemuria\Model\Game;
+use Lemuria\Model\World;
+
 /**
  * Return the class name of an object without it's namespace.
  *
@@ -54,42 +60,21 @@ function sign($number): int {
 /**
  * This singleton implementation offers factory methods.
  */
-final class Lemuria {
+final class Lemuria
+{
+	private static ?self $instance = null;
 
-	/**
-	 * @var Lemuria
-	 */
-	private static $instance;
+	private Builder $builder;
 
-	/**
-	 * @var Builder
-	 */
-	private $builder;
+	private Calendar $calendar;
 
-	/**
-	 * @var Calendar
-	 */
-	private $calendar;
+	private Catalog $catalog;
 
-	/**
-	 * @var Catalog
-	 */
-	private $catalog;
+	private Game $game;
 
-	/**
-	 * @var Game
-	 */
-	private $game;
+	private LoggerInterface $log;
 
-	/**
-	 * @var LoggerInterface
-	 */
-	private $log;
-
-	/**
-	 * @var World
-	 */
-	private $world;
+	private World $world;
 
 	/**
 	 * Get the builder.
@@ -180,8 +165,8 @@ final class Lemuria {
 	 */
 	private function __construct() {
 		try {
-			// TODO
 			$this->log = $this->createLog();
+			// TODO: Initialize Builder, Calendar, Catalog, Game, World.
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
@@ -194,7 +179,7 @@ final class Lemuria {
 	 * @throws \Exception
 	 */
 	private function createLog(): LoggerInterface {
-		$logDir = realpath(__DIR__ . '/../tests/storage') . '/log';
+		$logDir = realpath(__DIR__ . '/../tests/storage');
 		if (!file_exists($logDir)) {
 			@mkdir($logDir, 0775, true);
 		}

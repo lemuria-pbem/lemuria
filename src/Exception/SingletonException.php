@@ -5,8 +5,8 @@ namespace Lemuria\Exception;
 /**
  * This exception is thrown when a class is not a singleton.
  */
-class SingletonException extends \DomainException {
-
+class SingletonException extends \DomainException
+{
 	/**
 	 * @param string $class
 	 */

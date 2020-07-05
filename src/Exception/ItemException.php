@@ -8,8 +8,8 @@ use Lemuria\Item;
 /**
  * This exception is thrown by the Item class.
  */
-class ItemException extends \InvalidArgumentException {
-
+class ItemException extends \InvalidArgumentException
+{
 	public const ADD_WRONG_ITEM = 1;
 
 	public const REMOVE_TOO_MUCH = 0;

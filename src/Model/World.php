@@ -1,8 +1,9 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
 
-use Lemuria\Exception\MapException;
+use Lemuria\Model\Exception\MapException;
+use Lemuria\Serializable;
 
 /**
  * The world model of Lemuria is limited to a two-dimensional map, but flexible in terms of technical implementation.
@@ -54,14 +55,14 @@ interface World extends Serializable
 	/**
 	 * Load the world data.
 	 *
-	 * @return self
+	 * @return World
 	 */
-	public function load(): self;
+	public function load(): World;
 
 	/**
 	 * Save the world data.
 	 *
-	 * @return self
+	 * @return World
 	 */
-	public function save(): self;
+	public function save(): World;
 }

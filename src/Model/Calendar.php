@@ -1,6 +1,8 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Model;
+
+use Lemuria\Serializable;
 
 /**
  * A Calendar knows current time in the game.

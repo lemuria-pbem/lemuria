@@ -12,29 +12,29 @@ use Lemuria\Exception\UnserializeEntitySetException;
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
 	/**
-	 * @var Collector
+	 * @var Collector|null
 	 */
-	private $collector;
+	private ?Collector $collector;
 
 	/**
 	 * @var int[]
 	 */
-	private $indices = [];
+	private array $indices = [];
 
 	/**
 	 * @var array(int=>Id)
 	 */
-	private $entities = [];
+	private array $entities = [];
 
 	/**
 	 * @var int
 	 */
-	private $index = 0;
+	private int $index = 0;
 
 	/**
 	 * @var int
 	 */
-	private $count = 0;
+	private int $count = 0;
 
 	/**
 	 * Init the set for a Collector.
@@ -191,9 +191,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Clear the set.
 	 *
-	 * @return self
+	 * @return EntitySet
 	 */
-	public function clear(): self {
+	public function clear(): EntitySet {
 		$this->indices  = [];
 		$this->entities = [];
 		$this->index    = 0;
@@ -204,7 +204,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Set the Collector in all entities.
 	 */
-	public function addCollectorsToAll(): self {
+	public function addCollectorsToAll(): EntitySet {
 		if ($this->hasCollector()) {
 			foreach ($this->entities as $id/* @var Id $id */) {
 				/* @var Collectible $collectible */

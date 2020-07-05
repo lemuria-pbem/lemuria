@@ -18,7 +18,7 @@ interface Serializable
 	 * Restore the model's data from serialized data.
 	 *
 	 * @param array $data
-	 * @return self
+	 * @return Serializable
 	 */
-	public function unserialize(array $data): self;
+	public function unserialize(array $data): Serializable;
 }

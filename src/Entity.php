@@ -66,9 +66,9 @@ abstract class Entity implements Identifiable, Serializable
 	 * Set the name.
 	 *
 	 * @param string $name
-	 * @return self
+	 * @return Entity
 	 */
-	public function setName(string $name): self {
+	public function setName(string $name): Entity {
 		$this->name = $name;
 		return $this;
 	}
@@ -77,9 +77,9 @@ abstract class Entity implements Identifiable, Serializable
 	 * Set the description.
 	 *
 	 * @param string $description
-	 * @return self
+	 * @return Entity
 	 */
-	public function setDescription(string $description): self {
+	public function setDescription(string $description): Entity {
 		$this->description = $description;
 		return $this;
 	}

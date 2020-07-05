@@ -13,7 +13,7 @@ interface Collectible
 	 * @param Collector $collector
 	 * @return Collectible
 	 */
-	public function addCollector(Collector $collector): self;
+	public function addCollector(Collector $collector): Collectible;
 
 	/**
 	 * Remove the Collector.
@@ -21,5 +21,5 @@ interface Collectible
 	 * @param Collector $collector
 	 * @return Collectible
 	 */
-	public function removeCollector(Collector $collector): self;
+	public function removeCollector(Collector $collector): Collectible;
 }

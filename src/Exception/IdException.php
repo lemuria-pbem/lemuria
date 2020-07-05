@@ -2,7 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Exception;
 
-
 /**
  * This exception is thrown when an invalid ID is encountered.
  */
