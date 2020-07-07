@@ -8,9 +8,9 @@ namespace Lemuria;
 trait IdentifiableTrait
 {
 	/**
-	 * @var Id
+	 * @var Id|null
 	 */
-	private Id $id;
+	private ?Id $id = null;
 
 	/**
 	 * Get the ID.
