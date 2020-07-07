@@ -5,9 +5,9 @@ namespace Lemuria\Exception;
 class InitializationException extends LemuriaException
 {
 	/**
-	 * @param \Throwable $previous
+	 * Create exception.
 	 */
-	public function __construct(\Throwable $previous) {
-		parent::__construct('You have to call the load() method first.', $previous);
+	public function __construct() {
+		parent::__construct('You have to call the init() method first.');
 	}
 }

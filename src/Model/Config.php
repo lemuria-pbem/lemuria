@@ -28,4 +28,9 @@ interface Config
 	 * @return World
 	 */
 	public function World(): World;
+
+	/**
+	 * @return string
+	 */
+	public function getPathToLog(): string;
 }

@@ -86,11 +86,7 @@ final class Lemuria
 	 * @throws InitializationException
 	 */
 	public static function Builder(): Builder {
-		try {
-			return self::getInstance()->builder;
-		} catch (\TypeError $e) {
-			throw new InitializationException($e);
-		}
+		return self::getInstance()->builder;
 	}
 
 	/**
@@ -100,11 +96,7 @@ final class Lemuria
 	 * @throws InitializationException
 	 */
 	public static function Calendar(): Calendar {
-		try {
-			return self::getInstance()->calendar;
-		} catch (\TypeError $e) {
-			throw new InitializationException($e);
-		}
+		return self::getInstance()->calendar;
 	}
 
 	/**
@@ -114,11 +106,7 @@ final class Lemuria
 	 * @throws InitializationException
 	 */
 	public static function Catalog(): Catalog {
-		try {
-			return self::getInstance()->catalog;
-		} catch (\TypeError $e) {
-			throw new InitializationException($e);
-		}
+		return self::getInstance()->catalog;
 	}
 
 	/**
@@ -128,11 +116,7 @@ final class Lemuria
 	 * @throws InitializationException
 	 */
 	public static function Game(): Game {
-		try {
-			return self::getInstance()->game;
-		} catch (\TypeError $e) {
-			throw new InitializationException($e);
-		}
+		return self::getInstance()->game;
 	}
 
 	/**
@@ -151,20 +135,20 @@ final class Lemuria
 	 * @throws InitializationException
 	 */
 	public static function World(): World {
-		try {
-			return self::getInstance()->world;
-		} catch (\TypeError $e) {
-			throw new InitializationException($e);
-		}
+		return self::getInstance()->world;
+	}
+
+	/**
+	 * @param Config $config
+	 */
+	public static function init(Config $config): void {
+		self::$instance = new self($config);
 	}
 
 	/**
 	 * Init Lemuria for the current Game.
-	 *
-	 * @param Config $config
 	 */
-	public static function load(Config $config): void {
-		self::getInstance()->setConfig($config);
+	public static function load(): void {
 		self::Calendar()->load();
 		self::Catalog()->load();
 		self::World()->load();
@@ -186,17 +170,24 @@ final class Lemuria
 	 */
 	private static function getInstance(): Lemuria {
 		if (!self::$instance) {
-			self::$instance = new self();
+			throw new InitializationException();
 		}
 		return self::$instance;
 	}
 
 	/**
 	 * Private constructor for singleton.
+	 *
+	 * @param Config $config
 	 */
-	private function __construct() {
+	private function __construct(Config $config) {
 		try {
-			$this->log = $this->createLog();
+			$this->log      = $this->createLog($config->getPathToLog());
+			$this->builder  = $config->Builder();
+			$this->calendar = $config->Calendar();
+			$this->catalog  = $config->Catalog();
+			$this->game     = $config->Game();
+			$this->world    = $config->World();
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
@@ -205,15 +196,15 @@ final class Lemuria
 	/**
 	 * Create the Log.
 	 *
+	 * @param string $logPath
 	 * @return LoggerInterface
 	 * @throws \Exception
 	 */
-	private function createLog(): LoggerInterface {
-		$logDir = realpath(__DIR__ . '/../tests/storage');
+	private function createLog(string $logPath): LoggerInterface {
+		$logDir = dirname($logPath);
 		if (!file_exists($logDir)) {
 			@mkdir($logDir, 0775, true);
 		}
-		$logPath = $logDir . '/lemuria.log';
 		file_exists($logPath) ? file_put_contents($logPath, '') : touch($logPath);
 		$logFile = new StreamHandler($logPath);
 
@@ -225,16 +216,5 @@ final class Lemuria
 		ErrorHandler::register($log);
 
 		return $log;
-	}
-
-	/**
-	 * @param Config $config
-	 */
-	private function setConfig(Config $config): void {
-		$this->builder  = $config->Builder();
-		$this->calendar = $config->Calendar();
-		$this->catalog  = $config->Catalog();
-		$this->game     = $config->Game();
-		$this->world    = $config->World();
 	}
 }
