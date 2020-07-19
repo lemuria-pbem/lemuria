@@ -9,9 +9,10 @@ class SingletonException extends \DomainException
 {
 	/**
 	 * @param string $class
+	 * @param string $expected
 	 */
-	public function __construct(string $class) {
-		$message = $class . ' is not a singleton.';
+	public function __construct(string $class, string $expected = 'singleton') {
+		$message = $class . ' is not a ' . $expected . '.';
 		parent::__construct($message);
 	}
 }

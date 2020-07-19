@@ -2,20 +2,21 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use Lemuria\Exception\InitializationException;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+use Lemuria\Exception\InitializationException;
 use Lemuria\Model\Builder;
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Catalog;
 use Lemuria\Model\Config;
 use Lemuria\Model\Game;
+use Lemuria\Model\Report;
 use Lemuria\Model\World;
-use function PHPUnit\Framework\throwException;
+
 
 /**
  * Return the class name of an object without it's namespace.
@@ -77,6 +78,8 @@ final class Lemuria
 
 	private LoggerInterface $log;
 
+	private Report $report;
+
 	private World $world;
 
 	/**
@@ -129,6 +132,15 @@ final class Lemuria
 	}
 
 	/**
+	 * Get the report.
+	 *
+	 * @return Report
+	 */
+	public static function Report(): Report {
+		return self::getInstance()->report;
+	}
+
+	/**
 	 * Get the World.
 	 *
 	 * @return World
@@ -151,6 +163,7 @@ final class Lemuria
 	public static function load(): void {
 		self::Calendar()->load();
 		self::Catalog()->load();
+		self::Report()->load();
 		self::World()->load();
 	}
 
@@ -160,6 +173,7 @@ final class Lemuria
 	public static function save(): void {
 		self::Calendar()->save();
 		self::Catalog()->save();
+		self::Report()->save();
 		self::World()->save();
 	}
 
@@ -187,6 +201,7 @@ final class Lemuria
 			$this->calendar = $config->Calendar();
 			$this->catalog  = $config->Catalog();
 			$this->game     = $config->Game();
+			$this->report   = $config->Report();
 			$this->world    = $config->World();
 		} catch (\Exception $e) {
 			die((string)$e);

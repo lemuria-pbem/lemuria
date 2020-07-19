@@ -22,6 +22,13 @@ interface Game
 	public function getConstructions(): array;
 
 	/**
+	 * Get the report messages.
+	 *
+	 * @return array
+	 */
+	public function getMessages(): array;
+
+	/**
 	 * Get the parties data.
 	 *
 	 * @return array
@@ -78,6 +85,14 @@ interface Game
 	 * @return Game
 	 */
 	public function setConstructions(array $constructions): Game;
+
+	/**
+	 * Set the report messages.
+	 *
+	 * @param array $messages
+	 * @return Game
+	 */
+	public function setMessages(array $messages): Game;
 
 	/**
 	 * Set the parties data.

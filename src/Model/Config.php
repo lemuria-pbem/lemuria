@@ -25,6 +25,11 @@ interface Config
 	public function Game(): Game;
 
 	/**
+	 * @return Report
+	 */
+	public function Report(): Report;
+
+	/**
 	 * @return World
 	 */
 	public function World(): World;
