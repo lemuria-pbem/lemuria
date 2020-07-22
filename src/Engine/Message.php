@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace Lemuria\Model;
+namespace Lemuria\Engine;
 
 use Lemuria\Id;
 

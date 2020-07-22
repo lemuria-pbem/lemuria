@@ -8,13 +8,13 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+use Lemuria\Engine\Report;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Model\Builder;
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Catalog;
 use Lemuria\Model\Config;
 use Lemuria\Model\Game;
-use Lemuria\Model\Report;
 use Lemuria\Model\World;
 
 

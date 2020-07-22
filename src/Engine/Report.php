@@ -1,11 +1,12 @@
 <?php
 declare(strict_types = 1);
-namespace Lemuria\Model;
+namespace Lemuria\Engine;
 
+use Lemuria\Engine\Exception\NotRegisteredException;
 use Lemuria\Id;
 use Lemuria\Identifiable;
 use Lemuria\Model\Exception\DuplicateIdException;
-use Lemuria\Model\Exception\NotRegisteredException;
+use Lemuria\Model\Catalog;
 
 interface Report
 {
@@ -23,7 +24,6 @@ interface Report
 	 * Get the specified message.
 	 *
 	 * @param Id $id
-	 * @param int $namespace
 	 * @return Message
 	 * @throws NotRegisteredException
 	 */
