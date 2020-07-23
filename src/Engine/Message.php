@@ -3,8 +3,9 @@ declare(strict_types = 1);
 namespace Lemuria\Engine;
 
 use Lemuria\Id;
+use Lemuria\Serializable;
 
-interface Message
+interface Message extends Serializable
 {
 	/**
 	 * Get the ID.

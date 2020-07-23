@@ -3,6 +3,7 @@ declare (strict_types = 1);
 namespace Lemuria\Model;
 
 use Lemuria\Exception\SingletonException;
+use Lemuria\Factory\SingletonCatalog;
 use Lemuria\Singleton;
 
 /**
@@ -18,4 +19,10 @@ interface Builder
 	 * @throws SingletonException
 	 */
 	public function create(string $class): Singleton;
+
+	/**
+	 * @param SingletonCatalog $catalog
+	 * @return Builder
+	 */
+	public function register(SingletonCatalog $catalog): Builder;
 }

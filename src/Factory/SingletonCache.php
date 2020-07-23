@@ -1,6 +1,9 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria;
+namespace Lemuria\Factory;
+
+use function Lemuria\getClass;
+use Lemuria\Singleton;
 
 /**
  * The Singleton cache implementation is a simple key/value store in volatile memory.
