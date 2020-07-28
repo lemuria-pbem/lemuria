@@ -44,3 +44,24 @@ _RuntimeException_ geworfen.
 
 Lemuria implementiert PSR-3-kompatibles Logging mittels der _Monolog_-
 Bibliothek.
+
+#### Log level
+
+Spielnachrichten werden mit anderen Logleveln als interne Meldungen und Fehler
+geloggt.
+
+__Implementierungsfehler:__
+- EMERGENCY: LemuriaException-Logging (interne Fehler aufgrund falsch
+implementierter Logik)
+- ALERT: andere Laufzeitfehler wegen Datenfehlern, die zum Programmabbruch
+führen
+- CRITICAL: Warnungen zur Laufzeit, die keinen Programmabbruch zur Folge haben
+
+__Spielereignisse:__
+- ERROR: CommandException-Logging wegen ungültiger Befehle
+- WARNING: Logging von Spielereignissen wie z.B. Unwettern
+- NOTICE: Logging von unbeabsichtigten Befehlsauswirkungen wie z.B. fehlende
+Ressourcen in der Produktion
+- INFO: Logging normaler Befehlsergebnisse
+
+__DEBUG__ wird nur für das Logging von Debugmeldungen verwendet.
