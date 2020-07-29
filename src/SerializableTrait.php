@@ -18,6 +18,17 @@ trait SerializableTrait
 	}
 
 	/**
+	 * @param array $data
+	 * @param string $key
+	 * @param string $type
+	 */
+	protected function validateIfExists(array &$data, string $key, string $type): void {
+		if (isset($data[$key])) {
+			$this->validate($data, $key, $type);
+		}
+	}
+
+	/**
 	 * Validate that a serialized data array has a specific value.
 	 *
 	 * @param array(string=>mixed) $data
