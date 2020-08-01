@@ -8,6 +8,7 @@ use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
 use function Lemuria\sign;
+use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
 
 class LemuriaTest extends Test
@@ -81,6 +82,7 @@ class LemuriaTest extends Test
 	 * @test
 	 */
 	public function testLog(): void {
-		$this->assertInstanceOf(LoggerInterface::class, Lemuria::Log());
+		$this->expectException(InitializationException::class);
+		Lemuria::Log();
 	}
 }

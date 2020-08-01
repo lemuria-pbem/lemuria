@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
-use Lemuria\SingletonCache;
+use Lemuria\Factory\SingletonCache;
 
 use Lemuria\Tests\Mock\SingletonMock;
 

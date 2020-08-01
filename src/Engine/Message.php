@@ -39,6 +39,13 @@ interface Message extends Serializable
 	public function Report(): int;
 
 	/**
+	 * Get the entity ID.
+	 *
+	 * @return Id
+	 */
+	public function Entity(): Id;
+
+	/**
 	 * Set the ID.
 	 *
 	 * @param Id $id

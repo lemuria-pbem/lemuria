@@ -21,7 +21,7 @@ class CommandFile implements Move
 
 	private bool $isValid;
 
-	private string $line;
+	private string $line = '';
 
 	/**
 	 * Open specified file path to read commands from.
@@ -68,15 +68,16 @@ class CommandFile implements Move
 	 */
 	public function next(): void {
 		while (!feof($this->file)) {
-			$this->line = @fgets($this->file);
-			if (is_string($this->line)) {
-				$comment = strpos($this->line, ';');
+			$line = @fgets($this->file);
+			if (is_string($line)) {
+				$comment = strpos($line, ';');
 				if ($comment !== false) {
-					$this->line = substr($this->line, 0, $comment);
+					$line = substr($line, 0, $comment);
 				}
-				$this->line = trim($this->line);
+				$line = trim($line);
 			}
-			if ($this->line) {
+			if ($line) {
+				$this->line = $line;
 				$this->index++;
 				return;
 			}

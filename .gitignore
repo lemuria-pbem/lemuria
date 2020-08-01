@@ -2,5 +2,6 @@
 
 /composer.lock
 /.phpunit.result.cache
+/.idea/deployment.xml
 /.idea/workspace.xml
 /tests/storage/lemuria.log
