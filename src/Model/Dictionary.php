@@ -1,0 +1,75 @@
+<?php
+declare(strict_types = 1);
+namespace Lemuria\Model;
+
+use function Lemuria\getClass;
+use Lemuria\Lemuria;
+use Lemuria\Singleton;
+
+final class Dictionary
+{
+	/**
+	 * @var array|null
+	 */
+	private static ?array $strings = null;
+
+	/**
+	 * Initialize the static strings.
+	 */
+	public function __construct() {
+		if (!self::$strings) {
+			self::$strings = Lemuria::Game()->getStrings();
+		}
+	}
+
+	/**
+	 * Get a string.
+	 *
+	 * @param string $keyPath
+	 * @param Singleton|string|int|null $index
+	 * @return string
+	 */
+	public function get(string $keyPath, $index = null): string {
+		if ($index instanceof Singleton) {
+			$index = getClass($index);
+		}
+		$strings =& self::$strings;
+		$default = $index === null ? $keyPath : $keyPath . '.' . $index;
+
+		foreach (explode('.', $keyPath) as $key) {
+			if (is_array($strings) && array_key_exists($key, $strings)) {
+				$strings =& $strings[$key];
+			} else {
+				return $default;
+			}
+		}
+		if ($index === null) {
+			if (is_array($strings)) {
+				if (array_key_exists(0, $strings)) {
+					return (string)$strings[0];
+				}
+				return $default;
+			}
+			return (string)$strings;
+		} else {
+			if (is_array($strings)) {
+				if (array_key_exists($index, $strings)) {
+					$strings =& $strings[$index];
+					if (is_array($strings)) {
+						if (array_key_exists(0, $strings)) {
+							return (string)$strings[0];
+						} else {
+							return $default;
+						}
+					}
+					return (string)$strings;
+				}
+				if (is_int($index) && $index > 1 && count($strings) === 2 &&
+					array_key_exists(0, $strings) && array_key_exists(1, $strings)) {
+					return (string)$strings[1];
+				}
+			}
+			return $default;
+		}
+	}
+}
