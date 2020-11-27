@@ -23,47 +23,35 @@ interface Report
 	/**
 	 * Get the specified message.
 	 *
-	 * @param Id $id
-	 * @return Message
 	 * @throws NotRegisteredException
 	 */
 	public function get(Id $id): Message;
 
 	/**
 	 * Get all messages of an entity.
-	 *
-	 * @param Identifiable $identifiable
-	 * @return array
 	 */
 	public function getAll(Identifiable $identifiable): array;
 
 	/**
 	 * Load message data into report.
-	 *
-	 * @return Report
+
 	 */
 	public function load(): Report;
 
 	/**
 	 * Save game data from report.
-	 *
-	 * @return Report
 	 */
 	public function save(): Report;
 
 	/**
 	 * Register a message.
 	 *
-	 * @param Message $message
-	 * @return Report
 	 * @throws DuplicateIdException
 	 */
 	public function register(Message $message): Report;
 
 	/**
 	 * Reserve the next ID.
-	 *
-	 * @return Id
 	 */
 	public function nextId(): Id;
 }

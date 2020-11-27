@@ -63,7 +63,9 @@ class LemuriaTest extends Test
 		$this->assertSame(-1, sign(-0.123e3));
 		$this->assertSame(-1, sign(-2));
 		$this->assertSame(-1, sign(-1));
+		$this->assertSame(-1, sign(''));
 		$this->assertSame(-1, sign('-0.123e1'));
+		$this->assertSame(-1, sign('-eins'));
 		$this->assertSame(1, sign(0));
 		$this->assertSame(1, sign(0.0));
 		$this->assertSame(1, sign(1));
@@ -72,9 +74,7 @@ class LemuriaTest extends Test
 		$this->assertSame(1, sign(1.23e+2));
 		$this->assertSame(1, sign(null));
 		$this->assertSame(1, sign(false));
-		$this->assertSame(1, sign(''));
 		$this->assertSame(1, sign('eins'));
-		$this->assertSame(1, sign('-eins'));
 		$this->assertSame(1, sign('0.123e-1'));
 	}
 

@@ -13,9 +13,6 @@ final class OctagonalMap extends BaseMap
 {
 	/**
 	 * Get the neighbour regions of a location.
-	 *
-	 * @param Location $location
-	 * @return Neighbours
 	 */
 	public function getNeighbours(Location $location): Neighbours {
 		$coordinates                  = $this->getCoordinates($location);

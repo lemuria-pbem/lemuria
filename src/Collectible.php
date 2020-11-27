@@ -9,17 +9,11 @@ interface Collectible
 {
 	/**
 	 * Set the Collector.
-	 *
-	 * @param Collector $collector
-	 * @return Collectible
 	 */
 	public function addCollector(Collector $collector): Collectible;
 
 	/**
 	 * Remove the Collector.
-	 *
-	 * @param Collector $collector
-	 * @return Collectible
 	 */
 	public function removeCollector(Collector $collector): Collectible;
 }

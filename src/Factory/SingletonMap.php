@@ -32,8 +32,6 @@ class SingletonMap
 	/**
 	 * Get the full namespaced class name of a Singleton class.
 	 *
-	 * @param string $class
-	 * @return string
 	 * @throws SingletonException
 	 */
 	public function find(string $class): string {
@@ -47,10 +45,6 @@ class SingletonMap
 		return $namespace . '\\' . $group . '\\' . $class;
 	}
 
-	/**
-	 * @param SingletonGroup $group
-	 * @return SingletonMap
-	 */
 	public function add(SingletonGroup $group): SingletonMap {
 		$groupId                = count($this->groups);
 		$this->groups[]         = $group->getGroup();
@@ -61,10 +55,6 @@ class SingletonMap
 		return $this;
 	}
 
-	/**
-	 * @param string $namespace
-	 * @return int
-	 */
 	private function addNamespace(string $namespace): int {
 		$n = count($this->namespaces);
 		for ($i = 0; $i < $n; $i++) {

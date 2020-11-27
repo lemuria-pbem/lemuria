@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * A helper class that encapsulates the neighbour locations of a location.
  */
@@ -14,40 +16,29 @@ class Neighbours implements \ArrayAccess
 
 	/**
 	 * Check if a location in the specified direction exists.
-	 *
-	 * @param string $offset
-	 * @return bool
 	 */
-	public function offsetExists($offset): bool {
+	#[Pure] public function offsetExists(mixed $offset): bool {
 		return isset($this->locations[$offset]);
 	}
 
 	/**
 	 * Get the location in the specified direction.
-	 *
-	 * @param string $offset
-	 * @return Location
 	 */
-	public function offsetGet($offset): ?Location {
+	#[Pure] public function offsetGet(mixed $offset): ?Location {
 		return $this->locations[$offset] ?? null;
 	}
 
 	/**
 	 * Set the location in the specified direction.
-	 *
-	 * @param string $offset
-	 * @param Location $value
 	 */
-	public function offsetSet($offset, $value): void {
+	public function offsetSet(mixed $offset, mixed $value): void {
 		$this->locations[$offset] = $value;
 	}
 
 	/**
 	 * Unset the location in the specified direction.
-	 *
-	 * @param string $offset
 	 */
-	public function offsetUnset($offset): void {
+	public function offsetUnset(mixed $offset): void {
 		unset($this->locations[$offset]);
 	}
 
@@ -56,7 +47,7 @@ class Neighbours implements \ArrayAccess
 	 *
 	 * @return array(string=>Location)
 	 */
-	public function getAll(): array {
+	#[Pure] public function getAll(): array {
 		return $this->locations;
 	}
 }

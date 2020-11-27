@@ -13,14 +13,13 @@ trait SerializableTrait
 	 * Check that a serialized data array is valid.
 	 *
 	 * @param array (string=>mixed) &$data
+	 * @throws UnserializeEntityException
 	 */
-	protected function validateSerializedData(&$data): void {
+	protected function validateSerializedData(array &$data): void {
 	}
 
 	/**
-	 * @param array $data
-	 * @param string $key
-	 * @param string $type
+	 * @throws UnserializeEntityException
 	 */
 	protected function validateIfExists(array &$data, string $key, string $type): void {
 		if (isset($data[$key])) {
@@ -32,11 +31,10 @@ trait SerializableTrait
 	 * Validate that a serialized data array has a specific value.
 	 *
 	 * @param array(string=>mixed) $data
-	 * @param string $key
-	 * @param string $type
+	 * @throws UnserializeEntityException
 	 */
 	protected function validate(array &$data, string $key, string $type): void {
-		if (strpos($type, '?') === 0) {
+		if (str_starts_with($type, '?')) {
 			if (array_key_exists($key, $data) && $data[$key] === null) {
 				return;
 			}

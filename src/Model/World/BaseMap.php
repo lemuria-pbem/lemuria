@@ -2,7 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\LemuriaException;
+use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Exception\UnserializeException;
 use Lemuria\Id;
 use Lemuria\Lemuria;
@@ -28,7 +32,7 @@ abstract class BaseMap implements World
 								   World::SOUTHWEST, World::WEST, World::NORTHWEST];
 
 	/**
-	 * @var array(array)
+	 * @var array[]
 	 */
 	protected array $map = [];
 
@@ -42,15 +46,14 @@ abstract class BaseMap implements World
 	/**
 	 * Create an empty map.
 	 */
-	public function __construct() {
+	#[Pure] public function __construct() {
 		$this->origin = new MapCoordinates();
 	}
 
 	/**
 	 * Get a plain data array of the model's data.
-	 *
-	 * @return array
 	 */
+	#[ArrayShape(['origin' => 'array', 'map' => 'array'])]
 	public function serialize(): array {
 		$map = [];
 		foreach ($this->map as $ids) {
@@ -70,8 +73,7 @@ abstract class BaseMap implements World
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param array $data
-	 * @return Serializable
+	 * @throws UnserializeException
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -104,6 +106,7 @@ abstract class BaseMap implements World
 	 *
 	 * @param Location $location
 	 * @return Coordinates
+	 * @throws MapException
 	 */
 	public function getCoordinates(Location $location): Coordinates {
 		$id = $location->Id()->Id();
@@ -119,7 +122,7 @@ abstract class BaseMap implements World
 	 * @param string $direction
 	 * @return bool
 	 */
-	public function isDirection(string $direction): bool {
+	#[Pure] public function isDirection(string $direction): bool {
 		return in_array($direction, $this->directions);
 	}
 
@@ -164,7 +167,8 @@ abstract class BaseMap implements World
 	/**
 	 * Check that a serialized data array is valid.
 	 *
-	 * @param array(string=>mixed) &$data
+	 * @param array(string=>mixed) $data
+	 * @throws UnserializeEntityException
 	 */
 	private function validateSerializedData(&$data): void {
 		$this->validate($data, 'origin', 'array');

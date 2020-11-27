@@ -29,8 +29,6 @@ interface World extends Serializable
 	/**
 	 * Get the world coordinates of a region.
 	 *
-	 * @param Location $location
-	 * @return Coordinates
 	 * @throws MapException
 	 */
 	public function getCoordinates(Location $location): Coordinates;
@@ -38,31 +36,22 @@ interface World extends Serializable
 	/**
 	 * Get the neighbour regions of a region.
 	 *
-	 * @param Location $location
-	 * @return Neighbours
 	 * @throws MapException
 	 */
 	public function getNeighbours(Location $location): Neighbours;
 
 	/**
 	 * Check if a direction is valid in this world.
-	 *
-	 * @param string $direction
-	 * @return bool
 	 */
 	public function isDirection(string $direction): bool;
 
 	/**
 	 * Load the world data.
-	 *
-	 * @return World
 	 */
 	public function load(): World;
 
 	/**
 	 * Save the world data.
-	 *
-	 * @return World
 	 */
 	public function save(): World;
 }

@@ -20,7 +20,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function serialize(BaseCalendar $calendar): void {
 		$data = $calendar->serialize();
@@ -31,7 +30,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function Month(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Month());
@@ -40,7 +38,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function Round(BaseCalendar $calendar): void {
 		$this->assertSame(0 + 1, $calendar->Round());
@@ -49,7 +46,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function Season(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Season());
@@ -58,7 +54,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function Week(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Week());
@@ -67,7 +62,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function Year(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Year());
@@ -76,7 +70,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function nextRound(BaseCalendar $calendar): void {
 		$expected = 0 + 1 + 1;
@@ -87,7 +80,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param Calendar $calendar
 	 */
 	public function testChangeOfYear(Calendar $calendar): void {
 		$round = 24; // letzte Woche vor Jahreswechsel
@@ -110,7 +102,6 @@ class BaseCalendarTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param BaseCalendar $calendar
 	 */
 	public function unserialize(BaseCalendar $calendar): void {
 		$round = 1 + 24 + 9 + 1; // zweite Woche im dritten Monat in Jahr 2
@@ -122,5 +113,4 @@ class BaseCalendarTest extends Test
 		$this->assertSame(2, $calendar->Season());
 		$this->assertSame(2, $calendar->Year());
 	}
-
 }

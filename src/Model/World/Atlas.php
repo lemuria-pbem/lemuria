@@ -20,30 +20,18 @@ class Atlas extends EntitySet
 	/**
 	 * Sort mode by location ID.
 	 */
-	const BY_ID = 0;
+	public const BY_ID = 0;
 
 	/**
 	 * Sort mode by coordinates from north to south.
 	 */
-	const NORTH_TO_SOUTH = 1;
+	public const NORTH_TO_SOUTH = 1;
 
-	/**
-	 * Add a location.
-	 *
-	 * @param Location $location
-	 * @return Atlas
-	 */
 	public function add(Location $location): self {
 		parent::addEntity($location->Id());
 		return $this;
 	}
 
-	/**
-	 * Remove a location.
-	 *
-	 * @param Location $location
-	 * @return Atlas
-	 */
 	public function remove(Location $location): Atlas {
 		parent::removeEntity($location->Id());
 		return $this;
@@ -51,9 +39,6 @@ class Atlas extends EntitySet
 
 	/**
 	 * Sort the locations.
-	 *
-	 * @param int $mode
-	 * @return Atlas
 	 */
 	public function sort(int $mode = self::BY_ID): Atlas {
 		switch ($mode) {
@@ -71,9 +56,6 @@ class Atlas extends EntitySet
 
 	/**
 	 * Get an Entity by ID.
-	 *
-	 * @param Id $id
-	 * @return Entity
 	 */
 	protected function get(Id $id): Entity {
 		$location = Lemuria::Catalog()->get($id, Catalog::LOCATIONS);

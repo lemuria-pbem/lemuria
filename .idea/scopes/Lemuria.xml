@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Lemuria" pattern="file[lemuria]:src/*||file[lemuria]:tests/*||file:composer.json||file:phpunit.xml" />
+</component>

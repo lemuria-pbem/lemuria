@@ -9,23 +9,16 @@ interface Identifiable
 {
 	/**
 	 * Get the ID.
-	 *
-	 * @return Id
 	 */
 	public function Id(): Id;
 
 	/**
 	 * Get the catalog namespace.
-	 *
-	 * @return int
 	 */
 	public function Catalog(): int;
 
 	/**
 	 * Set the ID.
-	 *
-	 * @param Id $id
-	 * @return Entity
 	 */
 	public function setId(Id $id): Identifiable;
 }

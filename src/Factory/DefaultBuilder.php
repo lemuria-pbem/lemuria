@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Factory;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\SingletonException;
 use Lemuria\Model\Builder;
@@ -16,10 +18,7 @@ class DefaultBuilder implements Builder
 
 	private SingletonMap $singletonMap;
 
-	/**
-	 * Create the Builder.
-	 */
-	public function __construct() {
+	#[Pure] public function __construct() {
 		$this->singletonCache = new SingletonCache();
 		$this->singletonMap   = new SingletonMap();
 	}
@@ -27,8 +26,6 @@ class DefaultBuilder implements Builder
 	/**
 	 * Create a singleton.
 	 *
-	 * @param string $class
-	 * @return Singleton
 	 * @throws LemuriaException
 	 */
 	public function create(string $class): Singleton {
@@ -48,16 +45,10 @@ class DefaultBuilder implements Builder
 			return $this->singletonCache->set($singleton);
 		}
 
-		// @codeCoverageIgnoreStart
 		$bug = 'Class SingletonMap created an invalid Singleton.';
 		throw new LemuriaException($bug, new SingletonException($class));
-		// @codeCoverageIgnoreEnd
 	}
 
-	/**
-	 * @param SingletonCatalog $catalog
-	 * @return Builder
-	 */
 	public function register(SingletonCatalog $catalog): Builder {
 		foreach ($catalog->getGroups() as $group) {
 			$this->singletonMap->add($group);

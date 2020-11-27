@@ -9,12 +9,12 @@ abstract class Test extends TestCase
 	/**
 	 * Assert that the actual value is an array containing an exact number of elements that may have a defined type.
 	 *
-	 * @param mixed $actual The expected array.
-	 * @param int|null $count The expected number of elements.
-	 * @param string|null $type The expected type of the array's elements.
-	 * @param string|null $message
+	 * @param mixed $actual
+	 * @param int $count
+	 * @param string|null $type
+	 * @param string $message
 	 */
-	public static function assertArray($actual, int $count = 0, string $type = null, string $message = ''): void {
+	public static function assertArray(mixed $actual, int $count = 0, string $type = null, string $message = ''): void {
 		parent::assertIsArray($actual, $message);
 		$message = $message ?? 'Expected array of ' . $count . ' elements.';
 		parent::assertSame($count, count($actual), $message);
@@ -25,13 +25,8 @@ abstract class Test extends TestCase
 
 	/**
 	 * Assert that array has key and value.
-	 *
-	 * @param array $actual
-	 * @param mixed $key
-	 * @param mixed $value
-	 * @param string $message
 	 */
-	public static function assertArrayKey($actual, $key, $value, string $message = ''): void {
+	public static function assertArrayKey(mixed $actual, mixed $key, mixed $value, string $message = ''): void {
 		parent::assertIsArray($actual, $message);
 		parent::assertArrayHasKey($key, $actual, $message);
 		$actualValue = $actual[$key];
@@ -49,10 +44,8 @@ abstract class Test extends TestCase
 
 	/**
 	 * Mark a test incomplete.
-	 *
-	 * @param string $message
 	 */
-	protected function incomplete($message = 'is incomplete') {
+	protected function incomplete(string $message = 'is incomplete'): void {
 		$message = trim($message, ' .');
 		$this->markTestIncomplete('Test ' . $this->getName() . '() ' . $message . '.');
 	}

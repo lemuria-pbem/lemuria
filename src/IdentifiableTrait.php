@@ -7,26 +7,12 @@ namespace Lemuria;
  */
 trait IdentifiableTrait
 {
-	/**
-	 * @var Id|null
-	 */
 	private ?Id $id = null;
 
-	/**
-	 * Get the ID.
-	 *
-	 * @return Id
-	 */
 	public function Id(): Id {
 		return $this->id;
 	}
 
-	/**
-	 * Set the ID.
-	 *
-	 * @param Id $id
-	 * @return Entity
-	 */
 	public function setId(Id $id): Identifiable {
 		if ($this->id) {
 			/* @var Identifiable $this */

@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 use function Lemuria\getClass;
 use Lemuria\Item;
 
@@ -18,12 +20,8 @@ class ItemException extends \InvalidArgumentException
 
 	/**
 	 * Create an exception for a specific action with two items.
-	 *
-	 * @param Item $item
-	 * @param Item $otherItem
-	 * @param int $action
 	 */
-	public function __construct(Item $item, Item $otherItem, int $action) {
+	#[Pure] public function __construct(Item $item, Item $otherItem, int $action) {
 		$class      = getClass($item->getObject());
 		$otherCLass = getClass($otherItem->getObject());
 		switch ($action) {

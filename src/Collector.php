@@ -10,15 +10,11 @@ interface Collector extends Identifiable
 	/**
 	 * This method will be called by the Catalog after loading is finished; the Collector can initialize its collections
 	 * then.
-	 *
-	 * @return Collector
 	 */
 	public function collectAll(): Collector;
 
 	/**
 	 * Get the relation that this Collector has to its collectibles.
-	 *
-	 * @return string
 	 */
 	public function getRelation(): string;
 }

@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\ItemSetException;
 use Lemuria\Exception\ItemSetFillException;
 use Lemuria\Exception\LemuriaException;
@@ -22,23 +24,16 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 */
 	private array $items = [];
 
-	/**
-	 * @var int
-	 */
 	private int $index = 0;
 
-	/**
-	 * @var int
-	 */
 	private int $count = 0;
 
 	/**
 	 * Check if an item is in the set.
 	 *
 	 * @param Singleton|string $offset
-	 * @return bool
 	 */
-	public function offsetExists($offset): bool {
+	#[Pure] public function offsetExists(mixed $offset): bool {
 		$class = $this->getClass($offset);
 		return isset($this->items[$class]);
 	}
@@ -49,9 +44,8 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 * If no such item exists, an empty item is returned.
 	 *
 	 * @param Singleton|string $offset
-	 * @return Item
 	 */
-	public function offsetGet($offset): Item {
+	public function offsetGet(mixed $offset): Item {
 		$class = $this->getClass($offset);
 		if (isset($this->items[$class])) {
 			return $this->items[$class];
@@ -65,7 +59,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 * @param Item|Singleton|string $offset
 	 * @param Item $value
 	 */
-	public function offsetSet($offset, $value): void {
+	public function offsetSet(mixed $offset, mixed $value): void {
 		if (!$this->isValidItem($value)) {
 			throw new LemuriaException('Invalid item for this set: ' . $value);
 		}
@@ -84,9 +78,9 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Delete an item from the set.
 	 *
-	 * @param mixed $offset
+	 * @param Singleton|string $offset
 	 */
-	public function offsetUnset($offset): void {
+	public function offsetUnset(mixed $offset): void {
 		$class = $this->getClass($offset);
 		if (isset($this->items[$class])) {
 			$this->delete($class);
@@ -95,61 +89,38 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Get the number of items in the set.
-	 *
-	 * @return int
 	 */
-	public function count(): int {
+	#[Pure] public function count(): int {
 		return $this->count;
 	}
 
-	/**
-	 * Get the current item of the iterator.
-	 *
-	 * @return Item
-	 */
-	public function current(): ?Item {
+	#[Pure] public function current(): ?Item {
 		$key = $this->key();
 		return $key !== null ? $this->items[$key] : null;
 	}
 
-	/**
-	 * Get the current key of the iterator.
-	 *
-	 * @return string
-	 */
-	public function key(): ?string {
+	#[Pure] public function key(): ?string {
 		return $this->indices[$this->index] ?? null;
 	}
 
-	/**
-	 * Increment the iterator.
-	 */
 	public function next(): void {
 		$this->index++;
 	}
 
-	/**
-	 * Rewind the iterator.
-	 */
 	public function rewind(): void {
 		$this->index = 0;
 	}
 
-	/**
-	 * Check if the iterator's current item is valid.
-	 *
-	 * @return bool
-	 */
-	public function valid(): bool {
+	#[Pure] public function valid(): bool {
 		return $this->index < $this->count;
 	}
 
 	/**
 	 * Get a plain data array of the model's data.
 	 *
-	 * @return array
+	 * @return array[string=>int]
 	 */
-	public function serialize(): array {
+	#[Pure] public function serialize(): array {
 		$data = [];
 		foreach ($this->items as $class => $item /* @var Item $item */) {
 			$data[$class] = $item->Count();
@@ -160,8 +131,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param array $data
-	 * @return Serializable
+	 * @param array[string=>int] $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->clear();
@@ -176,8 +146,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Clear the set.
-	 *
-	 * @return ItemSet
 	 */
 	public function clear(): ItemSet {
 		$this->indices = [];
@@ -189,9 +157,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Fill the set with a copy of the items of given set.
-	 *
-	 * @param ItemSet $set
-	 * @return ItemSet
 	 */
 	public function fill(ItemSet $set): ItemSet {
 		foreach ($set->items as $item) {
@@ -205,25 +170,16 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Create an Item from unserialized data.
-	 *
-	 * @param string $class
-	 * @param int $count
-	 * @return Item
 	 */
 	abstract protected function createItem(string $class, int $count): Item;
 
 	/**
 	 * Check if an item is valid for this set.
-	 *
-	 * @param Item $item
-	 * @return bool
 	 */
-	abstract protected function isValidItem($item): bool;
+	abstract protected function isValidItem(Item $item): bool;
 
 	/**
 	 * Add an item to the set.
-	 *
-	 * @param Item $item
 	 */
 	protected function addItem(Item $item): void {
 		if ($item->Count() > 0) {
@@ -242,7 +198,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Remove an item from the set.
 	 *
-	 * @param Item $item
 	 * @throws ItemSetException The item is not part of the set.
 	 */
 	protected function removeItem(Item $item): void {
@@ -261,8 +216,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Remove the item of the specified class from the set.
-	 *
-	 * @param string $class
 	 */
 	private function delete(string $class): void {
 		unset($this->items[$class]);
@@ -279,11 +232,8 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	/**
 	 * Get the class of an offset.
-	 *
-	 * @param Singleton|string $offset
-	 * @return string
 	 */
-	private function getClass($offset): string {
+	#[Pure] private function getClass(Singleton|string $offset): string {
 		return $offset instanceof Singleton ? getClass($offset) : getClass((string)$offset);
 	}
 }

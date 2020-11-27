@@ -2,6 +2,10 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\Calendar;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+
+use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Lemuria;
 use Lemuria\Model\Calendar;
 use Lemuria\Serializable;
@@ -28,18 +32,15 @@ class BaseCalendar implements Calendar
 
 	/**
 	 * Get a plain data array of the model's data.
-	 *
-	 * @return array
 	 */
+	#[ArrayShape(['round' => 'int'])]
+	#[Pure]
 	public function serialize(): array {
 		return ['round' => $this->round];
 	}
 
 	/**
 	 * Restore the model's data from serialized data.
-	 *
-	 * @param array $data
-	 * @return Serializable
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -49,53 +50,41 @@ class BaseCalendar implements Calendar
 
 	/**
 	 * Get the month.
-	 *
-	 * @return int
 	 */
-	public function Month(): int {
+	#[Pure] public function Month(): int {
 		return $this->round % ($this->seasons * $this->months) + 1;
 	}
 
 	/**
 	 * Get the game round.
-	 *
-	 * @return int
 	 */
-	public function Round(): int {
+	#[Pure] public function Round(): int {
 		return $this->round + 1;
 	}
 
 	/**
 	 * Get the season.
-	 *
-	 * @return int
 	 */
-	public function Season(): int {
+	#[Pure] public function Season(): int {
 		return (int)($this->round / ($this->months * $this->weeks)) % $this->seasons + 1;
 	}
 
 	/**
 	 * Get the week of the month.
-	 *
-	 * @return int
 	 */
-	public function Week(): int {
+	#[Pure] public function Week(): int {
 		return $this->round % $this->weeks + 1;
 	}
 
 	/**
 	 * Get the year.
-	 *
-	 * @return int
 	 */
-	public function Year(): int {
+	#[Pure] public function Year(): int {
 		return (int)floor($this->round / ($this->seasons * $this->months * $this->weeks)) + 1;
 	}
 
 	/**
 	 * Load game data.
-	 *
-	 * @return Calendar
 	 */
 	public function load(): Calendar {
 		$this->unserialize(Lemuria::Game()->getCalendar());
@@ -104,8 +93,6 @@ class BaseCalendar implements Calendar
 
 	/**
 	 * Save game data.
-	 *
-	 * @return Calendar
 	 */
 	public function save(): Calendar {
 		Lemuria::Game()->setCalendar($this->serialize());
@@ -114,8 +101,6 @@ class BaseCalendar implements Calendar
 
 	/**
 	 * Advance the Calendar to next round and return the new round.
-	 *
-	 * @return int
 	 */
 	public function nextRound(): int {
 		$this->round++;
@@ -126,6 +111,7 @@ class BaseCalendar implements Calendar
 	 * Check that a serialized data array is valid.
 	 *
 	 * @param array (string=>mixed) &$data
+	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(&$data): void {
 		$this->validate($data, 'round', 'int');

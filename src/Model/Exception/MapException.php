@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Model\Location;
 
 /**
@@ -9,10 +11,7 @@ use Lemuria\Model\Location;
  */
 final class MapException extends ModelException
 {
-	/**
-	 * @param Location $location
-	 */
-	public function __construct(Location $location) {
+	#[Pure] public function __construct(Location $location) {
 		$message = "Location " . $location->Id()->Id() . " is not on this world's map.";
 		parent::__construct($message);
 	}

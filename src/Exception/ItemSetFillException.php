@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 use function Lemuria\getClass;
 use Lemuria\Item;
 use Lemuria\ItemSet;
@@ -13,11 +15,8 @@ class ItemSetFillException extends \InvalidArgumentException
 {
 	/**
 	 * Create an exception for an item set that is filled with wrong item type.
-	 *
-	 * @param Item $item
-	 * @param ItemSet $set
 	 */
-	public function __construct(Item $item, ItemSet $set) {
+	#[Pure] public function __construct(Item $item, ItemSet $set) {
 		$message = 'A ' . getClass($set) . ' set cannot be filled with ' . getClass($item) . ' items.';
 		parent::__construct($message);
 	}

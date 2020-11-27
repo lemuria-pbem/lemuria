@@ -7,12 +7,7 @@ namespace Lemuria;
  */
 final class NullItem extends Item
 {
-	/**
-	 * Create an empty item.
-	 *
-	 * @param Singleton|string $singleton
-	 */
-	public function __construct($singleton) {
+	public function __construct(Singleton|string $singleton) {
 		$object = $singleton instanceof Singleton ? $singleton : Lemuria::Builder()->create($singleton);
 		parent::__construct($object);
 	}

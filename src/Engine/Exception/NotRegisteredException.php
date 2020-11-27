@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Engine\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Id;
 
 /**
@@ -9,10 +11,7 @@ use Lemuria\Id;
  */
 class NotRegisteredException extends EngineException
 {
-	/**
-	 * @param Id $id
-	 */
-	public function __construct(Id $id) {
+	#[Pure] public function __construct(Id $id) {
 		$message = 'Entity ' . $id . ' is not registered in this report.';
 		parent::__construct($message);
 	}

@@ -11,7 +11,6 @@ class IdTest extends Test
 
 	/**
 	 * @test
-	 * @return Id
 	 */
 	public function construct(): Id {
 		$id = new Id(self::ID);
@@ -24,24 +23,22 @@ class IdTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param Id $id
 	 */
-	public function Id(Id $id) {
+	public function Id(Id $id): void {
 		$this->assertSame(self::ID, $id->Id());
 	}
 
 	/**
 	 * @depends construct
-	 * @param Id $id
 	 */
-	public function testToString(Id $id) {
+	public function testToString(Id $id): void {
 		$this->assertSame('2s', (string)$id);
 	}
 
 	/**
 	 * @test
 	 */
-	public function fromId() {
+	public function fromId(): void {
 		$id = Id::fromId(' A8 ');
 
 		$this->assertInstanceOf(Id::class, $id);
@@ -51,7 +48,7 @@ class IdTest extends Test
 	/**
 	 * @test
 	 */
-	public function fromIdFailsOnInvalidCharacters() {
+	public function fromIdFailsOnInvalidCharacters(): void {
 		$this->expectException(IdException::class);
 		Id::fromId('xö');
 	}

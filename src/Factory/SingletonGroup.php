@@ -2,6 +2,8 @@
 declare(strict_types = 1);
 namespace Lemuria\Factory;
 
+use JetBrains\PhpStorm\Pure;
+
 use function Lemuria\hasPrefix;
 use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileNotFoundException;
@@ -9,40 +11,20 @@ use Lemuria\Exception\LemuriaException;
 
 class SingletonGroup
 {
-	/**
-	 * @var string
-	 */
 	private string $group;
 
-	/**
-	 * @var string
-	 */
 	private string $namespace;
 
-	/**
-	 * @var string
-	 */
 	private string $classDirectory;
 
-	/**
-	 * @return string
-	 */
-	public function getNamespace(): string {
+	#[Pure] public function getNamespace(): string {
 		return $this->namespace;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getGroup(): string {
+	#[Pure] public function getGroup(): string {
 		return $this->group;
 	}
 
-	/**
-	 * @param string $group
-	 * @param string $namespace
-	 * @param string $classDirectory
-	 */
 	public function __construct(string $group, string $namespace, string $classDirectory) {
 		$this->setGroup($group);
 		$this->setNamespace($namespace);
@@ -70,7 +52,6 @@ class SingletonGroup
 	}
 
 	/**
-	 * @param string $group
 	 * @throws LemuriaException
 	 */
 	private function setGroup(string $group): void {
@@ -79,7 +60,6 @@ class SingletonGroup
 	}
 
 	/**
-	 * @param string $namespace
 	 * @throws LemuriaException
 	 */
 	private function setNamespace(string $namespace): void {
@@ -88,7 +68,6 @@ class SingletonGroup
 	}
 
 	/**
-	 * @param string $classDirectory
 	 * @throws LemuriaException
 	 */
 	private function setClassDirectory(string $classDirectory): void {
@@ -100,8 +79,6 @@ class SingletonGroup
 	}
 
 	/**
-	 * @param string $namespace
-	 * @param string $type
 	 * @throws LemuriaException
 	 */
 	private function checkNamespace(string $namespace, string $type): void {

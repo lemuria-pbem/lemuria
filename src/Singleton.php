@@ -11,8 +11,6 @@ interface Singleton
 {
 	/**
 	 * Get the class of the singleton.
-	 *
-	 * @return string
 	 */
 	public function __toString(): string;
 }

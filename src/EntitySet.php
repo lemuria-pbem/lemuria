@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\EntitySetException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeEntitySetException;
@@ -12,11 +14,6 @@ use Lemuria\Exception\UnserializeEntitySetException;
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
 	/**
-	 * @var Collector|null
-	 */
-	private ?Collector $collector;
-
-	/**
 	 * @var int[]
 	 */
 	private array $indices = [];
@@ -26,32 +23,22 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 */
 	private array $entities = [];
 
-	/**
-	 * @var int
-	 */
 	private int $index = 0;
 
-	/**
-	 * @var int
-	 */
 	private int $count = 0;
 
 	/**
 	 * Init the set for a Collector.
-	 *
-	 * @param Collector|null $collector
 	 */
-	public function __construct(Collector $collector = null) {
-		$this->collector = $collector;
+	#[Pure] public function __construct(private ?Collector $collector = null) {
 	}
 
 	/**
 	 * Check if an offset is in the set.
 	 *
 	 * @param int $offset
-	 * @return bool
 	 */
-	public function offsetExists($offset): bool {
+	#[Pure] public function offsetExists(mixed $offset): bool {
 		return $offset >= 0 && $offset < $this->count;
 	}
 
@@ -59,10 +46,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * Get an entity from the set.
 	 *
 	 * @param int $offset
-	 * @return Entity
 	 * @throws \OutOfBoundsException
 	 */
-	public function offsetGet($offset): Entity {
+	public function offsetGet(mixed $offset): Entity {
 		if ($this->offsetExists($offset)) {
 			return $this->get($this->entities[$this->indices[$offset]]);
 		}
@@ -73,10 +59,10 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * Not implemented.
 	 *
 	 * @param int $offset
-	 * @param mixed $entity
+	 * @param Entity $value
 	 * @throws LemuriaException
 	 */
-	public function offsetSet($offset, $entity): void {
+	public function offsetSet(mixed $offset, mixed $value): void {
 		throw new LemuriaException('Setting via ArrayAccess is intentionally not implemented.');
 	}
 
@@ -86,7 +72,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * @param int $offset
 	 * @throws \OutOfBoundsException
 	 */
-	public function offsetUnset($offset): void {
+	public function offsetUnset(mixed $offset): void {
 		if ($this->offsetExists($offset)) {
 			$this->removeEntity($this->entities[$this->indices[$offset]]);
 		} else {
@@ -99,56 +85,35 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 *
 	 * @return int
 	 */
-	public function count(): int {
+	#[Pure] public function count(): int {
 		return $this->count;
 	}
 
-	/**
-	 * Get the current entity of the iterator.
-	 *
-	 * @return Entity|null
-	 */
 	public function current(): ?Entity {
 		$key = $this->key();
 		return $key ? $this->get($this->entities[$key]) : null;
 	}
 
-	/**
-	 * Get the current key of the iterator.
-	 *
-	 * @return int|null
-	 */
-	public function key(): ?int {
+	#[Pure] public function key(): ?int {
 		return $this->indices[$this->index] ?? null;
 	}
 
-	/**
-	 * Increment the iterator.
-	 */
 	public function next(): void {
 		$this->index++;
 	}
 
-	/**
-	 * Rewind the iterator.
-	 */
 	public function rewind(): void {
 		$this->index = 0;
 	}
 
-	/**
-	 * Check if the iterator's current item is valid.
-	 *
-	 * @return bool
-	 */
-	public function valid(): bool {
+	#[Pure] public function valid(): bool {
 		return $this->index < $this->count;
 	}
 
 	/**
 	 * Get a plain data array of the model's data.
 	 *
-	 * @return array
+	 * @return int[]
 	 */
 	public function serialize(): array {
 		$data = [];
@@ -161,8 +126,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param array $data
-	 * @return Serializable
+	 * @param int[] $data
 	 */
 	public function unserialize(array $data): Serializable {
 		if ($this->count > 0) {
@@ -180,18 +144,13 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Check if an entity belongs to the set.
-	 *
-	 * @param Id $id
-	 * @return bool
 	 */
-	public function has(Id $id): bool {
+	#[Pure] public function has(Id $id): bool {
 		return isset($this->entities[$id->Id()]);
 	}
 
 	/**
 	 * Clear the set.
-	 *
-	 * @return EntitySet
 	 */
 	public function clear(): EntitySet {
 		$this->indices  = [];
@@ -217,16 +176,11 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Get an Entity by ID.
-	 *
-	 * @param Id $id
-	 * @return Entity
 	 */
 	abstract protected function get(Id $id): Entity;
 
 	/**
 	 * Check if a Collector is set.
-	 *
-	 * @return bool
 	 */
 	protected function hasCollector(): bool {
 		return $this->collector instanceof Collector;
@@ -234,8 +188,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Get the Collector.
-	 *
-	 * @return Collector
 	 */
 	protected function collector(): Collector {
 		return $this->collector;
@@ -243,8 +195,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Get the first Entity.
-	 *
-	 * @return Id|null
 	 */
 	protected function first(): ?Id {
 		if ($this->count > 0) {
@@ -255,8 +205,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Add an entity's ID to the set.
-	 *
-	 * @param Id $id
 	 */
 	protected function addEntity(Id $id): void {
 		if (!isset($this->entities[$id->Id()])) {
@@ -268,8 +216,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Remove an entity's ID from the set.
-	 *
-	 * @param Id $id
 	 * @throws EntitySetException The entity is not part of the set.
 	 */
 	protected function removeEntity(Id $id): void {
@@ -292,9 +238,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Change position of two entities given by their ID.
 	 *
-	 * @param Id $entity
-	 * @param Id $position
-	 * @param int $reorder
 	 * @throws EntitySetException One of the entities is not part of the set.
 	 */
 	protected function reorderEntity(Id $entity, Id $position, int $reorder = Reorder::FLIP): void {
@@ -342,8 +285,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Sort the set using specified order.
-	 *
-	 * @param EntityOrder $order
 	 */
 	protected function sortUsing(EntityOrder $order): void {
 		$this->indices = $order->sort($this);

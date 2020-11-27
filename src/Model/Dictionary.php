@@ -2,15 +2,14 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\Pure;
+
 use function Lemuria\getClass;
 use Lemuria\Lemuria;
 use Lemuria\Singleton;
 
 final class Dictionary
 {
-	/**
-	 * @var array|null
-	 */
 	private static ?array $strings = null;
 
 	/**
@@ -24,12 +23,8 @@ final class Dictionary
 
 	/**
 	 * Get a string.
-	 *
-	 * @param string $keyPath
-	 * @param Singleton|string|int|null $index
-	 * @return string
 	 */
-	public function get(string $keyPath, $index = null): string {
+	#[Pure] public function get(string $keyPath, Singleton|string|int|null $index = null): string {
 		if ($index instanceof Singleton) {
 			$index = getClass($index);
 		}

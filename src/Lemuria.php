@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
 use Monolog\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -20,11 +21,8 @@ use Lemuria\Model\World;
 
 /**
  * Return the class name of an object without it's namespace.
- *
- * @param object|string $object
- * @return string
  */
-function getClass($object): string {
+#[Pure] function getClass(object|string $object): string {
 	$class = is_object($object) ? get_class($object) : $object;
 	$i     = strripos($class, '\\');
 	return $i > 0 ? substr($class, $i + 1) : $class;
@@ -32,32 +30,24 @@ function getClass($object): string {
 
 /**
  * Checks if a string has a given prefix.
- *
- * @param string $prefix
- * @param mixed $subject
- * @return bool
  */
-function hasPrefix(string $prefix, $subject): bool {
-	return $prefix === '' ? true : strpos((string)$subject, $prefix) === 0;
+#[Pure] function hasPrefix(string $prefix, mixed $subject): bool {
+	return $prefix === '' ? true : str_starts_with((string)$subject, $prefix);
 }
 
 /**
  * Check if given string represents an integer.
- *
- * @param string $subject
- * @return bool
  */
-function isInt(string $subject): bool {
+#[Pure] function isInt(string $subject): bool {
 	return (string)(int)$subject === $subject;
 }
 
 /**
  * The mathematical signum function.
  *
- * @param mixed $number Number argument.
  * @return int 1 if argument is greater or equal to zero, -1 otherwise.
  */
-function sign($number): int {
+#[Pure] function sign(mixed $number): int {
 	return $number >= 0 ? 1 : -1;
 }
 
@@ -85,7 +75,6 @@ final class Lemuria
 	/**
 	 * Get the builder.
 	 *
-	 * @return Builder
 	 * @throws InitializationException
 	 */
 	public static function Builder(): Builder {
@@ -95,7 +84,6 @@ final class Lemuria
 	/**
 	 * Get the Calendar.
 	 *
-	 * @return Calendar
 	 * @throws InitializationException
 	 */
 	public static function Calendar(): Calendar {
@@ -105,7 +93,6 @@ final class Lemuria
 	/**
 	 * Get the Catalog.
 	 *
-	 * @return Catalog
 	 * @throws InitializationException
 	 */
 	public static function Catalog(): Catalog {
@@ -115,7 +102,6 @@ final class Lemuria
 	/**
 	 * Get the Game.
 	 *
-	 * @return Game
 	 * @throws InitializationException
 	 */
 	public static function Game(): Game {
@@ -124,8 +110,6 @@ final class Lemuria
 
 	/**
 	 * Get the log.
-	 *
-	 * @return LoggerInterface
 	 */
 	public static function Log(): LoggerInterface {
 		return self::getInstance()->log;
@@ -133,8 +117,6 @@ final class Lemuria
 
 	/**
 	 * Get the report.
-	 *
-	 * @return Report
 	 */
 	public static function Report(): Report {
 		return self::getInstance()->report;
@@ -143,16 +125,12 @@ final class Lemuria
 	/**
 	 * Get the World.
 	 *
-	 * @return World
 	 * @throws InitializationException
 	 */
 	public static function World(): World {
 		return self::getInstance()->world;
 	}
 
-	/**
-	 * @param Config $config
-	 */
 	public static function init(Config $config): void {
 		self::$instance = new self($config);
 	}
@@ -177,11 +155,6 @@ final class Lemuria
 		self::World()->save();
 	}
 
-	/**
-	 * Get the singleton instance.
-	 *
-	 * @return Lemuria
-	 */
 	private static function getInstance(): Lemuria {
 		if (!self::$instance) {
 			throw new InitializationException();
@@ -189,11 +162,6 @@ final class Lemuria
 		return self::$instance;
 	}
 
-	/**
-	 * Private constructor for singleton.
-	 *
-	 * @param Config $config
-	 */
 	private function __construct(Config $config) {
 		try {
 			$this->log      = $this->createLog($config->getPathToLog());
@@ -209,10 +177,6 @@ final class Lemuria
 	}
 
 	/**
-	 * Create the Log.
-	 *
-	 * @param string $logPath
-	 * @return LoggerInterface
 	 * @throws \Exception
 	 */
 	private function createLog(string $logPath): LoggerInterface {

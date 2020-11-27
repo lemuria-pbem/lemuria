@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Exception;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Id;
 
 /**
@@ -9,10 +11,7 @@ use Lemuria\Id;
  */
 class EntitySetException extends \InvalidArgumentException
 {
-	/**
-	 * @param Id $id
-	 */
-	public function __construct(Id $id) {
+	#[Pure] public function __construct(Id $id) {
 		$message = 'The entity ' . $id . ' is not part of the set.';
 		parent::__construct($message);
 	}

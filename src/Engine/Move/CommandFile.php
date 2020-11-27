@@ -10,8 +10,6 @@ use Lemuria\Engine\Exception\EngineException;
  */
 class CommandFile implements Move
 {
-	private string $path;
-
 	/**
 	 * @var resource
 	 */
@@ -29,8 +27,7 @@ class CommandFile implements Move
 	 * @param string $path
 	 * @throws EngineException
 	 */
-	public function __construct(string $path) {
-		$this->path = $path;
+	public function __construct(private string $path) {
 		$this->file = @fopen($path, 'r');
 		if (!$this->file) {
 			throw new EngineException('Command file could not be opened.');

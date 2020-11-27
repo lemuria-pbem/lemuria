@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\IdException;
 
 /**
@@ -10,15 +12,8 @@ use Lemuria\Exception\IdException;
 final class Id
 {
 	/**
-	 * @var int
-	 */
-	private int $id;
-
-	/**
 	 * Convert a Base36 ID to its integer representation.
 	 *
-	 * @param string $id
-	 * @return Id
 	 * @throws IdException
 	 */
 	public static function fromId(string $id): Id {
@@ -27,34 +22,25 @@ final class Id
 
 	/**
 	 * Create a Base36 ID from its integer representation.
-	 *
-	 * @param int $id
 	 */
-	public function __construct(int $id) {
-		$this->id = $id;
+	#[Pure] public function __construct(private int $id) {
 	}
 
 	/**
 	 * Get the Base36 ID as a string.
-	 *
-	 * @return string
 	 */
-	public function __toString(): string {
+	#[Pure] public function __toString(): string {
 		return base_convert((string)$this->id, 10, 36);
 	}
 
 	/**
 	 * Get the integer representation.
-	 *
-	 * @return int
 	 */
-	public function Id(): int {
+	#[Pure] public function Id(): int {
 		return $this->id;
 	}
 
 	/**
-	 * @param string $id
-	 * @return string
 	 * @throws IdException
 	 */
 	private static function clean(string $id): string {

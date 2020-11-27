@@ -6,9 +6,5 @@ use Lemuria\Id;
 
 interface Writer
 {
-	/**
-	 * @param Id $party
-	 * @return Writer
-	 */
 	public function render(Id $party): Writer;
 }

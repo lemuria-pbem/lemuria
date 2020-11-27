@@ -2,6 +2,10 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+
+use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
@@ -13,27 +17,10 @@ final class MapCoordinates implements Coordinates
 {
 	use SerializableTrait;
 
-	private int $x;
-
-	private int $y;
-
-	/**
-	 * Init coordinates.
-	 *
-	 * @param int $x
-	 * @param int $y
-	 */
-	public function __construct(int $x = 0, int $y = 0) {
-		$this->x = $x;
-		$this->y = $y;
+	#[Pure] public function __construct(private int $x = 0, private int $y = 0) {
 	}
 
-	/**
-	 * Get a string representation.
-	 *
-	 * @return string
-	 */
-	public function __toString(): string {
+	#[Pure] public function __toString(): string {
 		return '(' . $this->X() . ' ' . $this->Y() . ')';
 	}
 
@@ -42,6 +29,8 @@ final class MapCoordinates implements Coordinates
 	 *
 	 * @return array
 	 */
+	#[ArrayShape(['x' => 'int', 'y' => 'int'])]
+	#[Pure]
 	public function serialize(): array {
 		return [
 			'x' => $this->X(),
@@ -51,9 +40,6 @@ final class MapCoordinates implements Coordinates
 
 	/**
 	 * Restore the model's data from serialized data.
-	 *
-	 * @param array $data
-	 * @return Serializable
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -62,28 +48,17 @@ final class MapCoordinates implements Coordinates
 		return $this;
 	}
 
-	/**
-	 * Get the x coordinate.
-	 *
-	 * @return int
-	 */
-	public function X(): int {
+	#[Pure] public function X(): int {
 		return $this->x;
 	}
 
-	/**
-	 * Get the y coordinate.
-	 *
-	 * @return int
-	 */
-	public function Y(): int {
+	#[Pure] public function Y(): int {
 		return $this->y;
 	}
 
 	/**
-	 * Check that a serialized data array is valid.
-	 *
-	 * @param array (string=>mixed) &$data
+	 * @param array (string=>mixed) $data
+	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(&$data): void {
 		$this->validate($data, 'x', 'int');
