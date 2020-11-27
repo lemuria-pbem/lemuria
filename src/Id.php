@@ -40,7 +40,7 @@ final class Id
 	 * @return string
 	 */
 	public function __toString(): string {
-		return base_convert($this->id, 10, 36);
+		return base_convert((string)$this->id, 10, 36);
 	}
 
 	/**
