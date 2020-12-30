@@ -13,7 +13,10 @@ use Lemuria\Exception\ItemException;
  */
 abstract class Item
 {
-	protected function __construct(private Singleton $object, private int $count = 0) {
+	/**
+	 * @noinspection PhpAttributeCanBeAddedToOverriddenMemberInspection
+	 */
+	#[Pure] protected function __construct(private Singleton $object, private int $count = 0) {
 	}
 
 	#[Pure] public function __toString(): string {
