@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
+use JetBrains\PhpStorm\ExpectedValues;
+
 use Lemuria\Entity;
 use Lemuria\EntitySet;
 use Lemuria\Exception\LemuriaException;
@@ -40,7 +42,7 @@ class Atlas extends EntitySet
 	/**
 	 * Sort the locations.
 	 */
-	public function sort(int $mode = self::BY_ID): Atlas {
+	public function sort(#[ExpectedValues(valuesFromClass: self::class)] int $mode = self::BY_ID): Atlas {
 		switch ($mode) {
 			case self::BY_ID :
 				$this->sortUsing(new ById());

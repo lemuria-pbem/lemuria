@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\ExpectedValues;
+
 use Lemuria\Model\Exception\MapException;
 use Lemuria\Serializable;
 
@@ -43,7 +45,7 @@ interface World extends Serializable
 	/**
 	 * Check if a direction is valid in this world.
 	 */
-	public function isDirection(string $direction): bool;
+	public function isDirection(#[ExpectedValues(valuesFromClass: self::class)] string $direction): bool;
 
 	/**
 	 * Load the world data.

@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\ExpectedValues;
+
 use Lemuria\Id;
 use Lemuria\Identifiable;
 use Lemuria\Model\Exception\DuplicateIdException;
@@ -25,7 +27,7 @@ interface Catalog
 	/**
 	 * Checks if an entity exists in the specified catalog namespace.
 	 */
-	public function has(Id $id, int $namespace): bool;
+	public function has(Id $id, #[ExpectedValues(valuesFromClass: self::class)] int $namespace): bool;
 
 	/**
 	 * Check if game data has been loaded.
@@ -37,12 +39,12 @@ interface Catalog
 	 *
 	 * @throws NotRegisteredException
 	 */
-	public function get(Id $id, int $namespace): Identifiable;
+	public function get(Id $id, #[ExpectedValues(valuesFromClass: self::class)] int $namespace): Identifiable;
 
 	/**
 	 * Get all entities of a namespace.
 	 */
-	public function getAll(int $namespace): array;
+	public function getAll(#[ExpectedValues(valuesFromClass: self::class)] int $namespace): array;
 
 	/**
 	 * Load game data into catalog.
@@ -71,5 +73,5 @@ interface Catalog
 	/**
 	 * Reserve the next ID that is available for a namespace.
 	 */
-	public function nextId(int $namespace): Id;
+	public function nextId(#[ExpectedValues(valuesFromClass: self::class)] int $namespace): Id;
 }

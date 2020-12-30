@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\EntitySetException;
@@ -240,7 +241,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 *
 	 * @throws EntitySetException One of the entities is not part of the set.
 	 */
-	protected function reorderEntity(Id $entity, Id $position, int $reorder = Reorder::FLIP): void {
+	protected function reorderEntity(Id $entity, Id $position,
+									 #[ExpectedValues(valuesFromClass: Reorder::class)] int $reorder = Reorder::FLIP): void
+	{
 		$e = $entity->Id();
 		if (!isset($this->entities[$e])) {
 			throw new EntitySetException($entity);

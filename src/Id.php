@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Immutable;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\IdException;
@@ -9,7 +10,7 @@ use Lemuria\Exception\IdException;
 /**
  * Implementation of the general Base36 ID, used for Parties, Units, Buildings and so on.
  */
-final class Id
+#[Immutable] final class Id
 {
 	/**
 	 * Convert a Base36 ID to its integer representation.

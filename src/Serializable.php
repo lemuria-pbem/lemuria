@@ -7,6 +7,10 @@ namespace Lemuria;
  */
 interface Serializable
 {
+	public const TYPES = [
+		'array', '?array', 'bool', '?bool', 'float', '?float', 'int', '?int', 'string', '?string'
+	];
+
 	/**
 	 * Get a plain data array of the model's data.
 	 */

@@ -3,6 +3,7 @@ declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\LemuriaException;
@@ -122,7 +123,7 @@ abstract class BaseMap implements World
 	 * @param string $direction
 	 * @return bool
 	 */
-	#[Pure] public function isDirection(string $direction): bool {
+	#[Pure] public function isDirection(#[ExpectedValues(valuesFromClass: World::class)] string $direction): bool {
 		return in_array($direction, $this->directions);
 	}
 

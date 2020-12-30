@@ -5,6 +5,8 @@ namespace Lemuria;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 
+use Lemuria\Exception\UnserializeEntityException;
+
 /**
  * An Entity is a unique item that has an identity.
  */
@@ -66,6 +68,7 @@ abstract class Entity implements Identifiable, Serializable
 	 * Check that a serialized data array is valid.
 	 *
 	 * @param array (string=>mixed) &$data
+	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(array &$data): void {
 		$this->validate($data, 'id', 'int');

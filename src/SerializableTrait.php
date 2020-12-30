@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\ExpectedValues;
+
 use Lemuria\Exception\UnserializeEntityException;
 
 /**
@@ -21,7 +23,8 @@ trait SerializableTrait
 	/**
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateIfExists(array &$data, string $key, string $type): void {
+	protected function validateIfExists(array &$data, string $key,
+										#[ExpectedValues(values: Serializable::TYPES)] string $type): void {
 		if (isset($data[$key])) {
 			$this->validate($data, $key, $type);
 		}
@@ -33,11 +36,14 @@ trait SerializableTrait
 	 * @param array(string=>mixed) $data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validate(array &$data, string $key, string $type): void {
+	protected function validate(array &$data, string $key,
+								#[ExpectedValues(values: Serializable::TYPES)] string $type): void
+	{
 		if (str_starts_with($type, '?')) {
 			if (array_key_exists($key, $data) && $data[$key] === null) {
 				return;
 			}
+			/** @noinspection PhpExpectedValuesShouldBeUsedInspection */
 			$type = substr($type, 1);
 		}
 

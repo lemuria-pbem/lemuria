@@ -26,8 +26,6 @@ final class MapCoordinates implements Coordinates
 
 	/**
 	 * Get a plain data array of the model's data.
-	 *
-	 * @return array
 	 */
 	#[ArrayShape(['x' => 'int', 'y' => 'int'])]
 	#[Pure]
