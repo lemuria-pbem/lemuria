@@ -3,6 +3,7 @@ declare (strict_types = 1);
 namespace Lemuria;
 
 use JetBrains\PhpStorm\ExpectedValues;
+use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Model\Catalog;
 
@@ -14,12 +15,14 @@ interface Identifiable
 	/**
 	 * Get the ID.
 	 */
-	public function Id(): Id;
+	#[Pure] public function Id(): Id;
 
 	/**
 	 * Get the catalog namespace.
 	 */
-	#[ExpectedValues(valuesFromClass: Catalog::class)] public function Catalog(): int;
+	#[ExpectedValues(valuesFromClass: Catalog::class)]
+	#[Pure]
+	public function Catalog(): int;
 
 	/**
 	 * Set the ID.

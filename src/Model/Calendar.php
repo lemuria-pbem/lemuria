@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Serializable;
 
 /**
@@ -12,27 +14,27 @@ interface Calendar extends Serializable
 	/**
 	 * Get the month.
 	 */
-	public function Month(): int;
+	#[Pure] public function Month(): int;
 
 	/**
 	 * Get the game round.
 	 */
-	public function Round(): int;
+	#[Pure] public function Round(): int;
 
 	/**
 	 * Get the season.
 	 */
-	public function Season(): int;
+	#[Pure] public function Season(): int;
 
 	/**
 	 * Get the week of the month.
 	 */
-	public function Week(): int;
+	#[Pure] public function Week(): int;
 
 	/**
 	 * Get the year.
 	 */
-	public function Year(): int;
+	#[Pure] public function Year(): int;
 
 	/**
 	 * Load game data.

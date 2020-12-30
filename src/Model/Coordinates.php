@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Serializable;
 
 /**
@@ -9,9 +11,9 @@ use Lemuria\Serializable;
  */
 interface Coordinates extends Serializable
 {
-	public function X(): int;
+	#[Pure] public function X(): int;
 
-	public function Y(): int;
+	#[Pure] public function Y(): int;
 
-	public function __toString(): string;
+	#[Pure] public function __toString(): string;
 }
