@@ -21,8 +21,11 @@ abstract class Entity implements Identifiable, Serializable
 
 	/**
 	 * Get a plain data array of the model's data.
+	 *
+	 * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
 	 */
 	#[ArrayShape(['id' => 'int', 'name' => 'string', 'description' => 'string'])]
+	#[Pure]
 	public function serialize(): array {
 		return [
 			'id'          => $this->Id()->Id(),
