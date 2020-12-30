@@ -39,11 +39,11 @@ abstract class Entity implements Identifiable, Serializable
 		return $this->setId(new Id($data['id']))->setName($data['name'])->setDescription($data['description']);
 	}
 
-	public function Name(): string {
+	#[Pure] public function Name(): string {
 		return $this->name;
 	}
 
-	public function Description(): string {
+	#[Pure] public function Description(): string {
 		return $this->description;
 	}
 

@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
+
 /**
  * Common implementation of an Identifier.
  */
@@ -9,7 +11,7 @@ trait IdentifiableTrait
 {
 	private ?Id $id = null;
 
-	public function Id(): Id {
+	#[Pure] public function Id(): Id {
 		return $this->id;
 	}
 
