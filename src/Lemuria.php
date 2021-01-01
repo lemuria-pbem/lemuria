@@ -20,6 +20,34 @@ use Lemuria\Model\World;
 
 
 /**
+ * Format a number.
+ */
+#[Pure] function number(int|float $number): string {
+	$formattedNumber = $number < 0 ? '-' : '';
+	$integer         = (int)abs($number);
+	$string          = (string)$integer;
+	$n               = strlen($string);
+	$c               = $n;
+	for ($i = 0; $i < $n; $i++) {
+		if ($c-- % 3 === 0 && $i > 0) {
+			$formattedNumber .= '.';
+		}
+		$formattedNumber .= $string[$i];
+	}
+	if (is_float($number)) {
+		$string   = (string)$number;
+		$i        = strpos($string, '.');
+		$n        = strlen($string);
+		$decimals = '0';
+		if ($i !== false && ++$i < $n) {
+			$decimals = substr($string, $i);
+		}
+		$formattedNumber .= ',' . $decimals;
+	}
+	return $formattedNumber;
+}
+
+/**
  * Return the class name of an object without it's namespace.
  */
 #[Pure] function getClass(object|string $object): string {
