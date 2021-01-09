@@ -210,9 +210,8 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 */
 	protected function addEntity(Id $id): void {
 		if (!isset($this->entities[$id->Id()])) {
-			$this->entities[$id->Id()] = $id;
-			$this->indices[]           = $id->Id();
-			$this->count++;
+			$this->entities[$id->Id()]     = $id;
+			$this->indices[$this->count++] = $id->Id();
 		}
 	}
 
