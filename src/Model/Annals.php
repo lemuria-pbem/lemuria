@@ -66,7 +66,7 @@ abstract class Annals extends EntitySet
 		}
 
 		$entities = array_values($data['entities']);
-		$regions  = array_values($data['regions']);
+		$regions  = array_values($data['rounds']);
 		$n        = count($entities);
 		if (count($regions) !== $n) {
 			throw new UnserializeException('Mismatch of entities and rounds count.');
@@ -107,7 +107,7 @@ abstract class Annals extends EntitySet
 	 */
 	protected function validateSerializedData(array &$data): void {
 		$this->validate($data, 'entities', 'array');
-		$this->validate($data, 'regions', 'array');
+		$this->validate($data, 'rounds', 'array');
 	}
 
 	protected function getRound(int $id): int {
