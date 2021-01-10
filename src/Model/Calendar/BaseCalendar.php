@@ -44,7 +44,7 @@ class BaseCalendar implements Calendar
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
-		$this->round = $data['round'];
+		$this->setRound($data['round']);
 		return $this;
 	}
 
@@ -115,5 +115,10 @@ class BaseCalendar implements Calendar
 	 */
 	protected function validateSerializedData(&$data): void {
 		$this->validate($data, 'round', 'int');
+	}
+
+	protected function setRound(int $round): void
+	{
+		$this->round = $round;
 	}
 }
