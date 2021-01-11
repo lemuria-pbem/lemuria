@@ -1,6 +1,6 @@
 <?php
 declare (strict_types = 1);
-namespace Lemuria\Model\Exception;
+namespace Lemuria\Exception;
 
 use JetBrains\PhpStorm\Pure;
 
