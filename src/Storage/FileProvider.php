@@ -78,7 +78,7 @@ class FileProvider implements Provider
 				if (!@mkdir($this->directory, 0775, true)) {
 					throw new FileException('Create directory failed: ' . $this->directory);
 				}
-				$this->directory = realpath($directory);
+				$this->directory = realpath($this->directory);
 				if (!$this->directory) {
 					throw new DirectoryNotFoundException($directory);
 				}
