@@ -20,10 +20,16 @@ class FileProvider
 	public function __construct(private string $directory) {
 	}
 
+	/**
+	 * @throws DirectoryNotFoundException
+	 */
 	public function exists(string $fileName): bool {
 		return file_exists($this->getPath($fileName));
 	}
 
+	/**
+	 * @throws FileException
+	 */
 	public function read(string $fileName): string {
 		$path = $this->getPath($fileName);
 		if (!is_file($path)) {
@@ -36,6 +42,9 @@ class FileProvider
 		return $content;
 	}
 
+	/**
+	 * @throws FileException
+	 */
 	public function write(string $fileName, string $content): void {
 		$path = $this->setPath($fileName);
 		if (file_put_contents($path, $content) !== strlen($content)) {
@@ -43,6 +52,9 @@ class FileProvider
 		}
 	}
 
+	/**
+	 * @throws DirectoryNotFoundException
+	 */
 	protected function getPath(string $fileName): string {
 		if (!$this->isAvailable) {
 			$directory = realpath($this->directory);
@@ -58,6 +70,9 @@ class FileProvider
 		return $this->directory . DIRECTORY_SEPARATOR . $fileName;
 	}
 
+	/**
+	 * @throws FileException
+	 */
 	protected function setPath(string $fileName): string {
 		if (!$this->isAvailable) {
 			$directory = realpath($this->directory);

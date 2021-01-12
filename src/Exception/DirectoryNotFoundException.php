@@ -4,7 +4,7 @@ namespace Lemuria\Exception;
 
 use JetBrains\PhpStorm\Pure;
 
-class DirectoryNotFoundException extends \RuntimeException
+class DirectoryNotFoundException extends FileException
 {
 	#[Pure] public function __construct(string $directory) {
 		parent::__construct('Directory not found: ' . $directory);

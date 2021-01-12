@@ -4,7 +4,7 @@ namespace Lemuria\Exception;
 
 use JetBrains\PhpStorm\Pure;
 
-class FileNotFoundException extends \RuntimeException
+class FileNotFoundException extends FileException
 {
 	#[Pure] public function __construct(string $file) {
 		parent::__construct('File not found: ' . $file);
