@@ -10,10 +10,8 @@ use Lemuria\Exception\FileNotFoundException;
 use Lemuria\Exception\ReadException;
 use Lemuria\Exception\WriteException;
 
-class FileProvider
+class FileProvider implements Provider
 {
-	public const DEFAULT = '';
-
 	private bool $isAvailable = false;
 
 	#[Pure]
