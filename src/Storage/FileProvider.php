@@ -2,6 +2,8 @@
 declare(strict_types = 1);
 namespace Lemuria\Storage;
 
+use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileException;
 use Lemuria\Exception\FileNotFoundException;
@@ -14,7 +16,12 @@ class FileProvider
 
 	private bool $isAvailable = false;
 
+	#[Pure]
 	public function __construct(private string $directory) {
+	}
+
+	public function exists(string $fileName): bool {
+		return file_exists($this->getPath($fileName));
 	}
 
 	public function read(string $fileName): string {
