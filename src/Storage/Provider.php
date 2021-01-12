@@ -24,5 +24,5 @@ interface Provider
 	/**
 	 * @throws FileException
 	 */
-	public function write(string $fileName, string $content): mixed;
+	public function write(string $fileName, mixed $content): void;
 }

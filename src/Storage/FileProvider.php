@@ -43,7 +43,7 @@ class FileProvider implements Provider
 	/**
 	 * @throws FileException
 	 */
-	public function write(string $fileName, string $content): void {
+	public function write(string $fileName, mixed $content): void {
 		$path = $this->setPath($fileName);
 		if (file_put_contents($path, $content) !== strlen($content)) {
 			throw new WriteException($path);
