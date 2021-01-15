@@ -6,6 +6,7 @@ use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\EntitySetException;
+use Lemuria\Exception\EntitySetReplaceException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeEntitySetException;
 
@@ -177,6 +178,36 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	}
 
 	/**
+	 * Replace an entity in the set with another one that is not part of the set.
+	 *
+	 * @throws EntitySetException The entity is not part of the set.
+	 * @throws EntitySetReplaceException The replacement is part of the set.
+	 */
+	public function replace(Id $search, Id $replace): void {
+		$s = $search->Id();
+		if (!isset($this->entities[$s])) {
+			throw new EntitySetException($search);
+		}
+		$r = $replace->Id();
+		if (isset($this->entities[$r])) {
+			throw new EntitySetReplaceException($replace);
+		}
+
+		$i           = 0;
+		$newEntities = [];
+		foreach ($this->entities as $e => $id) {
+			if ($e === $s) {
+				$newEntities[$r]   = $replace;
+				$this->indices[$i] = $r;
+			} else {
+				$newEntities[$e] = $id;
+			}
+			$i++;
+		}
+		$this->entities = $newEntities;
+	}
+
+	/**
 	 * Get an Entity by ID.
 	 */
 	abstract protected function get(Id $id): Entity;
@@ -217,6 +248,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	/**
 	 * Remove an entity's ID from the set.
+	 *
 	 * @throws EntitySetException The entity is not part of the set.
 	 */
 	protected function removeEntity(Id $id): void {

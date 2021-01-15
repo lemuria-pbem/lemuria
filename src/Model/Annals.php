@@ -66,14 +66,14 @@ abstract class Annals extends EntitySet
 		}
 
 		$entities = array_values($data['entities']);
-		$regions  = array_values($data['rounds']);
+		$rounds   = array_values($data['rounds']);
 		$n        = count($entities);
-		if (count($regions) !== $n) {
+		if (count($rounds) !== $n) {
 			throw new UnserializeException('Mismatch of entities and rounds count.');
 		}
 
 		for ($i = 0; $i < $n; $i++) {
-			$this->addEntity(new Id($entities[$i]), $regions[$i]);
+			$this->addEntity(new Id($entities[$i]), $rounds[$i]);
 		}
 		return $this;
 	}
