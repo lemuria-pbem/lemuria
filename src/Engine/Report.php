@@ -30,7 +30,7 @@ interface Report
 	/**
 	 * Get all messages of an entity.
 	 */
-	public function getAll(Identifiable $identifiable): array;
+	public function getAll(Identifiable $entity): array;
 
 	/**
 	 * Load message data into report.
@@ -49,6 +49,11 @@ interface Report
 	 * @throws DuplicateIdException
 	 */
 	public function register(Message $message): Report;
+
+	/**
+	 * Reassign all message of an Entity to the new ID.
+	 */
+	public function reassign(Id $oldId, Identifiable $entity): Report;
 
 	/**
 	 * Reserve the next ID.
