@@ -172,7 +172,9 @@ final class Lemuria
 	}
 
 	public static function init(Config $config): void {
-		self::$instance = new self($config);
+		self::$instance         = new self($config);
+		self::$instance->orders = $config->Orders();
+		self::$instance->report = $config->Report();
 	}
 
 	/**
@@ -208,11 +210,9 @@ final class Lemuria
 		try {
 			$this->log      = $this->createLog($config->getPathToLog());
 			$this->builder  = $config->Builder();
+			$this->game     = $config->Game();
 			$this->calendar = $config->Calendar();
 			$this->catalog  = $config->Catalog();
-			$this->game     = $config->Game();
-			$this->orders   = $config->Orders();
-			$this->report   = $config->Report();
 			$this->world    = $config->World();
 		} catch (\Exception $e) {
 			die((string)$e);
