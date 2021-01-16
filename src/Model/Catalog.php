@@ -82,9 +82,6 @@ interface Catalog
 
 	/**
 	 * Register a reassignment listener.
-	 *
-	 * @param Reassignment $listener
-	 * @return Catalog
 	 */
 	public function addReassignment(Reassignment $listener): Catalog;
 }

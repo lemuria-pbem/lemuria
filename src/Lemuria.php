@@ -22,6 +22,8 @@ use Lemuria\Model\World;
 
 /**
  * Format a number.
+ *
+ * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
 #[Pure] function number(int|float $number): string {
 	$formattedNumber = $number < 0 ? '-' : '';
