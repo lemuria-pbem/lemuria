@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Model\Builder;
@@ -96,6 +97,8 @@ final class Lemuria
 
 	private LoggerInterface $log;
 
+	private Orders $orders;
+
 	private Report $report;
 
 	private World $world;
@@ -144,6 +147,13 @@ final class Lemuria
 	}
 
 	/**
+	 * Get the orders.
+	 */
+	public static function Orders(): Orders {
+		return self::getInstance()->orders;
+	}
+
+	/**
 	 * Get the report.
 	 */
 	public static function Report(): Report {
@@ -169,6 +179,7 @@ final class Lemuria
 	public static function load(): void {
 		self::Calendar()->load();
 		self::Catalog()->load();
+		self::Orders()->load();
 		self::Report()->load();
 		self::World()->load();
 	}
@@ -179,6 +190,7 @@ final class Lemuria
 	public static function save(): void {
 		self::Calendar()->save();
 		self::Catalog()->save();
+		self::Orders()->save();
 		self::Report()->save();
 		self::World()->save();
 	}
@@ -197,6 +209,7 @@ final class Lemuria
 			$this->calendar = $config->Calendar();
 			$this->catalog  = $config->Catalog();
 			$this->game     = $config->Game();
+			$this->orders   = $config->Orders();
 			$this->report   = $config->Report();
 			$this->world    = $config->World();
 		} catch (\Exception $e) {

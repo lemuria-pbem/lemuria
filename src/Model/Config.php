@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 
 interface Config
@@ -13,6 +14,8 @@ interface Config
 	public function Catalog(): Catalog;
 
 	public function Game(): Game;
+
+	public function Orders(): Orders;
 
 	public function Report(): Report;
 
