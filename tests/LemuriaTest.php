@@ -57,6 +57,7 @@ class LemuriaTest extends Test
 
 	/**
 	 * @test
+	 * @noinspection SpellCheckingInspection
 	 */
 	public function sign(): void {
 		$this->assertSame(-1, sign(-0.123));
