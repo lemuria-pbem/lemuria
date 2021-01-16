@@ -19,10 +19,10 @@ interface Orders
 	/**
 	 * Load orders data.
 	 */
-	public function load(): Report;
+	public function load(): Orders;
 
 	/**
 	 * Save orders data.
 	 */
-	public function save(): Report;
+	public function save(): Orders;
 }
