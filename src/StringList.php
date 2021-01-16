@@ -2,10 +2,13 @@
 declare(strict_types = 1);
 namespace Lemuria;
 
+use JetBrains\PhpStorm\Pure;
 use Lemuria\Engine\Instructions;
 
 class StringList implements Instructions
 {
+	use SerializableTrait;
+
 	/**
 	 * @var string[]
 	 */
@@ -18,6 +21,7 @@ class StringList implements Instructions
 	/**
 	 * @param int $offset
 	 */
+	#[Pure]
 	public function offsetExists(mixed $offset): bool {
 		return isset($this->list[$offset]);
 	}
@@ -53,6 +57,7 @@ class StringList implements Instructions
 		}
 	}
 
+	#[Pure]
 	public function count(): int {
 		return $this->count;
 	}
@@ -65,15 +70,38 @@ class StringList implements Instructions
 		$this->index++;
 	}
 
+	#[Pure]
 	public function key(): int {
 		return $this->index;
 	}
 
+	#[Pure]
 	public function valid(): bool {
 		return $this->index < $this->count;
 	}
 
 	public function rewind(): void {
 		$this->index = 0;
+	}
+
+	/**
+	 * Get a plain data array.
+	 *
+	 * @return string[]
+	 */
+	#[Pure] public function serialize(): array {
+		return $this->list;
+	}
+
+	/**
+	 * Restore the list from serialized data.
+	 *
+	 * @param string[] $data
+	 */
+	public function unserialize(array $data): Serializable {
+		$this->list = array_values($data);
+		$this->index = 0;
+		$this->count = count($this->list);
+		return $this;
 	}
 }

@@ -2,6 +2,8 @@
 declare(strict_types = 1);
 namespace Lemuria\Engine;
 
-interface Instructions extends \ArrayAccess, \Countable, \Iterator
+use Lemuria\Serializable;
+
+interface Instructions extends \ArrayAccess, \Countable, \Iterator, Serializable
 {
 }
