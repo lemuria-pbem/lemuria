@@ -11,4 +11,6 @@ use Lemuria\Identifiable;
 interface Reassignment
 {
 	public function reassign(Id $oldId, Identifiable $identifiable): void;
+
+	public function remove(Identifiable $identifiable): void;
 }
