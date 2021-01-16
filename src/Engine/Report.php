@@ -39,7 +39,7 @@ interface Report
 	public function load(): Report;
 
 	/**
-	 * Save game data from report.
+	 * Save message data from report.
 	 */
 	public function save(): Report;
 
@@ -49,11 +49,6 @@ interface Report
 	 * @throws DuplicateIdException
 	 */
 	public function register(Message $message): Report;
-
-	/**
-	 * Reassign all message of an Entity to the new ID.
-	 */
-	public function reassign(Id $oldId, Identifiable $entity): Report;
 
 	/**
 	 * Reserve the next ID.

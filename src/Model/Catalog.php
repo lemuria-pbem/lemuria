@@ -71,7 +71,20 @@ interface Catalog
 	public function remove(Identifiable $identifiable): Catalog;
 
 	/**
+	 * Propagate change of an entity's ID.
+	 */
+	public function reassign(Id $oldId, Identifiable $identifiable): Catalog;
+
+	/**
 	 * Reserve the next ID that is available for a namespace.
 	 */
 	public function nextId(#[ExpectedValues(valuesFromClass: self::class)] int $namespace): Id;
+
+	/**
+	 * Register a reassignment listener.
+	 *
+	 * @param Reassignment $listener
+	 * @return Catalog
+	 */
+	public function addReassignment(Reassignment $listener): Catalog;
 }
