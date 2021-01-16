@@ -28,6 +28,11 @@ interface Game
 	public function getParties(): array;
 
 	/**
+	 * Get the orders data.
+	 */
+	public function getOrders(): array;
+
+	/**
 	 * Get the regions data.
 	 */
 	public function getRegions(): array;
@@ -71,6 +76,11 @@ interface Game
 	 * Set the parties data.
 	 */
 	public function setParties(array $parties): Game;
+
+	/**
+	 * Set the orders data.
+	 */
+	public function setOrders(array $orders): Game;
 
 	/**
 	 * Set the regions data.
