@@ -72,8 +72,10 @@ interface Catalog
 
 	/**
 	 * Propagate change of an entity's ID.
+	 *
+	 * If old ID is null, propagate removal instead of reassignment.
 	 */
-	public function reassign(Id $oldId, Identifiable $identifiable): Catalog;
+	public function reassign(Identifiable $identifiable, ?Id $oldId = null): Catalog;
 
 	/**
 	 * Reserve the next ID that is available for a namespace.
