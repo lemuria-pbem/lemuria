@@ -5,6 +5,7 @@ namespace Lemuria;
 use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
+use Lemuria\Exception\EmptySetException;
 use Lemuria\Exception\EntitySetException;
 use Lemuria\Exception\EntitySetReplaceException;
 use Lemuria\Exception\LemuriaException;
@@ -205,6 +206,19 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 			$i++;
 		}
 		$this->entities = $newEntities;
+	}
+
+	/**
+	 * Get a randomly selected Entity.
+	 *
+	 * @throws EmptySetException
+	 */
+	public function random(): Entity {
+		if ($this->count > 0) {
+			$index = $this->indices[rand(max: $this->count - 1)];
+			return $this->entities[$index];
+		}
+		throw new EmptySetException();
 	}
 
 	/**
