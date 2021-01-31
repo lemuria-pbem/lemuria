@@ -5,6 +5,7 @@ namespace Lemuria;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\ItemException;
+use Lemuria\Exception\LemuriaException;
 
 /**
  * An item is a quantity of one object.
@@ -62,5 +63,17 @@ abstract class Item
 			throw new ItemException($this, $item, ItemException::REMOVE_TOO_MUCH);
 		}
 		$this->count -= $item->count;
+	}
+
+	/**
+	 * Multiply item size with a integer factor > 0.
+	 *
+	 * @throws LemuriaException
+	 */
+	public function multiply(int $factor): void {
+		if ($factor < 1) {
+			throw new LemuriaException('Multiplication factor must be greater than zero.');
+		}
+		$this->count *= $factor;
 	}
 }
