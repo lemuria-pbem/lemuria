@@ -232,6 +232,7 @@ final class Lemuria
 			$this->calendar = $config->Calendar();
 			$this->catalog  = $config->Catalog();
 			$this->world    = $config->World();
+			$this->score    = $config->Score();
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
