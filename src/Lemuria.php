@@ -185,6 +185,7 @@ final class Lemuria
 		self::$instance         = new self($config);
 		self::$instance->orders = $config->Orders();
 		self::$instance->report = $config->Report();
+		self::$instance->score  = $config->Score();
 	}
 
 	/**
