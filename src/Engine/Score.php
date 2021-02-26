@@ -2,8 +2,23 @@
 declare(strict_types = 1);
 namespace Lemuria\Engine;
 
+use Lemuria\Identifiable;
+use Lemuria\Model\Catalog;
+
 interface Score
 {
+	public const PARTY = Catalog::PARTIES;
+
+	public const UNIT = Catalog::UNITS;
+
+	public const LOCATION = Catalog::LOCATIONS;
+
+	public const CONSTRUCTION = Catalog::CONSTRUCTIONS;
+
+	public const VESSEL = Catalog::VESSELS;
+
+	public function find(Identifiable $effect): Identifiable;
+
 	/**
 	 * Load message data into score.
 	 */
