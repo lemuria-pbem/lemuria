@@ -53,6 +53,11 @@ interface Game
 	public function getWorld(): array;
 
 	/**
+	 * Get the effects.
+	 */
+	public function getEffects(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
