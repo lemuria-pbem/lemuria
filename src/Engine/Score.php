@@ -19,6 +19,10 @@ interface Score
 
 	public function find(Identifiable $effect): Identifiable;
 
+	public function add(Identifiable $effect): Score;
+
+	public function remove(Identifiable $effect): Score;
+
 	/**
 	 * Load message data into score.
 	 */
