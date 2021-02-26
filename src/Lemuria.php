@@ -11,6 +11,7 @@ use Psr\Log\LogLevel;
 
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
+use Lemuria\Engine\Score;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Model\Builder;
 use Lemuria\Model\Calendar;
@@ -105,6 +106,8 @@ final class Lemuria
 
 	private World $world;
 
+	private Score $score;
+
 	/**
 	 * Get the builder.
 	 *
@@ -163,6 +166,13 @@ final class Lemuria
 	}
 
 	/**
+	 * Get the score.
+	 */
+	public static function Score(): Score {
+		return self::getInstance()->score;
+	}
+
+	/**
 	 * Get the World.
 	 *
 	 * @throws InitializationException
@@ -185,6 +195,7 @@ final class Lemuria
 		self::Catalog()->load();
 		self::Orders()->load();
 		self::Report()->load();
+		self::Score()->load();
 		self::World()->load();
 	}
 
@@ -196,6 +207,7 @@ final class Lemuria
 		self::Catalog()->save();
 		self::Orders()->save();
 		self::Report()->save();
+		self::Score()->save();
 		self::World()->save();
 	}
 

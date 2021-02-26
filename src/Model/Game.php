@@ -53,7 +53,7 @@ interface Game
 	public function getWorld(): array;
 
 	/**
-	 * Get the effects.
+	 * Get the effects data.
 	 */
 	public function getEffects(): array;
 
@@ -106,4 +106,9 @@ interface Game
 	 * Set the world data.
 	 */
 	public function setWorld(array $world): Game;
+
+	/**
+	 * Set the effects data.
+	 */
+	public function setEffects(array $effects): Game;
 }

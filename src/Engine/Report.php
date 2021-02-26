@@ -34,7 +34,6 @@ interface Report
 
 	/**
 	 * Load message data into report.
-
 	 */
 	public function load(): Report;
 
