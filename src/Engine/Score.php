@@ -17,10 +17,19 @@ interface Score
 
 	public const VESSEL = Catalog::VESSELS;
 
+	/**
+	 * Search for an existing Effect.
+	 */
 	public function find(Identifiable $effect): Identifiable;
 
+	/**
+	 * Add an Effect to persistence.
+	 */
 	public function add(Identifiable $effect): Score;
 
+	/**
+	 * Remove an Effect from persistence.
+	 */
 	public function remove(Identifiable $effect): Score;
 
 	/**
