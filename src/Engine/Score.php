@@ -20,7 +20,7 @@ interface Score
 	/**
 	 * Search for an existing Effect.
 	 */
-	public function find(Identifiable $effect): Identifiable;
+	public function find(Identifiable $effect): ?Identifiable;
 
 	/**
 	 * Add an Effect to persistence.
