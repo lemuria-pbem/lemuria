@@ -7,7 +7,7 @@ use JetBrains\PhpStorm\Pure;
 /**
  * A helper class that encapsulates the neighbour locations of a location.
  */
-class Neighbours implements \ArrayAccess
+class Neighbours implements \ArrayAccess, \Countable
 {
 	/**
 	 * @var array(string=>Location)
@@ -40,6 +40,13 @@ class Neighbours implements \ArrayAccess
 	 */
 	public function offsetUnset(mixed $offset): void {
 		unset($this->locations[$offset]);
+	}
+
+	/**
+	 * Count the locations.
+	 */
+	#[Pure] public function count(): int {
+		return count($this->locations);
 	}
 
 	/**
