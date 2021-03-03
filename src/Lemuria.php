@@ -108,6 +108,8 @@ final class Lemuria
 
 	private Score $score;
 
+	private Registry $registry;
+
 	/**
 	 * Get the builder.
 	 *
@@ -181,11 +183,17 @@ final class Lemuria
 		return self::getInstance()->world;
 	}
 
+	/**
+	 * Get the registry.
+	 */
+	public static function Registry(): Registry {
+		return self::getInstance()->registry;
+	}
+
 	public static function init(Config $config): void {
 		self::$instance         = new self($config);
 		self::$instance->orders = $config->Orders();
 		self::$instance->report = $config->Report();
-		self::$instance->score  = $config->Score();
 	}
 
 	/**
@@ -234,6 +242,7 @@ final class Lemuria
 			$this->catalog  = $config->Catalog();
 			$this->world    = $config->World();
 			$this->score    = $config->Score();
+			$this->registry = $config->Registry();
 		} catch (\Exception $e) {
 			die((string)$e);
 		}

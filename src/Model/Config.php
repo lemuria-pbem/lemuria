@@ -5,6 +5,7 @@ namespace Lemuria\Model;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
+use Lemuria\Registry;
 
 interface Config
 {
@@ -23,6 +24,8 @@ interface Config
 	public function World(): World;
 
 	public function Score(): Score;
+
+	public function Registry(): Registry;
 
 	public function getPathToLog(): string;
 }
