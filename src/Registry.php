@@ -4,5 +4,5 @@ namespace Lemuria;
 
 interface Registry extends \Countable
 {
-	public function find(): ?Assignable;
+	public function find(string $uuid): ?Assignable;
 }
