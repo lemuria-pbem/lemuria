@@ -29,6 +29,8 @@ interface Report
 
 	/**
 	 * Get all messages of an entity.
+	 *
+	 * @return Message[]
 	 */
 	public function getAll(Identifiable $entity): array;
 
