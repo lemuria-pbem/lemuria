@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria\Engine;
 
+use Lemuria\EntitySet;
 use Lemuria\Identifiable;
 use Lemuria\Model\Newcomer;
 
@@ -13,7 +14,7 @@ interface Turn
 	/**
 	 * Add commands.
 	 */
-	public function add(Move $move): Turn;
+	public function add(Move $move): EntitySet;
 
 	/**
 	 * Bring a new party into the game.
