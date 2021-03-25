@@ -52,7 +52,7 @@ class BaseCalendar implements Calendar
 	 * Get the month.
 	 */
 	#[Pure] public function Month(): int {
-		return $this->round % ($this->seasons * $this->months) + 1;
+		return (int)($this->round / $this->weeks) % ($this->months * $this->seasons) + 1;
 	}
 
 	/**
