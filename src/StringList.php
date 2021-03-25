@@ -3,6 +3,7 @@ declare(strict_types = 1);
 namespace Lemuria;
 
 use JetBrains\PhpStorm\Pure;
+
 use Lemuria\Engine\Instructions;
 
 class StringList implements Instructions
@@ -99,9 +100,19 @@ class StringList implements Instructions
 	 * @param string[] $data
 	 */
 	public function unserialize(array $data): Serializable {
-		$this->list = array_values($data);
+		$this->list  = array_values($data);
 		$this->index = 0;
 		$this->count = count($this->list);
+		return $this;
+	}
+
+	/**
+	 * Clear the list.
+	 */
+	public function clear(): Instructions {
+		$this->list  = [];
+		$this->index = 0;
+		$this->count = 0;
 		return $this;
 	}
 }
