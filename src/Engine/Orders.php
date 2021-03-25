@@ -25,4 +25,9 @@ interface Orders
 	 * Save orders data.
 	 */
 	public function save(): Orders;
+
+	/**
+	 * Clear all orders in preparation for a new turn.
+	 */
+	public function clear(): Orders;
 }
