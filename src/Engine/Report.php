@@ -45,6 +45,11 @@ interface Report
 	public function save(): Report;
 
 	/**
+	 * Clear all messages in preparation for a new turn.
+	 */
+	public function clear(): Report;
+
+	/**
 	 * Register a message.
 	 *
 	 * @throws DuplicateIdException
