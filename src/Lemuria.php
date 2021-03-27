@@ -3,11 +3,7 @@ declare (strict_types = 1);
 namespace Lemuria;
 
 use JetBrains\PhpStorm\Pure;
-use Monolog\ErrorHandler;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
@@ -235,7 +231,7 @@ final class Lemuria
 
 	private function __construct(Config $config) {
 		try {
-			$this->log      = $this->createLog($config->getPathToLog());
+			$this->log      = $config->Log()->getLogger();
 			$this->builder  = $config->Builder();
 			$this->game     = $config->Game();
 			$this->calendar = $config->Calendar();
@@ -246,26 +242,5 @@ final class Lemuria
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
-	}
-
-	/**
-	 * @throws \Exception
-	 */
-	private function createLog(string $logPath): LoggerInterface {
-		$logDir = dirname($logPath);
-		if (!file_exists($logDir)) {
-			@mkdir($logDir, 0775, true);
-		}
-		file_exists($logPath) ? file_put_contents($logPath, '') : touch($logPath);
-		$logFile = new StreamHandler($logPath);
-
-		$logConsole = new StreamHandler('php://stdout', LogLevel::INFO);
-
-		$log = new Logger('lemuria');
-		$log->pushHandler($logFile);
-		$log->pushHandler($logConsole);
-		ErrorHandler::register($log);
-
-		return $log;
 	}
 }

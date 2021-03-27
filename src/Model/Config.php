@@ -5,6 +5,7 @@ namespace Lemuria\Model;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
+use Lemuria\Log;
 use Lemuria\Registry;
 
 interface Config
@@ -27,5 +28,5 @@ interface Config
 
 	public function Registry(): Registry;
 
-	public function getPathToLog(): string;
+	public function Log(): Log;
 }
