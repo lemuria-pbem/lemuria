@@ -5,7 +5,7 @@ namespace Lemuria\Engine;
 use Lemuria\Identifiable;
 use Lemuria\Model\Catalog;
 
-interface Score
+interface Score extends \Iterator
 {
 	public const PARTY = Catalog::PARTIES;
 
