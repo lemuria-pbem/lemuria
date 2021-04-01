@@ -58,6 +58,11 @@ interface Game
 	public function getEffects(): array;
 
 	/**
+	 * Get the newcomers data.
+	 */
+	public function getNewcomers(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -111,4 +116,9 @@ interface Game
 	 * Set the effects data.
 	 */
 	public function setEffects(array $effects): Game;
+
+	/**
+	 * Set the newcomers data.
+	 */
+	public function setNewcomers(array $newcomers): Game;
 }
