@@ -7,7 +7,7 @@ use Lemuria\Exception\UnknownUuidException;
 /**
  * A catalog for newcomers.
  */
-interface Debut
+interface Debut extends \Countable
 {
 	/**
 	 * Get a Newcomer.
