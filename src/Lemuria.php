@@ -5,6 +5,7 @@ namespace Lemuria;
 use JetBrains\PhpStorm\Pure;
 use Psr\Log\LoggerInterface;
 
+use Lemuria\Engine\Debut;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
@@ -92,6 +93,8 @@ final class Lemuria
 
 	private Catalog $catalog;
 
+	private Debut $debut;
+
 	private Game $game;
 
 	private LoggerInterface $log;
@@ -131,6 +134,13 @@ final class Lemuria
 	 */
 	public static function Catalog(): Catalog {
 		return self::getInstance()->catalog;
+	}
+
+	/**
+	 * Get the Debut.
+	 */
+	public static function Debut(): Debut {
+		return self::getInstance()->debut;
 	}
 
 	/**
@@ -188,6 +198,7 @@ final class Lemuria
 
 	public static function init(Config $config): void {
 		self::$instance         = new self($config);
+		self::$instance->debut  = $config->Debut();
 		self::$instance->orders = $config->Orders();
 		self::$instance->report = $config->Report();
 	}
@@ -198,6 +209,7 @@ final class Lemuria
 	public static function load(): void {
 		self::Calendar()->load();
 		self::Catalog()->load();
+		self::Debut()->load();
 		self::Orders()->load();
 		self::Report()->load();
 		self::Score()->load();
@@ -210,6 +222,7 @@ final class Lemuria
 	public static function save(): void {
 		self::Calendar()->save();
 		self::Catalog()->save();
+		self::Debut()->save();
 		self::Orders()->save();
 		self::Report()->save();
 		self::Score()->save();
@@ -236,6 +249,7 @@ final class Lemuria
 			$this->game     = $config->Game();
 			$this->calendar = $config->Calendar();
 			$this->catalog  = $config->Catalog();
+			$this->debut    = $config->Debut();
 			$this->world    = $config->World();
 			$this->score    = $config->Score();
 			$this->registry = $config->Registry();

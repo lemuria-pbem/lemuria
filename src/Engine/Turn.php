@@ -4,7 +4,6 @@ namespace Lemuria\Engine;
 
 use Lemuria\EntitySet;
 use Lemuria\Identifiable;
-use Lemuria\Model\Newcomer;
 
 /**
  * Main engine.
