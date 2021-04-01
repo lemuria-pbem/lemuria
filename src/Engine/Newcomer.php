@@ -7,4 +7,8 @@ namespace Lemuria\Engine;
  */
 interface Newcomer
 {
+	/**
+	 * Get the UUID.
+	 */
+	public function Uuid(): string;
 }
