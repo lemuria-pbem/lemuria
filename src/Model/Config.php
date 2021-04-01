@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Engine\Debut;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
@@ -15,6 +16,8 @@ interface Config
 	public function Calendar(): Calendar;
 
 	public function Catalog(): Catalog;
+
+	public function Debut(): Debut;
 
 	public function Game(): Game;
 
