@@ -11,4 +11,9 @@ interface Newcomer
 	 * Get the UUID.
 	 */
 	public function Uuid(): string;
+
+	/**
+	 * Get the creation time.
+	 */
+	public function Creation(): int;
 }
