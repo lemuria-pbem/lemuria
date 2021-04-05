@@ -104,7 +104,7 @@ class BaseCalendarTest extends Test
 	 * @depends construct
 	 */
 	public function unserialize(BaseCalendar $calendar): void {
-		$round = 1 + 24 + 9 + 1; // zweite Woche im dritten Monat in Jahr 2
+		$round = 2 + 6 + 24 ; // zweite Woche im dritten Monat in Jahr 2
 		$data  = ['round' => $round - 1];
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());

@@ -1,0 +1,17 @@
+PARTEI test "Nur1Test!"
+
+   ; Kommentar
+
+ EINHEIT erste
+   NUMMER 1; Test
+
+// Kommentar über \
+  zwei Zeilen
+
+EINHEIT zwei
+MACHE Nichts
+   NAME Einheit "Zu langer Name \
+       der darum in meh\
+reren Zeilen steht"
+
+NÄCHSTER
