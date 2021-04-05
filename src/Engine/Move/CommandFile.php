@@ -10,14 +10,16 @@ use Lemuria\Engine\Exception\EngineException;
  */
 class CommandFile implements Move
 {
+	private string $path;
+
 	/**
 	 * @var resource
 	 */
 	private $file;
 
-	private int $index;
+	private int $index = 0;
 
-	private bool $isValid;
+	private bool $isValid = false;
 
 	private string $line = '';
 
@@ -27,12 +29,16 @@ class CommandFile implements Move
 	 * @param string $path
 	 * @throws EngineException
 	 */
-	public function __construct(private string $path) {
+	public function __construct(string $path) {
+		$path = realpath($path);
+		if (!$path) {
+			throw new EngineException('Command file does not exist.');
+		}
+		$this->path = $path;
 		$this->file = @fopen($path, 'r');
 		if (!$this->file) {
 			throw new EngineException('Command file could not be opened.');
 		}
-		$this->rewind();
 	}
 
 	/**
@@ -64,14 +70,22 @@ class CommandFile implements Move
 	 * Advance to next command.
 	 */
 	public function next(): void {
+		$line = '';
 		while (!feof($this->file)) {
-			$line = @fgets($this->file);
-			if (is_string($line)) {
-				$comment = strpos($line, ';');
-				if ($comment !== false) {
-					$line = substr($line, 0, $comment);
-				}
-				$line = trim($line);
+			$next = @fgets($this->file);
+			if (is_string($next)) {
+				$line .= trim($next);
+			}
+			if (!$line) {
+				continue;
+			}
+			if (str_ends_with($line, '\\')) {
+				$line = substr($line, 0, strlen($line) - 1);
+				continue;
+			}
+			$comment = strpos($line, ';');
+			if ($comment !== false) {
+				$line = substr($line, 0, $comment);
 			}
 			if ($line) {
 				$this->line = $line;
