@@ -63,6 +63,11 @@ interface Game
 	public function getNewcomers(): array;
 
 	/**
+	 * Get the continent data.
+	 */
+	public function getContinents(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -121,4 +126,9 @@ interface Game
 	 * Set the newcomers data.
 	 */
 	public function setNewcomers(array $newcomers): Game;
+
+	/**
+	 * Set the continent data.
+	 */
+	public function setContinents(array $continents): Game;
 }
