@@ -43,7 +43,6 @@ trait SerializableTrait
 			if (array_key_exists($key, $data) && $data[$key] === null) {
 				return;
 			}
-			/** @noinspection PhpExpectedValuesShouldBeUsedInspection */
 			$type = substr($type, 1);
 		}
 

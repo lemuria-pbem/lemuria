@@ -117,7 +117,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * Get a plain data array of the model's data.
 	 *
 	 * @return int[]
-	 * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
 	 */
 	#[Pure] public function serialize(): array {
 		$data = [];
