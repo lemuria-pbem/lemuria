@@ -30,6 +30,8 @@ class BaseCalendar implements Calendar
 
 	private int $round = 0;
 
+	private int $r = 0;
+
 	/**
 	 * Get a plain data array of the model's data.
 	 */
@@ -52,35 +54,35 @@ class BaseCalendar implements Calendar
 	 * Get the month.
 	 */
 	#[Pure] public function Month(): int {
-		return (int)($this->round / $this->weeks) % ($this->months * $this->seasons) + 1;
+		return (int)($this->r / $this->weeks) % ($this->months * $this->seasons) + 1;
 	}
 
 	/**
 	 * Get the game round.
 	 */
 	#[Pure] public function Round(): int {
-		return $this->round + 1;
+		return $this->round;
 	}
 
 	/**
 	 * Get the season.
 	 */
 	#[Pure] public function Season(): int {
-		return (int)($this->round / ($this->months * $this->weeks)) % $this->seasons + 1;
+		return (int)($this->r / ($this->months * $this->weeks)) % $this->seasons + 1;
 	}
 
 	/**
 	 * Get the week of the month.
 	 */
 	#[Pure] public function Week(): int {
-		return $this->round % $this->weeks + 1;
+		return $this->r % $this->weeks + 1;
 	}
 
 	/**
 	 * Get the year.
 	 */
 	#[Pure] public function Year(): int {
-		return (int)floor($this->round / ($this->seasons * $this->months * $this->weeks)) + 1;
+		return (int)floor($this->r / ($this->seasons * $this->months * $this->weeks)) + 1;
 	}
 
 	/**
@@ -103,7 +105,7 @@ class BaseCalendar implements Calendar
 	 * Advance the Calendar to next round and return the new round.
 	 */
 	public function nextRound(): int {
-		$this->round++;
+		$this->setRound($this->round + 1);
 		return $this->Round();
 	}
 
@@ -120,5 +122,6 @@ class BaseCalendar implements Calendar
 	protected function setRound(int $round): void
 	{
 		$this->round = $round;
+		$this->r     = $round - 1;
 	}
 }
