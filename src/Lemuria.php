@@ -20,8 +20,6 @@ use Lemuria\Model\World;
 
 /**
  * Format a number.
- *
- * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
 #[Pure] function number(int|float $number): string {
 	$formattedNumber = $number < 0 ? '-' : '';
@@ -61,7 +59,7 @@ use Lemuria\Model\World;
  * Checks if a string has a given prefix.
  */
 #[Pure] function hasPrefix(string $prefix, mixed $subject): bool {
-	return $prefix === '' ? true : str_starts_with((string)$subject, $prefix);
+	return $prefix === '' || str_starts_with((string)$subject, $prefix);
 }
 
 /**

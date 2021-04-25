@@ -24,6 +24,8 @@ interface Catalog
 
 	public const VESSELS = 500;
 
+	public const CONTINENTS = 600;
+
 	/**
 	 * Checks if an entity exists in the specified catalog namespace.
 	 */
