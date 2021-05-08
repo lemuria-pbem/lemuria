@@ -25,12 +25,12 @@ final class HexagonalMap extends BaseMap
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
 		$neighbours  = new Neighbours();
-		$neighbours[World::NORTHEAST] = $this->getLocation($this->map[++$y][$x]) ?? null;
-		$neighbours[World::EAST]      = $this->getLocation($this->map[--$y][++$x]) ?? null;
-		$neighbours[World::SOUTHEAST] = $this->getLocation($this->map[--$y][$x]) ?? null;
-		$neighbours[World::SOUTHWEST] = $this->getLocation($this->map[$y][--$x]) ?? null;
-		$neighbours[World::WEST]      = $this->getLocation($this->map[++$y][--$x]) ?? null;
-		$neighbours[World::NORTHWEST] = $this->getLocation($this->map[++$y][$x]) ?? null;
+		$this->setNeighbour(World::NORTHEAST, ++$y, $x, $neighbours);
+		$this->setNeighbour(World::EAST, --$y, ++$x, $neighbours);
+		$this->setNeighbour(World::SOUTHEAST, --$y, $x, $neighbours);
+		$this->setNeighbour(World::SOUTHWEST, $y, --$x, $neighbours);
+		$this->setNeighbour(World::WEST, ++$y, --$x, $neighbours);
+		$this->setNeighbour(World::NORTHWEST, ++$y, $x, $neighbours);
 		return $neighbours;
 	}
 }
