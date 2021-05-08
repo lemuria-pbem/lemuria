@@ -15,6 +15,7 @@ use Lemuria\Model\Catalog;
 use Lemuria\Model\Exception\MapException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
+use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
@@ -106,8 +107,6 @@ abstract class BaseMap implements World
 	/**
 	 * Get the world coordinates of a location.
 	 *
-	 * @param Location $location
-	 * @return Coordinates
 	 * @throws MapException
 	 */
 	public function getCoordinates(Location $location): Coordinates {
@@ -120,9 +119,6 @@ abstract class BaseMap implements World
 
 	/**
 	 * Check if a direction is valid in this world.
-	 *
-	 * @param string $direction
-	 * @return bool
 	 */
 	#[Pure] public function isDirection(#[ExpectedValues(valuesFromClass: World::class)] string $direction): bool {
 		return in_array($direction, $this->directions);
@@ -130,8 +126,6 @@ abstract class BaseMap implements World
 
 	/**
 	 * Load the world data.
-	 *
-	 * @return World
 	 */
 	public function load(): World {
 		$this->unserialize(Lemuria::Game()->getWorld());
@@ -140,20 +134,12 @@ abstract class BaseMap implements World
 
 	/**
 	 * Save the world data.
-	 *
-	 * @return World
 	 */
 	public function save(): World {
 		Lemuria::Game()->setWorld($this->serialize());
 		return $this;
 	}
 
-	/**
-	 * Get a location.
-	 *
-	 * @param int|null $id
-	 * @return Location|null
-	 */
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {
 			$id       = new Id($id);
@@ -164,6 +150,13 @@ abstract class BaseMap implements World
 			throw new LemuriaException('Invalid location ' . $id . '.');
 		}
 		return null;
+	}
+
+	protected function setNeighbour(string $direction, int $y, int $x, Neighbours $neighbours): void {
+		$location = $this->getLocation($this->map[$y][$x]) ?? null;
+		if ($location) {
+			$neighbours[$direction] = $location;
+		}
 	}
 
 	/**
