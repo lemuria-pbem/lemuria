@@ -7,6 +7,7 @@ use Psr\Log\LoggerInterface;
 use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
+use function Lemuria\mbUcFirst;
 use function Lemuria\sign;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
@@ -76,6 +77,14 @@ class LemuriaTest extends Test
 		$this->assertSame(1, sign(false));
 		$this->assertSame(1, sign('eins'));
 		$this->assertSame(1, sign('0.123e-1'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function mbUcFirst(): void {
+		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
+		$this->assertSame('Älchemie', mbUcFirst('älchemie'));
 	}
 
 	/**

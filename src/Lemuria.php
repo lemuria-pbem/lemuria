@@ -79,6 +79,14 @@ use Lemuria\Model\World;
 }
 
 /**
+ * Implementation of multi-byte ucfirst.
+ */
+#[Pure] function mbUcFirst(string $string): string {
+	$f = mb_strtoupper(mb_substr($string, 0, 1));
+	return $f . mb_substr($string, 1);
+}
+
+/**
  * This singleton implementation offers factory methods.
  */
 final class Lemuria
