@@ -30,6 +30,8 @@ interface Message extends Serializable
 
 	public function Entity(): Id;
 
+	public function Section(): int;
+
 	public function setId(Id $id): Message;
 
 	public function __toString(): string;
