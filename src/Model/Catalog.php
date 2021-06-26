@@ -8,6 +8,7 @@ use Lemuria\Id;
 use Lemuria\Identifiable;
 use Lemuria\Model\Exception\DuplicateIdException;
 use Lemuria\Model\Exception\NotRegisteredException;
+use Lemuria\Version\VersionTag;
 
 /**
  * The catalog registers all entities and is used to ensure that IDs are only used once per namespace.
@@ -88,4 +89,9 @@ interface Catalog
 	 * Register a reassignment listener.
 	 */
 	public function addReassignment(Reassignment $listener): Catalog;
+
+	/**
+	 * Get the version of the model package of this catalog.
+	 */
+	public function getVersion(): VersionTag;
 }
