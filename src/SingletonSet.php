@@ -72,7 +72,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 		return $this->count;
 	}
 
-	#[Pure] public function current(): ?Item {
+	#[Pure] public function current(): ?Singleton {
 		$key = $this->key();
 		return $key !== null ? $this->singletons[$key] : null;
 	}
