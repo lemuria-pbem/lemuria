@@ -4,6 +4,7 @@ namespace Lemuria\Renderer;
 
 use Lemuria\Engine\Message\Filter;
 use Lemuria\Id;
+use Lemuria\Version\VersionTag;
 
 interface Writer
 {
@@ -16,4 +17,9 @@ interface Writer
 	 * Render a party's report.
 	 */
 	public function render(Id $party): Writer;
+
+	/**
+	 * Get the version of the package of this writer.
+	 */
+	public function getVersion(): VersionTag;
 }
