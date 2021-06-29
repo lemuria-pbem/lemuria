@@ -3,6 +3,7 @@ declare (strict_types = 1);
 namespace Lemuria;
 
 use JetBrains\PhpStorm\Pure;
+use Lemuria\Version\VersionFinder;
 use Psr\Log\LoggerInterface;
 
 use Lemuria\Engine\Debut;
@@ -115,6 +116,8 @@ final class Lemuria
 
 	private Registry $registry;
 
+	private Version $version;
+
 	/**
 	 * Get the builder.
 	 *
@@ -202,6 +205,13 @@ final class Lemuria
 		return self::getInstance()->registry;
 	}
 
+	/**
+	 * @return Version
+	 */
+	public static function Version(): Version {
+		return self::getInstance()->version;
+	}
+
 	public static function init(Config $config): void {
 		self::$instance         = new self($config);
 		self::$instance->debut  = $config->Debut();
@@ -259,8 +269,16 @@ final class Lemuria
 			$this->world    = $config->World();
 			$this->score    = $config->Score();
 			$this->registry = $config->Registry();
+			$this->version  = new Version();
+			$this->addVersions();
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
+	}
+
+	private function addVersions(): void {
+		$versionFinder                 = new VersionFinder(__DIR__ . '/..');
+		$this->version[Version::BASE]  = $versionFinder->get();
+		$this->version[Version::MODEL] = $this->catalog->getVersion();
 	}
 }

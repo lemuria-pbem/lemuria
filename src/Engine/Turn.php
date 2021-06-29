@@ -4,6 +4,7 @@ namespace Lemuria\Engine;
 
 use Lemuria\EntitySet;
 use Lemuria\Identifiable;
+use Lemuria\Version\VersionTag;
 
 /**
  * Main engine.
@@ -29,4 +30,9 @@ interface Turn
 	 * Evaluate the whole turn.
 	 */
 	public function evaluate(): Turn;
+
+	/**
+	 * Get the version of the engine package of this engine.
+	 */
+	public function getVersion(): VersionTag;
 }
