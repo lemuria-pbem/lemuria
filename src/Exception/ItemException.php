@@ -27,19 +27,12 @@ class ItemException extends \InvalidArgumentException
 	{
 		$class      = getClass($item->getObject());
 		$otherCLass = getClass($otherItem->getObject());
-		switch ($action) {
-			case self::ADD_WRONG_ITEM :
-				$message = 'A number of ' . $otherCLass . ' cannot be added to a number of ' . $class . '.';
-				break;
-			case self::REMOVE_TOO_MUCH :
-				$message = 'Cannot remove ' . $otherItem->Count() . ' items from a number of ' . $item->Count() . ' items.';
-				break;
-			case self::REMOVE_WRONG_ITEM :
-				$message = 'A number of ' . $otherCLass . ' cannot be removed from a number of ' . $class . '.';
-				break;
-			default :
-				$message = '';
-		}
+		$message    = match ($action) {
+			self::ADD_WRONG_ITEM    => 'A number of ' . $otherCLass . ' cannot be added to a number of ' . $class . '.',
+			self::REMOVE_TOO_MUCH   => 'Cannot remove ' . $otherItem->Count() . ' items from a number of ' . $item->Count() . ' items.',
+			self::REMOVE_WRONG_ITEM => 'A number of ' . $otherCLass . ' cannot be removed from a number of ' . $class . '.',
+			default                 => '',
+		};
 		parent::__construct($message);
 	}
 }

@@ -40,7 +40,6 @@ abstract class Annals extends EntitySet
 	 * Get a plain data array of the model's data.
 	 *
 	 * @return int[]
-	 * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
 	 */
 	#[ArrayShape(['entities' => "array", 'rounds' => "array"])]
 	#[Pure]
@@ -88,7 +87,7 @@ abstract class Annals extends EntitySet
 
 	protected function addEntity(Id $id, int $round = null): void {
 		parent::addEntity($id);
-		$this->round[$id->Id()] = $round ? $round : Lemuria::Calendar()->Round();
+		$this->round[$id->Id()] = $round ?: Lemuria::Calendar()->Round();
 	}
 
 	/**

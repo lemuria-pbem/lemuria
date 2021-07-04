@@ -56,7 +56,6 @@ abstract class BaseMap implements World
 	 * Get a plain data array of the model's data.
 	 */
 	#[ArrayShape(['origin' => 'array', 'map' => 'array'])]
-	#[Pure]
 	public function serialize(): array {
 		$map = [];
 		foreach ($this->map as $ids) {
