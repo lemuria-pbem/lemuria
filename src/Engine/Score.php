@@ -23,6 +23,11 @@ interface Score extends \Iterator
 	public function find(Identifiable $effect): ?Identifiable;
 
 	/**
+	 * @return Identifiable[]
+	 */
+	public function findAll(Identifiable $entity): array;
+
+	/**
 	 * Add an Effect to persistence.
 	 */
 	public function add(Identifiable $effect): Score;
