@@ -214,8 +214,8 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 */
 	public function random(): Entity {
 		if ($this->count > 0) {
-			$index = $this->indices[rand(max: $this->count - 1)];
-			return $this->entities[$index];
+			$index = $this->indices[rand(0, $this->count - 1)];
+			return $this->get($this->entities[$index]);
 		}
 		throw new EmptySetException();
 	}
