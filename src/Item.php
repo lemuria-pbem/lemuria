@@ -66,7 +66,7 @@ abstract class Item
 	}
 
 	/**
-	 * Multiply item size with a integer factor > 0.
+	 * Multiply item size with an integer factor > 0.
 	 *
 	 * @throws LemuriaException
 	 */

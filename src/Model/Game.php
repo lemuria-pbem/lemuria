@@ -13,7 +13,7 @@ interface Game
 	public function getCalendar(): array;
 
 	/**
-	 * Get the constructions data.
+	 * Get the constructions' data.
 	 */
 	public function getConstructions(): array;
 
@@ -23,27 +23,27 @@ interface Game
 	public function getMessages(): array;
 
 	/**
-	 * Get the parties data.
+	 * Get the parties' data.
 	 */
 	public function getParties(): array;
 
 	/**
-	 * Get the orders data.
+	 * Get the orders' data.
 	 */
 	public function getOrders(): array;
 
 	/**
-	 * Get the regions data.
+	 * Get the regions' data.
 	 */
 	public function getRegions(): array;
 
 	/**
-	 * Get the units data.
+	 * Get the units' data.
 	 */
 	public function getUnits(): array;
 
 	/**
-	 * Get the vessels data.
+	 * Get the vessels' data.
 	 */
 	public function getVessels(): array;
 
@@ -53,12 +53,12 @@ interface Game
 	public function getWorld(): array;
 
 	/**
-	 * Get the effects data.
+	 * Get the effects' data.
 	 */
 	public function getEffects(): array;
 
 	/**
-	 * Get the newcomers data.
+	 * Get the newcomers' data.
 	 */
 	public function getNewcomers(): array;
 
@@ -78,7 +78,7 @@ interface Game
 	public function setCalendar(array $calendar): Game;
 
 	/**
-	 * Set the constructions data.
+	 * Set the constructions' data.
 	 */
 	public function setConstructions(array $constructions): Game;
 
@@ -88,27 +88,27 @@ interface Game
 	public function setMessages(array $messages): Game;
 
 	/**
-	 * Set the parties data.
+	 * Set the parties' data.
 	 */
 	public function setParties(array $parties): Game;
 
 	/**
-	 * Set the orders data.
+	 * Set the orders' data.
 	 */
 	public function setOrders(array $orders): Game;
 
 	/**
-	 * Set the regions data.
+	 * Set the regions' data.
 	 */
 	public function setRegions(array $regions): Game;
 
 	/**
-	 * Set the units data.
+	 * Set the units' data.
 	 */
 	public function setUnits(array $units): Game;
 
 	/**
-	 * Set the vessels data.
+	 * Set the vessels' data.
 	 */
 	public function setVessels(array $vessels): Game;
 
@@ -118,12 +118,12 @@ interface Game
 	public function setWorld(array $world): Game;
 
 	/**
-	 * Set the effects data.
+	 * Set the effects' data.
 	 */
 	public function setEffects(array $effects): Game;
 
 	/**
-	 * Set the newcomers data.
+	 * Set the newcomers' data.
 	 */
 	public function setNewcomers(array $newcomers): Game;
 
