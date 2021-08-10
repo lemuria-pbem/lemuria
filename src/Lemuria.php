@@ -48,7 +48,7 @@ use Lemuria\Model\World;
 }
 
 /**
- * Return the class name of an object without it's namespace.
+ * Return the class name of an object without its namespace.
  */
 #[Pure] function getClass(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
