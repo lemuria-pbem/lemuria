@@ -8,6 +8,7 @@ use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
+use function Lemuria\randChance;
 use function Lemuria\sign;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
@@ -85,6 +86,37 @@ class LemuriaTest extends Test
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
 		$this->assertSame('Älchemie', mbUcFirst('älchemie'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function randChanceZero(): void {
+		for ($i = 0; $i < 1000; $i++) {
+			$this->assertFalse(randChance(0.0));
+		}
+	}
+
+	/**
+	 * @test
+	 */
+	public function randChanceEqual(): void {
+		$above = 0;
+		$below = 0;
+		for ($i = 0; $i < 1000; $i++) {
+			randChance(0.5) ? $below++ : $above++;
+		}
+		$this->assertGreaterThan(0, $above);
+		$this->assertGreaterThan(0, $below);
+	}
+
+	/**
+	 * @test
+	 */
+	public function randChanceOne(): void {
+		for ($i = 0; $i < 1000; $i++) {
+			$this->assertTrue(randChance(1.0));
+		}
 	}
 
 	/**

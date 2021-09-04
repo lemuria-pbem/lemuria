@@ -88,6 +88,15 @@ use Lemuria\Model\World;
 }
 
 /**
+ * Calculate a random chance.
+ */
+function randChance(float $chance): bool {
+	$max  = 1000000;
+	$rand = rand(1, $max) / $max;
+	return $rand <= $chance;
+}
+
+/**
  * This singleton implementation offers factory methods.
  */
 final class Lemuria
