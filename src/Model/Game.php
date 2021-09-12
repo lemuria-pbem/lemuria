@@ -68,6 +68,11 @@ interface Game
 	public function getContinents(): array;
 
 	/**
+	 * Get the hostilities' data.
+	 */
+	public function getHostilities(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -131,4 +136,9 @@ interface Game
 	 * Set the continent data.
 	 */
 	public function setContinents(array $continents): Game;
+
+	/**
+	 * Set the hostilities' data.
+	 */
+	public function setHostilities(array $hostilities): Game;
 }

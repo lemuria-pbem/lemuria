@@ -3,6 +3,7 @@ declare(strict_types = 1);
 namespace Lemuria\Model;
 
 use Lemuria\Engine\Debut;
+use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
@@ -28,6 +29,8 @@ interface Config
 	public function World(): World;
 
 	public function Score(): Score;
+
+	public function Hostilities(): Hostilities;
 
 	public function Registry(): Registry;
 

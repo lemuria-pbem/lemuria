@@ -3,10 +3,10 @@ declare (strict_types = 1);
 namespace Lemuria;
 
 use JetBrains\PhpStorm\Pure;
-use Lemuria\Version\VersionFinder;
 use Psr\Log\LoggerInterface;
 
 use Lemuria\Engine\Debut;
+use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
@@ -17,7 +17,7 @@ use Lemuria\Model\Catalog;
 use Lemuria\Model\Config;
 use Lemuria\Model\Game;
 use Lemuria\Model\World;
-
+use Lemuria\Version\VersionFinder;
 
 /**
  * Format a number.
@@ -123,6 +123,8 @@ final class Lemuria
 
 	private Score $score;
 
+	private Hostilities $hostilities;
+
 	private Registry $registry;
 
 	private Version $version;
@@ -199,6 +201,13 @@ final class Lemuria
 	}
 
 	/**
+	 * Get the hostilities.
+	 */
+	public static function Hostilities(): Hostilities {
+		return self::getInstance()->hostilities;
+	}
+
+	/**
 	 * Get the World.
 	 *
 	 * @throws InitializationException
@@ -238,6 +247,7 @@ final class Lemuria
 		self::Orders()->load();
 		self::Report()->load();
 		self::Score()->load();
+		self::Hostilities()->load();
 		self::World()->load();
 	}
 
@@ -251,6 +261,7 @@ final class Lemuria
 		self::Orders()->save();
 		self::Report()->save();
 		self::Score()->save();
+		self::Hostilities()->save();
 		self::World()->save();
 	}
 
@@ -269,16 +280,17 @@ final class Lemuria
 
 	private function __construct(Config $config) {
 		try {
-			$this->log      = $config->Log()->getLogger();
-			$this->builder  = $config->Builder();
-			$this->game     = $config->Game();
-			$this->calendar = $config->Calendar();
-			$this->catalog  = $config->Catalog();
-			$this->debut    = $config->Debut();
-			$this->world    = $config->World();
-			$this->score    = $config->Score();
-			$this->registry = $config->Registry();
-			$this->version  = new Version();
+			$this->log         = $config->Log()->getLogger();
+			$this->builder     = $config->Builder();
+			$this->game        = $config->Game();
+			$this->calendar    = $config->Calendar();
+			$this->catalog     = $config->Catalog();
+			$this->debut       = $config->Debut();
+			$this->world       = $config->World();
+			$this->score       = $config->Score();
+			$this->hostilities = $config->Hostilities();
+			$this->registry    = $config->Registry();
+			$this->version     = new Version();
 			$this->addVersions();
 		} catch (\Exception $e) {
 			die((string)$e);
