@@ -7,7 +7,7 @@ use JetBrains\PhpStorm\Pure;
 use Lemuria\Model\Location;
 
 /**
- * A MapException is throw when a region is not part of a world.
+ * A MapException is throw when a location is not part of a world.
  */
 final class MapException extends ModelException
 {
