@@ -9,7 +9,7 @@ use JetBrains\PhpStorm\Pure;
  *
  * Two objects of such a Singleton class are identical to each other.
  */
-interface Singleton
+interface Singleton extends \Stringable
 {
 	/**
 	 * Get the class of the singleton.

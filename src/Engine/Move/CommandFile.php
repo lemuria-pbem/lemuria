@@ -8,7 +8,7 @@ use Lemuria\Engine\Exception\EngineException;
 /**
  * An implementation of a move that hold its commands in a single file.
  */
-class CommandFile implements Move
+class CommandFile implements \Stringable, Move
 {
 	private string $path;
 

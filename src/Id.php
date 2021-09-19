@@ -10,7 +10,7 @@ use Lemuria\Exception\IdException;
 /**
  * Implementation of the general Base36 ID, used for Parties, Units, Buildings and so on.
  */
-#[Immutable] final class Id
+#[Immutable] final class Id implements \Stringable
 {
 	/**
 	 * Convert a Base36 ID to its integer representation.

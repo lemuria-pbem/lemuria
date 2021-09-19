@@ -10,7 +10,7 @@ use Lemuria\Exception\UnserializeEntityException;
 /**
  * An Entity is a unique item that has an identity.
  */
-abstract class Entity implements Identifiable, Serializable
+abstract class Entity implements \Stringable, Identifiable, Serializable
 {
 	use IdentifiableTrait;
 	use SerializableTrait;

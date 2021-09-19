@@ -12,7 +12,7 @@ use Lemuria\Exception\LemuriaException;
  *
  * Since the object is a Singleton, two items of the same object can easily be added or subtracted from each other.
  */
-abstract class Item
+abstract class Item implements \Stringable
 {
 	/**
 	 * @noinspection PhpAttributeCanBeAddedToOverriddenMemberInspection

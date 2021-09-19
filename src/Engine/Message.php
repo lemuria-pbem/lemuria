@@ -10,7 +10,7 @@ use Lemuria\Serializable;
 /**
  * A message created by the game engine.
  */
-interface Message extends Serializable
+interface Message extends \Stringable, Serializable
 {
 	public const ERROR = LogLevel::ERROR;
 

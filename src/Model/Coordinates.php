@@ -9,7 +9,7 @@ use Lemuria\Serializable;
 /**
  * Coordinates define the two-dimensional location on a map of Lemuria.
  */
-interface Coordinates extends Serializable
+interface Coordinates extends \Stringable, Serializable
 {
 	#[Pure] public function X(): int;
 
