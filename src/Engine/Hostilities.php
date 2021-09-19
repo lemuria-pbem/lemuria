@@ -21,6 +21,13 @@ interface Hostilities
 	public function findAll(Location $location): array;
 
 	/**
+	 * Search for all battles where a specific entity is engaged.
+	 *
+	 * @return Battle[]
+	 */
+	public function findFor(Identifiable $entity): array;
+
+	/**
 	 * Add a Battle to persistence.
 	 */
 	public function add(Battle $battle): Hostilities;
