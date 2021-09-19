@@ -4,15 +4,9 @@ namespace Lemuria;
 
 trait IteratorTrait
 {
-	private array $array;
-
 	private int $index = 0;
 
 	private int $count = 0;
-
-	public function current(): mixed {
-		return $this->array[$this->index];
-	}
 
 	public function key(): int {
 		return $this->index;

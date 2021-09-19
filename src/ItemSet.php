@@ -14,6 +14,9 @@ use Lemuria\Exception\UnserializeItemSetException;
  */
 abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
+	use CountableTrait;
+	use IteratorTrait;
+
 	/**
 	 * @var string[]
 	 */
@@ -23,10 +26,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 * @var array(string=>Item)
 	 */
 	private array $items = [];
-
-	private int $index = 0;
-
-	private int $count = 0;
 
 	/**
 	 * Check if an item is in the set.
@@ -87,13 +86,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 		}
 	}
 
-	/**
-	 * Get the number of items in the set.
-	 */
-	#[Pure] public function count(): int {
-		return $this->count;
-	}
-
 	#[Pure] public function current(): ?Item {
 		$key = $this->key();
 		return $key !== null ? $this->items[$key] : null;
@@ -101,18 +93,6 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 
 	#[Pure] public function key(): ?string {
 		return $this->indices[$this->index] ?? null;
-	}
-
-	public function next(): void {
-		$this->index++;
-	}
-
-	public function rewind(): void {
-		$this->index = 0;
-	}
-
-	#[Pure] public function valid(): bool {
-		return $this->index < $this->count;
 	}
 
 	/**

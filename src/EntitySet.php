@@ -16,6 +16,9 @@ use Lemuria\Exception\UnserializeEntitySetException;
  */
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
+	use CountableTrait;
+	use IteratorTrait;
+
 	/**
 	 * @var int[]
 	 */
@@ -25,10 +28,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * @var array(int=>Id)
 	 */
 	private array $entities = [];
-
-	private int $index = 0;
-
-	private int $count = 0;
 
 	/**
 	 * Init the set for a Collector.
@@ -83,15 +82,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 		}
 	}
 
-	/**
-	 * Get the number of items in the set.
-	 *
-	 * @return int
-	 */
-	#[Pure] public function count(): int {
-		return $this->count;
-	}
-
 	public function current(): ?Entity {
 		$key = $this->key();
 		return $key ? $this->get($this->entities[$key]) : null;
@@ -99,18 +89,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 
 	#[Pure] public function key(): ?int {
 		return $this->indices[$this->index] ?? null;
-	}
-
-	public function next(): void {
-		$this->index++;
-	}
-
-	public function rewind(): void {
-		$this->index = 0;
-	}
-
-	#[Pure] public function valid(): bool {
-		return $this->index < $this->count;
 	}
 
 	/**

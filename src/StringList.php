@@ -8,16 +8,14 @@ use Lemuria\Engine\Instructions;
 
 class StringList implements Instructions
 {
+	use CountableTrait;
+	use IteratorTrait;
 	use SerializableTrait;
 
 	/**
 	 * @var string[]
 	 */
 	private array $list = [];
-
-	private int $index = 0;
-
-	private int $count = 0;
 
 	/**
 	 * @param int $offset
@@ -58,31 +56,8 @@ class StringList implements Instructions
 		}
 	}
 
-	#[Pure]
-	public function count(): int {
-		return $this->count;
-	}
-
 	public function current(): string {
 		return $this->offsetGet($this->index);
-	}
-
-	public function next(): void {
-		$this->index++;
-	}
-
-	#[Pure]
-	public function key(): int {
-		return $this->index;
-	}
-
-	#[Pure]
-	public function valid(): bool {
-		return $this->index < $this->count;
-	}
-
-	public function rewind(): void {
-		$this->index = 0;
 	}
 
 	/**

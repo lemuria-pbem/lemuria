@@ -9,6 +9,9 @@ use Lemuria\Exception\SingletonException;
 
 class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
+	use CountableTrait;
+	use IteratorTrait;
+
 	/**
 	 * @var string[]
 	 */
@@ -18,10 +21,6 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	 * @var array(string=>Singleton)
 	 */
 	private array $singletons = [];
-
-	private int $index = 0;
-
-	private int $count = 0;
 
 	/**
 	 * Check if a singleton is in the set.
@@ -65,13 +64,6 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 		$this->delete($offset);
 	}
 
-	/**
-	 * Get the number of singletons in the set.
-	 */
-	#[Pure] public function count(): int {
-		return $this->count;
-	}
-
 	#[Pure] public function current(): ?Singleton {
 		$key = $this->key();
 		return $key !== null ? $this->singletons[$key] : null;
@@ -79,18 +71,6 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 
 	#[Pure] public function key(): ?string {
 		return $this->indices[$this->index] ?? null;
-	}
-
-	public function next(): void {
-		$this->index++;
-	}
-
-	public function rewind(): void {
-		$this->index = 0;
-	}
-
-	#[Pure] public function valid(): bool {
-		return $this->index < $this->count;
 	}
 
 	/**

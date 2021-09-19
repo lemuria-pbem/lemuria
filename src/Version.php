@@ -7,6 +7,9 @@ use Lemuria\Version\VersionTag;
 
 final class Version implements \ArrayAccess, \Countable, \Iterator
 {
+	use CountableTrait;
+	use IteratorTrait;
+
 	public const BASE = 'base';
 
 	public const MODEL = 'model';
@@ -20,10 +23,6 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 	private const KEYS = [self::BASE, self::MODEL, self::ENGINE, self::RENDERERS, self::GAME];
 
 	private array $versions;
-
-	private int $index = 0;
-
-	private int $count;
 
 	public function __construct() {
 		$this->versions = array_fill_keys(self::KEYS, []);
@@ -69,10 +68,6 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 		$this->versions[$offset] = [];
 	}
 
-	public function count(): int {
-		return $this->count;
-	}
-
 	public function key(): string {
 		return self::KEYS[$this->index];
 	}
@@ -82,17 +77,5 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 	 */
 	public function current(): array {
 		return $this->versions[self::KEYS[$this->index]];
-	}
-
-	public function next(): void {
-		$this->index++;
-	}
-
-	public function valid(): bool {
-		return $this->index < $this->count;
-	}
-
-	public function rewind(): void {
-		$this->index = 0;
 	}
 }
