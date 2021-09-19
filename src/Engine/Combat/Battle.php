@@ -6,7 +6,7 @@ use Lemuria\Identifiable;
 use Lemuria\Model\Location;
 use Lemuria\Serializable;
 
-interface Battle extends \Iterator, Serializable
+interface Battle extends \Countable, \Iterator, Serializable
 {
 	public function Location(): Location;
 
