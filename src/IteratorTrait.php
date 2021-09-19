@@ -4,14 +4,14 @@ namespace Lemuria;
 
 trait IteratorTrait
 {
-	private array $iteratorArray;
+	private array $array;
 
 	private int $index = 0;
 
 	private int $count = 0;
 
 	public function current(): mixed {
-		return $this->iteratorArray[$this->index];
+		return $this->array[$this->index];
 	}
 
 	public function key(): int {
@@ -28,9 +28,5 @@ trait IteratorTrait
 
 	public function valid(): bool {
 		return $this->index < $this->count;
-	}
-
-	protected function initIterator(array $array): void {
-		$this->iteratorArray = $array;
 	}
 }
