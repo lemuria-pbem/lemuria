@@ -272,6 +272,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 			throw new EntitySetException($entity);
 		}
 		$p = $position->Id();
+		if ($p === $e) {
+			return;
+		}
 		if (!isset($this->entities[$p])) {
 			throw new EntitySetException($position);
 		}
