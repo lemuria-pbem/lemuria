@@ -4,9 +4,9 @@ namespace Lemuria;
 
 trait IteratorTrait
 {
-	private int $index = 0;
+	use CountableTrait;
 
-	private int $count = 0;
+	private int $index = 0;
 
 	public function key(): int {
 		return $this->index;

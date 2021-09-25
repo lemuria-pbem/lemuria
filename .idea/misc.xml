@@ -4,6 +4,6 @@
     <option name="languageLevel" value="ES6" />
   </component>
   <component name="ProjectResources">
-    <resource url="https://schema.phpunit.de/7.3/phpunit.xsd" location="$PROJECT_DIR$/doc/phpunit.xsd" />
+    <resource url="https://schema.phpunit.de/9.2/phpunit.xsd" location="$PROJECT_DIR$/vendor/phpunit/phpunit/schema/9.2.xsd" />
   </component>
 </project>
