@@ -12,6 +12,8 @@ use Lemuria\Exception\IdException;
  */
 #[Immutable] final class Id implements \Stringable
 {
+	public const REGEX = '[0-9a-z]+';
+
 	/**
 	 * Convert a Base36 ID to its integer representation.
 	 *
@@ -46,7 +48,7 @@ use Lemuria\Exception\IdException;
 	 */
 	private static function clean(string $id): string {
 		$cleanId = strtolower(trim($id));
-		if (preg_match('/^[0-9a-z]+$/', $cleanId) !== 1) {
+		if (preg_match('/^' . self::REGEX . '$/', $cleanId) !== 1) {
 			throw new IdException($id);
 		}
 		return $cleanId;

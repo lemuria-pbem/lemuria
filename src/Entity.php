@@ -5,7 +5,9 @@ namespace Lemuria;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 
+use Lemuria\Exception\IdException;
 use Lemuria\Exception\UnserializeEntityException;
+use Lemuria\Model\NamedId;
 
 /**
  * An Entity is a unique item that has an identity.
@@ -18,6 +20,18 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	private string $name = '';
 
 	private string $description = '';
+
+	/**
+	 * @throws IdException
+	 */
+	public static function from(string $entity): NamedId {
+		if (preg_match('/^([^\[]+) \[(' . Id::REGEX . ')]$/', $entity, $matches) === 1) {
+			$id   = Id::fromId($matches[2]);
+			$name = $matches[1];
+			return new NamedId($id, $name);
+		}
+		throw new IdException($entity);
+	}
 
 	/**
 	 * Get a plain data array of the model's data.
