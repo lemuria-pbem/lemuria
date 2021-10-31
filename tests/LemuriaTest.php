@@ -4,6 +4,7 @@ namespace Lemuria\Tests;
 
 use Psr\Log\LoggerInterface;
 
+use function Lemuria\isClass;
 use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
@@ -15,6 +16,24 @@ use Lemuria\Lemuria;
 
 class LemuriaTest extends Test
 {
+	/**
+	 * @test
+	 */
+	public function isClass(): void {
+		$this->assertFalse(isClass(''));
+		$this->assertFalse(isClass('X'));
+		$this->assertFalse(isClass('X\\'));
+		$this->assertFalse(isClass('X\\Y\\'));
+		$this->assertFalse(isClass('XYZ'));
+		$this->assertFalse(isClass('\\X\\'));
+		$this->assertTrue(isClass('\\X'));
+		$this->assertTrue(isClass('\\X\\Y'));
+		$this->assertTrue(isClass('A\\B'));
+		$this->assertTrue(isClass('Aa\\Be'));
+		$this->assertTrue(isClass('A\\B\\C'));
+		$this->assertTrue(isClass('\\A\\B\\C'));
+	}
+
 	/**
 	 * @test
 	 */

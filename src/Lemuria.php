@@ -48,6 +48,14 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Check if a type is a namespaced class name.
+ */
+#[Pure] function isClass(string $type): bool {
+	$n = strlen($type);
+	return $n >= 2 && str_contains($type, '\\') && strrpos($type, '\\') <= $n - 2;
+}
+
+/**
  * Return the class name of an object without its namespace.
  */
 #[Pure] function getClass(object|string $object): string {
