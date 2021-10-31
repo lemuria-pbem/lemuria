@@ -52,7 +52,7 @@ use Lemuria\Version\VersionFinder;
  */
 #[Pure] function isClass(string $type): bool {
 	$n = strlen($type);
-	return $n >= 2 && str_contains($type, '\\') && strrpos($type, '\\') <= $n - 2;
+	return $n >= 3 && strpos($type, '\\') >= 1 && strrpos($type, '\\') <= $n - 2;
 }
 
 /**

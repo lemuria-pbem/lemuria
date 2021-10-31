@@ -26,12 +26,12 @@ class LemuriaTest extends Test
 		$this->assertFalse(isClass('X\\Y\\'));
 		$this->assertFalse(isClass('XYZ'));
 		$this->assertFalse(isClass('\\X\\'));
-		$this->assertTrue(isClass('\\X'));
-		$this->assertTrue(isClass('\\X\\Y'));
+		$this->assertFalse(isClass('\\X'));
+		$this->assertFalse(isClass('\\X\\Y'));
+		$this->assertFalse(isClass('\\A\\B\\C'));
 		$this->assertTrue(isClass('A\\B'));
 		$this->assertTrue(isClass('Aa\\Be'));
 		$this->assertTrue(isClass('A\\B\\C'));
-		$this->assertTrue(isClass('\\A\\B\\C'));
 	}
 
 	/**
