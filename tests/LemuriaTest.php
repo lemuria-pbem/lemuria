@@ -11,6 +11,7 @@ use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
 use function Lemuria\randChance;
 use function Lemuria\randDistribution23;
+use function Lemuria\random;
 use function Lemuria\sign;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
@@ -107,6 +108,17 @@ class LemuriaTest extends Test
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
 		$this->assertSame('Älchemie', mbUcFirst('älchemie'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function random(): void {
+		for ($i = 0; $i < 1000; $i++) {
+			$random = random();
+			$this->assertGreaterThanOrEqual(0.0, $random);
+			$this->assertLessThanOrEqual(1.0, $random);
+		}
 	}
 
 	/**

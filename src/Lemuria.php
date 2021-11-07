@@ -96,12 +96,18 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Get a random number in the interval [0.0, 1.0].
+ */
+function random(): float {
+	$max = 1000000;
+	return rand(1, $max) / $max;
+}
+
+/**
  * Calculate a random chance.
  */
 function randChance(float $chance): bool {
-	$max  = 1000000;
-	$rand = rand(1, $max) / $max;
-	return $rand <= $chance;
+	return random() <= $chance;
 }
 
 /**
