@@ -9,4 +9,8 @@ trait CountableTrait
 	public function count(): int {
 		return $this->count;
 	}
+
+	public function isEmpty(): bool {
+		return $this->count <= 0;
+	}
 }
