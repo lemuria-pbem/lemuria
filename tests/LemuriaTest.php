@@ -10,6 +10,7 @@ use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
 use function Lemuria\randChance;
+use function Lemuria\randDistribution23;
 use function Lemuria\sign;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
@@ -101,6 +102,7 @@ class LemuriaTest extends Test
 
 	/**
 	 * @test
+	 * @noinspection SpellCheckingInspection
 	 */
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
@@ -136,6 +138,23 @@ class LemuriaTest extends Test
 		for ($i = 0; $i < 1000; $i++) {
 			$this->assertTrue(randChance(1.0));
 		}
+	}
+
+	/**
+	 * @test
+	 */
+	public function randDistribution23(): void {
+		$this->assertSame([0.0], randDistribution23(0));
+		$this->assertSame([1.0], randDistribution23(-1));
+		$this->assertSame([1.0], randDistribution23(1));
+		$this->assertSame([0.6666667, 1.0], randDistribution23(-2));
+		$this->assertSame([0.6666667, 1.0], randDistribution23(2));
+		$this->assertSame([0.5, 0.8333333, 1.0], randDistribution23(-3));
+		$this->assertSame([0.5, 0.8333333, 1.0], randDistribution23(3));
+		$this->assertSame([0.4, 0.7, 0.9, 1.0], randDistribution23(-4));
+		$this->assertSame([0.4, 0.7, 0.9, 1.0], randDistribution23(4));
+		$this->assertSame([0.3333333, 0.6, 0.8, 0.9333333, 1.0], randDistribution23(-5));
+		$this->assertSame([0.3333333, 0.6, 0.8, 0.9333333, 1.0], randDistribution23(5));
 	}
 
 	/**

@@ -105,6 +105,34 @@ function randChance(float $chance): bool {
 }
 
 /**
+ * Get the "two-thirds random distribution" for a given amount.
+ *
+ * The result is an array containing $amount floating-point numbers that
+ * represent a descending random chance, e.g. for amount of 3 it will return
+ * [0.5, 0.833, 1.0] and for 4 it will return [0.4, 0.7, 0.9, 1.0].
+ *
+ * @return float[]
+ */
+function randDistribution23(int $amount): array {
+	$amount = abs($amount);
+	if ($amount === 0) {
+		return [0.0];
+	}
+
+	$distribution = [];
+	$chance       = 0.0;
+	$divisor      = $amount + 1;
+	for ($n = $divisor; $n >= 2; $n--) {
+		$next           = $chance;
+		$remaining      = 1.0 - $next;
+		$chance         = $next + 2 / $n * $remaining;
+		$distribution[] = round($chance, 7);
+	}
+
+	return $distribution;
+}
+
+/**
  * This singleton implementation offers factory methods.
  */
 final class Lemuria

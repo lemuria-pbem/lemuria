@@ -39,7 +39,7 @@ abstract class Test extends TestCase
 	}
 
 	/**
-	 * Load Lenuria functions.
+	 * Load Lemuria functions.
 	 */
 	protected function setUp(): void {
 		parent::setUp();
