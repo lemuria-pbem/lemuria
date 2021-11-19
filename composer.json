@@ -2,15 +2,7 @@
 	"name": "lemuria-pbem/lemuria",
 	"description": "This library is part of the PbeM Lemuria. It contains common code.",
 	"type": "library",
-	"keywords": [
-		"eressea",
-		"fantasya",
-		"game",
-		"lemuria",
-		"pbem"
-	],
-	"version": "0.8.0",
-	"time": "2021-11-07",
+	"keywords": ["eressea", "fantasya", "game", "lemuria", "pbem"],
 	"license": "GPL-3.0",
 	"authors": [
 		{
@@ -18,6 +10,8 @@
 			"email": "lemuria@online.de"
 		}
 	],
+	"version": "0.8.1",
+	"time": "2021-11-11",
 
 	"require": {
 		"php": "~8.0",
