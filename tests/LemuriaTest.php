@@ -9,6 +9,7 @@ use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
+use function Lemuria\undupChar;
 use function Lemuria\randChance;
 use function Lemuria\randDistribution23;
 use function Lemuria\random;
@@ -108,6 +109,13 @@ class LemuriaTest extends Test
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
 		$this->assertSame('Älchemie', mbUcFirst('älchemie'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function undupChar(): void {
+		$this->assertSame('Ein Satz mit X.', undupChar(' ', 'Ein Satz  mit    X.'));
 	}
 
 	/**

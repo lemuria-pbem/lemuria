@@ -2,7 +2,9 @@
   <dictionary name="lemuria">
     <words>
       <w>coord</w>
+      <w>signum</w>
       <w>ucfirst</w>
+      <w>undup</w>
       <w>unserialized</w>
     </words>
   </dictionary>

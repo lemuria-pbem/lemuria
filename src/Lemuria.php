@@ -96,6 +96,18 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Remove duplicate character in a string.
+ */
+function undupChar(string $char, string $string): string {
+	$search = $char . $char;
+	$string = str_replace($search, $char, $string, $count);
+	if ($count > 0) {
+		return undupChar($char, $string);
+	}
+	return $string;
+}
+
+/**
  * Get a random number in the interval [0.0, 1.0].
  */
 function random(): float {
