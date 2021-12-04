@@ -21,6 +21,14 @@ final class Dictionary
 		}
 	}
 
+	#[Pure] public function has(string $keyPath, Singleton|string|int|null $index = null): bool {
+		if ($index instanceof Singleton) {
+			$index = getClass($index);
+		}
+		$default = $index === null ? $keyPath : $keyPath . '.' . $index;
+		return $this->get($keyPath, $index) !== $default;
+	}
+
 	/**
 	 * Get a string.
 	 */
