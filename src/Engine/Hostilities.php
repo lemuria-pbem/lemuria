@@ -33,6 +33,11 @@ interface Hostilities
 	public function add(Battle $battle): Hostilities;
 
 	/**
+	 * Delete all battles as preparation for a new turn.
+	 */
+	public function clear(): Hostilities;
+
+	/**
 	 * Load battles.
 	 */
 	public function load(): Hostilities;

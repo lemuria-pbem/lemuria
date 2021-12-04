@@ -88,7 +88,7 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
- * Implementation of multi-byte ucfirst.
+ * Implementation of multibyte ucfirst.
  */
 #[Pure] function mbUcFirst(string $string): string {
 	$f = mb_strtoupper(mb_substr($string, 0, 1));

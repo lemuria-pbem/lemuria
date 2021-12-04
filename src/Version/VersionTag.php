@@ -7,7 +7,7 @@ final class VersionTag implements \Stringable
 	public function __construct(public string $name, public string $version) {
 	}
 
-	public function __toString() {
+	public function __toString(): string {
 		return $this->name . ' ' . $this->version;
 	}
 }

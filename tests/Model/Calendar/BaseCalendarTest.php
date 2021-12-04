@@ -72,6 +72,7 @@ class BaseCalendarTest extends Test
 	 * @depends construct
 	 */
 	public function nextRound(BaseCalendar $calendar): void {
+		/** @noinspection PhpIdempotentOperationInspection */
 		$expected = 0 + 1;
 		$this->assertSame($expected, $calendar->nextRound());
 		$this->assertSame($expected, $calendar->Round());
@@ -82,7 +83,7 @@ class BaseCalendarTest extends Test
 	 * @depends construct
 	 */
 	public function testChangeOfYear(Calendar $calendar): void {
-		$round = 24; // letzte Woche vor Jahreswechsel
+		$round = 24; // last week before year changes
 		$data  = ['round' => $round];
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());
@@ -104,7 +105,7 @@ class BaseCalendarTest extends Test
 	 * @depends construct
 	 */
 	public function unserialize(BaseCalendar $calendar): void {
-		$round = 2 + 6 + 24 ; // zweite Woche im dritten Monat in Jahr 2
+		$round = 2 + 6 + 24 ; // second week in third month in year 2
 		$data  = ['round' => $round];
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());

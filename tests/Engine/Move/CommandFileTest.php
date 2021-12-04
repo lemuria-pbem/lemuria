@@ -1,4 +1,5 @@
 <?php
+/** @noinspection SpellCheckingInspection */
 declare(strict_types = 1);
 namespace Lemuria\Tests\Engine\Move;
 
