@@ -33,4 +33,13 @@ final class HexagonalMap extends BaseMap
 		$this->setNeighbour(World::NORTHWEST, ++$y, $x, $neighbours);
 		return $neighbours;
 	}
+
+	/**
+	 * Get the path from a location to a distant point.
+	 */
+	public function getPath(Location $start, string $direction, int $distance): Path {
+		$path = new Path();
+		//TODO
+		return $path;
+	}
 }

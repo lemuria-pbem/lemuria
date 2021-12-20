@@ -5,6 +5,7 @@ namespace Lemuria\Model;
 use JetBrains\PhpStorm\ExpectedValues;
 
 use Lemuria\Model\Exception\MapException;
+use Lemuria\Model\World\Path;
 use Lemuria\Serializable;
 
 /**
@@ -41,6 +42,13 @@ interface World extends Serializable
 	 * @throws MapException
 	 */
 	public function getNeighbours(Location $location): Neighbours;
+
+	/**
+	 * Get the path from a location to a distant point.
+	 *
+	 * @throws MapException
+	 */
+	public function getPath(Location $start, string $direction, int $distance): Path;
 
 	/**
 	 * Check if a direction is valid in this world.
