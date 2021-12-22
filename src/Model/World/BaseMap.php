@@ -152,10 +152,14 @@ abstract class BaseMap implements World
 	}
 
 	protected function setNeighbour(string $direction, int $y, int $x, Neighbours $neighbours): void {
-		$location = $this->getLocation($this->map[$y][$x]) ?? null;
+		$location = $this->getByCoordinates($y, $x);
 		if ($location) {
 			$neighbours[$direction] = $location;
 		}
+	}
+
+	protected function getByCoordinates(int $y, int $x): ?Location {
+		return $this->getLocation($this->map[$y][$x] ?? null);
 	}
 
 	/**
