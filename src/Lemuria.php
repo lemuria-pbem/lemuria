@@ -289,6 +289,7 @@ final class Lemuria
 		self::$instance->debut  = $config->Debut();
 		self::$instance->orders = $config->Orders();
 		self::$instance->report = $config->Report();
+		self::$instance->score  = $config->Score();
 	}
 
 	/**
@@ -341,7 +342,6 @@ final class Lemuria
 			$this->catalog     = $config->Catalog();
 			$this->debut       = $config->Debut();
 			$this->world       = $config->World();
-			$this->score       = $config->Score();
 			$this->hostilities = $config->Hostilities();
 			$this->registry    = $config->Registry();
 			$this->version     = new Version();
