@@ -40,12 +40,12 @@ final class HexagonalMap extends BaseMap
 	 */
 	public function getPath(Location $start, string $direction, int $distance): Path {
 		return match ($direction) {
-			World::NORTHEAST => $this->createWays($start, 1, 0, $distance),
+			World::NORTHEAST => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
 			World::EAST      => $this->createWay($start, 1, $distance),
-			World::SOUTHEAST => $this->createWays($start, -1, 1, $distance),
-			World::SOUTHWEST => $this->createWays($start, -1, 0, $distance),
+			World::SOUTHEAST => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
+			World::SOUTHWEST => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
 			World::WEST      => $this->createWay($start, -1, $distance),
-			World::NORTHWEST => $this->createWays($start, 1, -1, $distance),
+			World::NORTHWEST => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
 			default          => throw new LemuriaException()
 		};
 	}
@@ -68,22 +68,80 @@ final class HexagonalMap extends BaseMap
 		return $path;
 	}
 
-	private function createWays(Location $location, int $dY, int $dX, int $distance): Path {
-		$path        = new Path();
-		$i           = 0;
-		$coordinates = $this->getCoordinates($location);
-		$x           = $coordinates->X();
-		$y           = $coordinates->Y();
-		$first       = $this->getByCoordinates($y + $dY, $x + $dX);
-		if (!$first) {
+	private function createDiagonalWays(Location $location, int $distance,
+		                                int $dy1, int $dx1, int $dy2, int $dx2, int $dx3): Path {
+		$path = $this->createWays($location, $dy2, $dx2);
+		if (!$path->count() || $distance <= 1) {
 			return $path;
 		}
 
-		$way = [$location, $first];
-		if (count($way) > $distance) {
-			$path[$i++] = $way;
+		$basicWay = $path[0];
+		$first    = $basicWay[1];
+		$f        = 1;
+		$path->offsetUnset(0);
+
+		do {
+			$way  = $basicWay;
+			$last = $first;
+			$i    = $f;
+			do {
+				if ($i++ % 2) {
+					$next = $this->nextLocation($last, $dy1, $dx1);
+				} else {
+					$next = $this->nextLocation($last, $dy2, $dx2);
+				}
+				if ($next) {
+					$way[] = $next;
+					$last  = $next;
+				}
+			} while ($next && $i < $distance);
+			if ($next) {
+				$path[] = $way;
+			}
+
+			$way  = $basicWay;
+			$last = $first;
+			$i    = $f;
+			do {
+				if ($i++ % 2) {
+					$next = $this->nextLocation($last, $dy2, $dx2);
+				} else {
+					$next = $this->nextLocation($last, $dy1, $dx1);
+				}
+				if ($next) {
+					$way[] = $next;
+					$last  = $next;
+				}
+			} while ($next && $i < $distance);
+			if ($next) {
+				$path[] = $way;
+			}
+
+			$first = $this->nextLocation($first, 0, $dx3);
+		} while (++$f < $distance);
+
+		if ($first) {
+			$way    = $basicWay;
+			$way[]  = $first;
+			$path[] = $way;
 		}
-		//TODO
+
 		return $path;
+	}
+
+	private function createWays(Location $location, int $dY, int $dX): Path {
+		$path  = new Path();
+		$first = $this->nextLocation($location, $dY, $dX);
+		if ($first) {
+			$path[0] = [$location, $first];
+		}
+		return $path;
+	}
+
+	private function nextLocation(Location $location, int $dY, int $dX): ?Location {
+		$coordinates = $this->getCoordinates($location);
+		$x           = $coordinates->X();
+		$y           = $coordinates->Y();
+		return $this->getByCoordinates($y + $dY, $x + $dX);
 	}
 }
