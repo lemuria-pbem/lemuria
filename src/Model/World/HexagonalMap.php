@@ -19,6 +19,34 @@ final class HexagonalMap extends BaseMap
 								   World::NORTHWEST];
 
 	/**
+	 * Get the shortest distance between two regions.
+	 */
+	public function getDistance(Location $from, Location $to): int {
+		$fromCoordinates = $this->getCoordinates($from);
+		$toCoordinates   = $this->getCoordinates($to);
+		if ($fromCoordinates->X() <= $toCoordinates->X()) {
+			$left  = $fromCoordinates;
+			$right = $toCoordinates;
+		} else {
+			$left  = $toCoordinates;
+			$right = $fromCoordinates;
+		}
+		$distance = $right->X() - $left->X();
+
+		$dy = $right->Y() - $left->Y();
+		if ($dy > 0) {
+			$distance += $dy;
+		} else {
+			$dy = abs($dy);
+			if ($dy > $distance) {
+				$distance += $dy - $distance;
+			}
+		}
+
+		return $distance;
+	}
+
+	/**
 	 * Get the neighbour regions of a location.
 	 */
 	public function getNeighbours(Location $location): Neighbours {
@@ -54,9 +82,8 @@ final class HexagonalMap extends BaseMap
 	 * Create all possible ways east from location, including diagonals to north/south.
 	 */
 	private function createEastWays(Location $location, int $distance): Path {
-		$path        = new Path();
-		$basicWay    = [$location];
-		$maxDistance = $distance;
+		$path     = new Path();
+		$basicWay = [$location];
 		while ($distance-- > 0) {
 			$next = $this->nextLocation($location, 0, 1);
 			if (!$next) {
@@ -79,16 +106,15 @@ final class HexagonalMap extends BaseMap
 				$path[]     = $basicWay;
 			}
 		}
-		return $path->keep($maxDistance);
+		return $path;
 	}
 
 	/**
 	 * Create all possible ways west from location, including diagonals to north/south.
 	 */
 	private function createWestWays(Location $location, int $distance): Path {
-		$path        = new Path();
-		$basicWay    = [$location];
-		$maxDistance = $distance;
+		$path     = new Path();
+		$basicWay = [$location];
 		while ($distance-- > 0) {
 			$next = $this->nextLocation($location, 0, -1);
 			if (!$next) {
@@ -111,7 +137,7 @@ final class HexagonalMap extends BaseMap
 				$path[]     = $basicWay;
 			}
 		}
-		return $path->keep($maxDistance);
+		return $path;
 	}
 
 	/**

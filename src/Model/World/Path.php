@@ -81,15 +81,4 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 	public function valid(): bool {
 		return $this->index < $this->count;
 	}
-
-	public function keep(int $distance): Path {
-		for ($this->index = 0; $this->index < $this->count; $this->index++) {
-			if (count($this->ways[$this->index]) - 1 > $distance) {
-				unset($this->ways[$this->index]);
-			}
-		}
-		$this->ways  = array_values($this->ways);
-		$this->count = count($this->ways);
-		return $this;
-	}
 }
