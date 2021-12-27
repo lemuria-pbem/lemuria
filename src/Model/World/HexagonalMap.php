@@ -41,33 +41,84 @@ final class HexagonalMap extends BaseMap
 	public function getPath(Location $start, string $direction, int $distance): Path {
 		return match ($direction) {
 			World::NORTHEAST => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
-			World::EAST      => $this->createWay($start, 1, $distance),
+			World::EAST      => $this->createEastWays($start, $distance),
 			World::SOUTHEAST => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
 			World::SOUTHWEST => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
-			World::WEST      => $this->createWay($start, -1, $distance),
+			World::WEST      => $this->createWestWays($start, $distance),
 			World::NORTHWEST => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
 			default          => throw new LemuriaException()
 		};
 	}
 
-	private function createWay(Location $location, int $dX, int $distance): Path {
+	/**
+	 * Create all possible ways east from location, including diagonals to north/south.
+	 */
+	private function createEastWays(Location $location, int $distance): Path {
 		$path        = new Path();
-		$way         = [$location];
-		$coordinates = $this->getCoordinates($location);
-		$x           = $coordinates->X();
-		$y           = $coordinates->Y();
+		$basicWay    = [$location];
+		$maxDistance = $distance;
 		while ($distance-- > 0) {
-			$x       += $dX;
-			$location = $this->getByCoordinates($y, $x);
-			if (!$location) {
+			$next = $this->nextLocation($location, 0, 1);
+			if (!$next) {
 				return $path;
 			}
-			$way[] = $location;
+
+			if ($distance > 0) {
+				$diagonals = $this->createDiagonalWays($next, $distance, 1, -1, 1, 0, 1);
+				foreach ($diagonals as $way) {
+					$path[] = array_merge($basicWay, $way);
+				}
+				$diagonals = $this->createDiagonalWays($next, $distance, -1, 0, -1, 1, 1);
+				foreach ($diagonals as $way) {
+					$path[] = array_merge($basicWay, $way);
+				}
+				$basicWay[] = $next;
+				$location   = $next;
+			} else {
+				$basicWay[] = $next;
+				$path[]     = $basicWay;
+			}
 		}
-		$path[0] = $way;
-		return $path;
+		return $path->keep($maxDistance);
 	}
 
+	/**
+	 * Create all possible ways west from location, including diagonals to north/south.
+	 */
+	private function createWestWays(Location $location, int $distance): Path {
+		$path        = new Path();
+		$basicWay    = [$location];
+		$maxDistance = $distance;
+		while ($distance-- > 0) {
+			$next = $this->nextLocation($location, 0, -1);
+			if (!$next) {
+				return $path;
+			}
+
+			if ($distance > 0) {
+				$diagonals = $this->createDiagonalWays($next, $distance, 1, 0, 1, -1, -1);
+				foreach ($diagonals as $way) {
+					$path[] = array_merge($basicWay, $way);
+				}
+				$diagonals = $this->createDiagonalWays($next, $distance, -1, 1, -1, 0, -1);
+				foreach ($diagonals as $way) {
+					$path[] = array_merge($basicWay, $way);
+				}
+				$basicWay[] = $next;
+				$location   = $next;
+			} else {
+				$basicWay[] = $next;
+				$path[]     = $basicWay;
+			}
+		}
+		return $path->keep($maxDistance);
+	}
+
+	/**
+	 * Create all diagonal ways in a 90° sector (NE, SE, SW, NW).
+	 *
+	 * @noinspection DuplicatedCode
+	 */
 	private function createDiagonalWays(Location $location, int $distance,
 		                                int $dy1, int $dx1, int $dy2, int $dx2, int $dx3): Path {
 		$path = $this->createWays($location, $dy2, $dx2);

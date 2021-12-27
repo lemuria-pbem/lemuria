@@ -37,6 +37,13 @@ interface World extends Serializable
 	public function getCoordinates(Location $location): Coordinates;
 
 	/**
+	 * Get the shortest distance between two regions.
+	 *
+	 * @throws MapException
+	 */
+	public function getDistance(Location $from, Location $to): int;
+
+	/**
 	 * Get the neighbour regions of a region.
 	 *
 	 * @throws MapException

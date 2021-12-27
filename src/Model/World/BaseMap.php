@@ -104,6 +104,17 @@ abstract class BaseMap implements World
 	}
 
 	/**
+	 * Get the shortest distance between two regions.
+	 */
+	public function getDistance(Location $from, Location $to): int {
+		$fromCoordinates = $this->getCoordinates($from);
+		$toCoordinates   = $this->getCoordinates($to);
+		$dx              = $toCoordinates->X() - $fromCoordinates->X();
+		$dy              = $toCoordinates->Y() - $fromCoordinates->Y();
+		return min(abs($dx), abs($dy));
+	}
+
+	/**
 	 * Get the world coordinates of a location.
 	 *
 	 * @throws MapException
