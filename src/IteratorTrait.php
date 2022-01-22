@@ -23,4 +23,8 @@ trait IteratorTrait
 	public function valid(): bool {
 		return $this->index < $this->count;
 	}
+
+	public function getIterator(): \Iterator {
+		return clone $this;
+	}
 }
