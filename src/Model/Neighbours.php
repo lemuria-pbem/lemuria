@@ -5,6 +5,7 @@ namespace Lemuria\Model;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Model\Exception\NeighbourException;
+use Lemuria\Model\World\Direction;
 
 /**
  * A helper class that encapsulates the neighbour locations of a location.
@@ -65,9 +66,9 @@ class Neighbours implements \ArrayAccess, \Countable
 	 *
 	 * @throws NeighbourException
 	 */
-	public function getDirection(Location $neighbour): string
+	public function getDirection(Location $neighbour): Direction
 	{
-		foreach ($this->locations as $direction => $location /* @var Location $location */) {
+		foreach ($this->locations as $direction => $location /* @var Direction $direction */) {
 			if ($location === $neighbour) {
 				return $direction;
 			}

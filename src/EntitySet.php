@@ -2,7 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\EmptySetException;
@@ -64,7 +63,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 * @param Entity $value
 	 * @throws LemuriaException
 	 */
-	public function offsetSet(mixed $offset, mixed $value): void {
+	public function offsetSet(mixed $offset, mixed $value): never {
 		throw new LemuriaException('Setting via ArrayAccess is intentionally not implemented.');
 	}
 
@@ -264,8 +263,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 *
 	 * @throws EntitySetException One of the entities is not part of the set.
 	 */
-	protected function reorderEntity(Id $entity, Id $position,
-									 #[ExpectedValues(valuesFromClass: Reorder::class)] int $reorder = Reorder::FLIP): void
+	protected function reorderEntity(Id $entity, Id $position, Reorder $reorder = Reorder::FLIP): void
 	{
 		$e = $entity->Id();
 		if (!isset($this->entities[$e])) {

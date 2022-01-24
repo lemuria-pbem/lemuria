@@ -7,7 +7,7 @@ namespace Lemuria;
  */
 interface Serializable
 {
-	public const TYPES = [
+	public final const TYPES = [
 		'array', '?array', 'bool', '?bool', 'float', '?float', 'int', '?int', 'string', '?string'
 	];
 

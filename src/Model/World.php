@@ -2,9 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
-use JetBrains\PhpStorm\ExpectedValues;
-
 use Lemuria\Model\Exception\MapException;
+use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
 use Lemuria\Serializable;
 
@@ -13,22 +12,6 @@ use Lemuria\Serializable;
  */
 interface World extends Serializable
 {
-	const NORTH = 'N';
-
-	const NORTHEAST = 'NE';
-
-	const EAST = 'E';
-
-	const SOUTHEAST = 'SE';
-
-	const SOUTH = 'S';
-
-	const SOUTHWEST = 'SW';
-
-	const WEST = 'W';
-
-	const NORTHWEST = 'NW';
-
 	/**
 	 * Get the world coordinates of a region.
 	 *
@@ -55,12 +38,12 @@ interface World extends Serializable
 	 *
 	 * @throws MapException
 	 */
-	public function getPath(Location $start, string $direction, int $distance): Path;
+	public function getPath(Location $start, Direction $direction, int $distance): Path;
 
 	/**
 	 * Check if a direction is valid in this world.
 	 */
-	public function isDirection(#[ExpectedValues(valuesFromClass: self::class)] string $direction): bool;
+	public function isDirection(Direction $direction): bool;
 
 	/**
 	 * Load the world data.

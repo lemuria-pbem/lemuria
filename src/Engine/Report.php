@@ -6,20 +6,9 @@ use Lemuria\Engine\Exception\NotRegisteredException;
 use Lemuria\Id;
 use Lemuria\Identifiable;
 use Lemuria\Model\Exception\DuplicateIdException;
-use Lemuria\Model\Catalog;
 
 interface Report
 {
-	public const PARTY = Catalog::PARTIES;
-
-	public const UNIT = Catalog::UNITS;
-
-	public const LOCATION = Catalog::LOCATIONS;
-
-	public const CONSTRUCTION = Catalog::CONSTRUCTIONS;
-
-	public const VESSEL = Catalog::VESSELS;
-
 	/**
 	 * Get the specified message.
 	 *

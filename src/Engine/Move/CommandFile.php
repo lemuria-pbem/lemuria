@@ -10,7 +10,7 @@ use Lemuria\Engine\Exception\EngineException;
  */
 class CommandFile implements \Stringable, Move
 {
-	private string $path;
+	private readonly string $path;
 
 	/**
 	 * @var resource

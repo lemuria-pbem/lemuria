@@ -14,9 +14,9 @@ use Lemuria\Singleton;
  */
 class DefaultBuilder implements Builder
 {
-	private SingletonCache $singletonCache;
+	private readonly SingletonCache $singletonCache;
 
-	private SingletonMap $singletonMap;
+	private readonly SingletonMap $singletonMap;
 
 	#[Pure] public function __construct() {
 		$this->singletonCache = new SingletonCache();

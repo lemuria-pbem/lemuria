@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Model\Exception;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Model\Location;
 
 /**
@@ -11,7 +9,7 @@ use Lemuria\Model\Location;
  */
 final class NeighbourException extends ModelException
 {
-	#[Pure] public function __construct(Location $location) {
+	public function __construct(Location $location) {
 		$message = "Location " . $location->Id()->Id() . " is not a neighbour.";
 		parent::__construct($message);
 	}

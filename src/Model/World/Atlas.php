@@ -2,14 +2,12 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
-use JetBrains\PhpStorm\ExpectedValues;
-
 use Lemuria\Entity;
 use Lemuria\EntitySet;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Id;
 use Lemuria\Lemuria;
-use Lemuria\Model\Catalog;
+use Lemuria\Model\Domain;
 use Lemuria\Model\Location;
 use Lemuria\Sorting\ById;
 use Lemuria\Sorting\Location\North2South;
@@ -19,16 +17,6 @@ use Lemuria\Sorting\Location\North2South;
  */
 class Atlas extends EntitySet
 {
-	/**
-	 * Sort mode by location ID.
-	 */
-	public const BY_ID = 0;
-
-	/**
-	 * Sort mode by coordinates from north to south.
-	 */
-	public const NORTH_TO_SOUTH = 1;
-
 	public function add(Location $location): self {
 		parent::addEntity($location->Id());
 		return $this;
@@ -42,16 +30,16 @@ class Atlas extends EntitySet
 	/**
 	 * Sort the locations.
 	 */
-	public function sort(#[ExpectedValues(valuesFromClass: self::class)] int $mode = self::BY_ID): Atlas {
+	public function sort(SortMode $mode = SortMode::BY_ID): Atlas {
 		switch ($mode) {
-			case self::BY_ID :
+			case SortMode::BY_ID :
 				$this->sortUsing(new ById());
 				break;
-			case self::NORTH_TO_SOUTH :
+			case SortMode::NORTH_TO_SOUTH :
 				$this->sortUsing(new North2South());
 				break;
 			default :
-				throw new LemuriaException('Invalid sort mode: ' . $mode . '.');
+				throw new LemuriaException('Unsupported sort mode: ' . $mode->name);
 		}
 		return $this;
 	}
@@ -60,7 +48,7 @@ class Atlas extends EntitySet
 	 * Get an Entity by ID.
 	 */
 	protected function get(Id $id): Entity {
-		$location = Lemuria::Catalog()->get($id, Catalog::LOCATIONS);
+		$location = Lemuria::Catalog()->get($id, Domain::LOCATION);
 		if ($location instanceof Entity) {
 			return $location;
 		}

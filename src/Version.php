@@ -10,15 +10,15 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 	use CountableTrait;
 	use IteratorTrait;
 
-	public const BASE = 'base';
+	public final const BASE = 'base';
 
-	public const MODEL = 'model';
+	public final const MODEL = 'model';
 
-	public const ENGINE = 'engine';
+	public final const ENGINE = 'engine';
 
-	public const RENDERERS = 'renderers';
+	public final const RENDERERS = 'renderers';
 
-	public const GAME = 'game';
+	public final const GAME = 'game';
 
 	private const KEYS = [self::BASE, self::MODEL, self::ENGINE, self::RENDERERS, self::GAME];
 

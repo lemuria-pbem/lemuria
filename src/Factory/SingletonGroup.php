@@ -11,11 +11,11 @@ use Lemuria\Exception\LemuriaException;
 
 class SingletonGroup
 {
-	private string $group;
+	private readonly string $group;
 
-	private string $namespace;
+	private readonly string $namespace;
 
-	private string $classDirectory;
+	private readonly string $classDirectory;
 
 	#[Pure] public function getNamespace(): string {
 		return $this->namespace;

@@ -3,7 +3,6 @@ declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 use Lemuria\Exception\LemuriaException;
@@ -11,7 +10,7 @@ use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Exception\UnserializeException;
 use Lemuria\Id;
 use Lemuria\Lemuria;
-use Lemuria\Model\Catalog;
+use Lemuria\Model\Domain;
 use Lemuria\Model\Exception\MapException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
@@ -30,8 +29,8 @@ abstract class BaseMap implements World
 	/**
 	 * @var string[]
 	 */
-	protected array $directions = [World::NORTH, World::NORTHEAST, World::EAST, World::SOUTHEAST, World::SOUTH,
-								   World::SOUTHWEST, World::WEST, World::NORTHWEST];
+	protected array $directions = [Direction::NORTH, Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST,
+		                           Direction::SOUTH, Direction::SOUTHWEST, Direction::WEST, Direction::NORTHWEST];
 
 	/**
 	 * @var array[]
@@ -119,7 +118,7 @@ abstract class BaseMap implements World
 	/**
 	 * Check if a direction is valid in this world.
 	 */
-	#[Pure] public function isDirection(#[ExpectedValues(valuesFromClass: World::class)] string $direction): bool {
+	#[Pure] public function isDirection(Direction $direction): bool {
 		return in_array($direction, $this->directions);
 	}
 
@@ -142,7 +141,7 @@ abstract class BaseMap implements World
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {
 			$id       = new Id($id);
-			$location = Lemuria::Catalog()->get($id, Catalog::LOCATIONS);
+			$location = Lemuria::Catalog()->get($id, Domain::LOCATION);
 			if ($location instanceof Location) {
 				return $location;
 			}
@@ -151,7 +150,7 @@ abstract class BaseMap implements World
 		return null;
 	}
 
-	protected function setNeighbour(string $direction, int $y, int $x, Neighbours $neighbours): void {
+	protected function setNeighbour(Direction $direction, int $y, int $x, Neighbours $neighbours): void {
 		$location = $this->getByCoordinates($y, $x);
 		if ($location) {
 			$neighbours[$direction] = $location;

@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\Exception;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Identifiable;
 
 /**
@@ -11,7 +9,7 @@ use Lemuria\Identifiable;
  */
 class DuplicateIdException extends ModelException
 {
-	#[Pure] public function __construct(Identifiable $identifiable) {
+	public function __construct(Identifiable $identifiable) {
 		$message = 'Entity ' . $identifiable->Id() . ' is already registered.';
 		parent::__construct($message);
 	}

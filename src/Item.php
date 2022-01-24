@@ -45,7 +45,7 @@ abstract class Item implements \Stringable
 	 */
 	public function addItem(Item $item): void {
 		if ($item->object !== $this->object) {
-			throw new ItemException($this, $item, ItemException::ADD_WRONG_ITEM);
+			throw new ItemException($this, $item, ItemAction::ADD_WRONG_ITEM);
 		}
 		$this->count += $item->count;
 	}
@@ -57,10 +57,10 @@ abstract class Item implements \Stringable
 	 */
 	public function removeItem(Item $item): void {
 		if ($item->object !== $this->object) {
-			throw new ItemException($this, $item, ItemException::REMOVE_WRONG_ITEM);
+			throw new ItemException($this, $item, ItemAction::REMOVE_WRONG_ITEM);
 		}
 		if ($item->count > $this->count) {
-			throw new ItemException($this, $item, ItemException::REMOVE_TOO_MUCH);
+			throw new ItemException($this, $item, ItemAction::REMOVE_TOO_MUCH);
 		}
 		$this->count -= $item->count;
 	}

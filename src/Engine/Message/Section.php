@@ -2,26 +2,23 @@
 declare(strict_types = 1);
 namespace Lemuria\Engine\Message;
 
-final class Section
+enum Section : int
 {
-	public const EVENT = 0;
+	case BATTLE = 1;
 
-	public const ERROR = 1;
+	case ECONOMY = 2;
 
-	public const BATTLE = 2;
+	case ERROR = 3;
 
-	public const ECONOMY = 3;
+	case EVENT = 4;
 
-	public const MAGIC = 4;
+	case MAGIC = 5;
 
-	public const MAIL = 5;
+	case MAIL = 6;
 
-	public const MOVEMENT = 6;
+	case MOVEMENT = 7;
 
-	public const PRODUCTION = 7;
+	case PRODUCTION = 8;
 
-	public const STUDY = 8;
-
-	private function __construct() {
-	}
+	case STUDY = 9;
 }

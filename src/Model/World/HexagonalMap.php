@@ -5,7 +5,6 @@ namespace Lemuria\Model\World;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Model\Location;
 use Lemuria\Model\Neighbours;
-use Lemuria\Model\World;
 
 /**
  * Representation of a two-dimensional world with six directions.
@@ -15,8 +14,8 @@ final class HexagonalMap extends BaseMap
 	/**
 	 * @var string[]
 	 */
-	protected array $directions = [World::NORTHEAST, World::EAST, World::SOUTHEAST, World::SOUTHWEST, World::WEST,
-								   World::NORTHWEST];
+	protected array $directions = [Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST, Direction::SOUTHWEST,
+								   Direction::WEST, Direction::NORTHWEST];
 
 	/**
 	 * Get the shortest distance between two regions.
@@ -54,27 +53,27 @@ final class HexagonalMap extends BaseMap
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
 		$neighbours  = new Neighbours();
-		$this->setNeighbour(World::NORTHEAST, ++$y, $x, $neighbours);
-		$this->setNeighbour(World::EAST, --$y, ++$x, $neighbours);
-		$this->setNeighbour(World::SOUTHEAST, --$y, $x, $neighbours);
-		$this->setNeighbour(World::SOUTHWEST, $y, --$x, $neighbours);
-		$this->setNeighbour(World::WEST, ++$y, --$x, $neighbours);
-		$this->setNeighbour(World::NORTHWEST, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::NORTHEAST, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::EAST, --$y, ++$x, $neighbours);
+		$this->setNeighbour(Direction::SOUTHEAST, --$y, $x, $neighbours);
+		$this->setNeighbour(Direction::SOUTHWEST, $y, --$x, $neighbours);
+		$this->setNeighbour(Direction::WEST, ++$y, --$x, $neighbours);
+		$this->setNeighbour(Direction::NORTHWEST, ++$y, $x, $neighbours);
 		return $neighbours;
 	}
 
 	/**
 	 * Get the path from a location to a distant point.
 	 */
-	public function getPath(Location $start, string $direction, int $distance): Path {
+	public function getPath(Location $start, Direction $direction, int $distance): Path {
 		return match ($direction) {
-			World::NORTHEAST => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
-			World::EAST      => $this->createEastWays($start, $distance),
-			World::SOUTHEAST => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
-			World::SOUTHWEST => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
-			World::WEST      => $this->createWestWays($start, $distance),
-			World::NORTHWEST => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
-			default          => throw new LemuriaException()
+			Direction::NORTHEAST => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
+			Direction::EAST      => $this->createEastWays($start, $distance),
+			Direction::SOUTHEAST => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
+			Direction::SOUTHWEST => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
+			Direction::WEST      => $this->createWestWays($start, $distance),
+			Direction::NORTHWEST => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
+			default              => throw new LemuriaException()
 		};
 	}
 

@@ -16,7 +16,7 @@ use Lemuria\SerializableTrait;
  *
  * The counter starts with zero which means that the first round is yet to come, which is round one. A round is a week.
  * A year consists of the seasons with a defined number of months each. A month has a defined number of weeks, so every
- * year has SEASONS*MONTH*WEEKS rounds (each as long as a week).
+ * year has SEASONS*MONTHS*WEEKS rounds (each as long as a week).
  */
 class BaseCalendar implements Calendar
 {

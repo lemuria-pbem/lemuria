@@ -157,31 +157,31 @@ final class Lemuria
 {
 	private static ?self $instance = null;
 
-	private Builder $builder;
+	private readonly Builder $builder;
 
-	private Calendar $calendar;
+	private readonly Calendar $calendar;
 
-	private Catalog $catalog;
+	private readonly Catalog $catalog;
 
-	private Debut $debut;
+	private readonly Debut $debut;
 
-	private Game $game;
+	private readonly Game $game;
 
-	private LoggerInterface $log;
+	private readonly LoggerInterface $log;
 
-	private Orders $orders;
+	private readonly Orders $orders;
 
-	private Report $report;
+	private readonly Report $report;
 
-	private World $world;
+	private readonly World $world;
 
-	private Score $score;
+	private readonly Score $score;
 
-	private Hostilities $hostilities;
+	private readonly Hostilities $hostilities;
 
-	private Registry $registry;
+	private readonly Registry $registry;
 
-	private Version $version;
+	private readonly Version $version;
 
 	/**
 	 * Get the builder.

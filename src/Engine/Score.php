@@ -3,20 +3,9 @@ declare(strict_types = 1);
 namespace Lemuria\Engine;
 
 use Lemuria\Identifiable;
-use Lemuria\Model\Catalog;
 
 interface Score extends \Iterator
 {
-	public const PARTY = Catalog::PARTIES;
-
-	public const UNIT = Catalog::UNITS;
-
-	public const LOCATION = Catalog::LOCATIONS;
-
-	public const CONSTRUCTION = Catalog::CONSTRUCTIONS;
-
-	public const VESSEL = Catalog::VESSELS;
-
 	/**
 	 * Search for an existing Effect.
 	 */

@@ -8,7 +8,7 @@ use Lemuria\Exception\ReadException;
 
 class VersionFinder
 {
-	protected string $composer;
+	protected readonly string $composer;
 
 	/**
 	 * @throws FileNotFoundException

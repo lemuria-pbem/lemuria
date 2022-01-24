@@ -10,7 +10,7 @@ class IteratorMock implements \Countable, \Iterator
 
 	protected array $items = [];
 
-	public function current() {
+	public function current(): mixed {
 		return $this->items[$this->index];
 	}
 

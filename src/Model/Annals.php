@@ -95,7 +95,7 @@ abstract class Annals extends EntitySet
 	 *
 	 * @throws LemuriaException
 	 */
-	protected function removeEntity(Id $id): void {
+	protected function removeEntity(Id $id): never {
 		throw new LemuriaException('Removing entities is intentionally not implemented.');
 	}
 

@@ -4,7 +4,9 @@ namespace Lemuria\Engine;
 
 use Psr\Log\LogLevel;
 
+use Lemuria\Engine\Message\Section;
 use Lemuria\Id;
+use Lemuria\Model\Domain;
 use Lemuria\Serializable;
 
 /**
@@ -12,25 +14,25 @@ use Lemuria\Serializable;
  */
 interface Message extends \Stringable, Serializable
 {
-	public const ERROR = LogLevel::ERROR;
+	public final const ERROR = LogLevel::ERROR;
 
-	public const EVENT = LogLevel::WARNING;
+	public final const EVENT = LogLevel::WARNING;
 
-	public const FAILURE = LogLevel::NOTICE;
+	public final const FAILURE = LogLevel::NOTICE;
 
-	public const SUCCESS = LogLevel::INFO;
+	public final const SUCCESS = LogLevel::INFO;
 
-	public const DEBUG = LogLevel::DEBUG;
+	public final const DEBUG = LogLevel::DEBUG;
 
 	public function Id(): Id;
 
 	public function Level(): string;
 
-	public function Report(): int;
+	public function Report(): Domain;
 
 	public function Entity(): Id;
 
-	public function Section(): int;
+	public function Section(): Section;
 
 	public function setId(Id $id): Message;
 

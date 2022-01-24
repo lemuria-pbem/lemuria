@@ -2,14 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-/**
- * Defines reordering constants.
- */
-interface Reorder
+enum Reorder : int
 {
-	const AFTER = 1;
+	case AFTER = 1;
 
-	const BEFORE = -1;
+	case BEFORE = -1;
 
-	const FLIP = 0;
+	case FLIP = 0;
 }
