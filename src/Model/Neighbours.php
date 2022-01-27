@@ -19,30 +19,39 @@ class Neighbours implements \ArrayAccess, \Countable
 
 	/**
 	 * Check if a location in the specified direction exists.
+	 *
+	 * @param Direction|string $offset
 	 */
 	#[Pure] public function offsetExists(mixed $offset): bool {
-		return isset($this->locations[$offset]);
+		return isset($this->locations[$this->offset($offset)]);
 	}
 
 	/**
 	 * Get the location in the specified direction.
+	 *
+	 * @param Direction|string $offset
 	 */
 	#[Pure] public function offsetGet(mixed $offset): ?Location {
-		return $this->locations[$offset] ?? null;
+		return $this->locations[$this->offset($offset)] ?? null;
 	}
 
 	/**
 	 * Set the location in the specified direction.
+	 *
+	 * @param Direction|string $offset
+	 * @param Location $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
-		$this->locations[$offset] = $value;
+		$this->locations[$this->offset($offset)] = $value;
 	}
 
 	/**
 	 * Unset the location in the specified direction.
+	 *
+	 * @param Direction|string $offset
 	 */
 	public function offsetUnset(mixed $offset): void {
-		unset($this->locations[$offset]);
+		unset($this->locations[$this->offset($offset)]);
 	}
 
 	/**
@@ -74,5 +83,9 @@ class Neighbours implements \ArrayAccess, \Countable
 			}
 		}
 		throw new NeighbourException($neighbour);
+	}
+
+	private function offset(mixed $offset): string {
+		return $offset instanceof Direction ? $offset->value : $offset;
 	}
 }

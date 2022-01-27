@@ -163,7 +163,7 @@ final class Lemuria
 
 	private readonly Catalog $catalog;
 
-	private readonly Debut $debut;
+	private Debut $debut;
 
 	private readonly Game $game;
 

@@ -21,9 +21,11 @@ final class Dictionary
 		}
 	}
 
-	#[Pure] public function has(string $keyPath, Singleton|string|int|null $index = null): bool {
+	#[Pure] public function has(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): bool {
 		if ($index instanceof Singleton) {
 			$index = getClass($index);
+		} elseif ($index instanceof \BackedEnum) {
+			$index = $index->value;
 		}
 		$default = $index === null ? $keyPath : $keyPath . '.' . $index;
 		return $this->get($keyPath, $index) !== $default;
@@ -32,9 +34,11 @@ final class Dictionary
 	/**
 	 * Get a string.
 	 */
-	#[Pure] public function get(string $keyPath, Singleton|string|int|null $index = null): string {
+	#[Pure] public function get(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): string {
 		if ($index instanceof Singleton) {
 			$index = getClass($index);
+		} elseif ($index instanceof \BackedEnum) {
+			$index = $index->value;
 		}
 		$strings =& self::$strings;
 		$default = $index === null ? $keyPath : $keyPath . '.' . $index;
