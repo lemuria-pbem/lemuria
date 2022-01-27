@@ -4,6 +4,10 @@ namespace Lemuria\Model\World;
 
 enum Direction : string
 {
+	public final const IN_DOCK = self::NONE;
+
+	public final const ROUTE_STOP = self::NONE;
+
 	case NONE = '';
 
 	case NORTH = 'N';
