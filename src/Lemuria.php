@@ -163,7 +163,7 @@ final class Lemuria
 
 	private readonly Catalog $catalog;
 
-	private Debut $debut;
+	private readonly Debut $debut;
 
 	private readonly Game $game;
 
@@ -286,7 +286,7 @@ final class Lemuria
 
 	public static function init(Config $config): void {
 		self::$instance         = new self($config);
-		self::$instance->debut  = $config->Debut();
+		//self::$instance->debut  = $config->Debut();
 		self::$instance->orders = $config->Orders();
 		self::$instance->report = $config->Report();
 		self::$instance->score  = $config->Score();

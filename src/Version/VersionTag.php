@@ -4,7 +4,7 @@ namespace Lemuria\Version;
 
 final class VersionTag implements \Stringable
 {
-	public function __construct(public string $name, public string $version) {
+	public function __construct(public readonly string $name, public readonly string $version) {
 	}
 
 	public function __toString(): string {

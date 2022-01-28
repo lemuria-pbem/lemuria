@@ -6,7 +6,7 @@ use Lemuria\Id;
 
 final class NamedId
 {
-	public function __construct(private Id $id, private string $name) {
+	public function __construct(private readonly Id $id, private readonly string $name) {
 	}
 
 	public function Id(): Id {

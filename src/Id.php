@@ -26,7 +26,7 @@ use Lemuria\Exception\IdException;
 	/**
 	 * Create a Base36 ID from its integer representation.
 	 */
-	#[Pure] public function __construct(private int $id) {
+	#[Pure] public function __construct(private readonly int $id) {
 	}
 
 	/**
