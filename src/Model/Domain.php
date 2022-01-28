@@ -15,4 +15,6 @@ enum Domain : int
 	case VESSEL = 500;
 
 	case CONTINENT = 600;
+
+	case UNICUM = 700;
 }
