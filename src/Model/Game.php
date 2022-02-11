@@ -73,6 +73,11 @@ interface Game
 	public function getHostilities(): array;
 
 	/**
+	 * Get the unica data.
+	 */
+	public function getUnica(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -141,4 +146,9 @@ interface Game
 	 * Set the hostilities' data.
 	 */
 	public function setHostilities(array $hostilities): Game;
+
+	/**
+	 * Set the unica data.
+	 */
+	public function setUnica(array $unica): Game;
 }
