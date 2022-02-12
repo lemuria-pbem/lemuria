@@ -35,32 +35,31 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	}
 
 	/**
-	 * Check if an offset is in the set.
+	 * Check if an entity is in the set.
 	 *
-	 * @param int $offset
+	 * @param int|Id $offset
 	 */
 	#[Pure] public function offsetExists(mixed $offset): bool {
-		return $offset >= 0 && $offset < $this->count;
+		$id = $offset instanceof Id ? $offset->Id() : $offset;
+		return isset($this->entities[$id]);
 	}
 
 	/**
 	 * Get an entity from the set.
 	 *
-	 * @param int $offset
-	 * @throws \OutOfBoundsException
+	 * @param int|Id $offset
+	 * @throws EntitySetException
 	 */
 	public function offsetGet(mixed $offset): Entity {
-		if ($this->offsetExists($offset)) {
-			return $this->get($this->entities[$this->indices[$offset]]);
-		}
-		throw new \OutOfBoundsException();
+		$id = $offset instanceof Id ? $offset : new Id($offset);
+		return $this->get($id);
 	}
 
 	/**
 	 * Not implemented.
 	 *
-	 * @param int $offset
-	 * @param Entity $value
+	 * @param mixed $offset
+	 * @param mixed $value
 	 * @throws LemuriaException
 	 */
 	public function offsetSet(mixed $offset, mixed $value): never {
@@ -70,15 +69,12 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Remove an entity from the set.
 	 *
-	 * @param int $offset
-	 * @throws \OutOfBoundsException
+	 * @param int|Id $offset
+	 * @throws EntitySetException
 	 */
 	public function offsetUnset(mixed $offset): void {
-		if ($this->offsetExists($offset)) {
-			$this->removeEntity($this->entities[$this->indices[$offset]]);
-		} else {
-			throw new \OutOfBoundsException();
-		}
+		$id = $offset instanceof Id ? $offset : new Id($offset);
+		$this->removeEntity($id);
 	}
 
 	public function current(): ?Entity {
