@@ -88,6 +88,14 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Implementation of multibyte str_pad.
+ */
+#[Pure] function mbStrPad(string $string, int $length, string $char = ' ', int $padType = STR_PAD_RIGHT): string {
+	$additional = strlen($string) - mb_strlen($string);
+	return str_pad($string, $length + $additional, $char, $padType);
+}
+
+/**
  * Implementation of multibyte ucfirst.
  */
 #[Pure] function mbUcFirst(string $string): string {
