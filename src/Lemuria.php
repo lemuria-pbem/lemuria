@@ -56,11 +56,20 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Return the class namespace.
+ */
+#[Pure] function getNamespace(object|string $object): string {
+	$class = is_object($object) ? $object::class : $object;
+	$i     = strrpos($class, '\\');
+	return $i > 0 ? substr($class, 0, $i) : $class;
+}
+
+/**
  * Return the class name of an object without its namespace.
  */
 #[Pure] function getClass(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
-	$i     = strripos($class, '\\');
+	$i     = strrpos($class, '\\');
 	return $i > 0 ? substr($class, $i + 1) : $class;
 }
 
