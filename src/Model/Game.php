@@ -151,4 +151,9 @@ interface Game
 	 * Set the unica data.
 	 */
 	public function setUnica(array $unica): Game;
+
+	/**
+	 * Migrate entities if needed.
+	 */
+	public function migrate(): Game;
 }
