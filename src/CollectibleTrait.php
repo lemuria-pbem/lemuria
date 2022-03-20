@@ -43,4 +43,22 @@ trait CollectibleTrait
 		}
 		return $this->collectors[$relation];
 	}
+
+	/**
+	 * @param string[] $availableCollectors
+	 */
+	public function findCollector(array $availableCollectors): Collector {
+		foreach ($availableCollectors as $collector) {
+			$collector = getClass($collector);
+			if ($this->hasCollector($collector)) {
+				return $this->getCollector($collector);
+			}
+		}
+
+		$set = [];
+		foreach ($availableCollectors as $collector) {
+			$set[] = getClass($collector);
+		}
+		throw new LemuriaException('This Entity has no Collector from the set [' . implode(', ', $set) . '].');
+	}
 }
