@@ -33,6 +33,8 @@ final class Dictionary
 
 	/**
 	 * Get a string.
+	 *
+	 * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
 	 */
 	#[Pure] public function get(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): string {
 		if ($index instanceof Singleton) {

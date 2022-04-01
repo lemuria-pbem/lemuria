@@ -57,6 +57,8 @@ use Lemuria\Version\VersionFinder;
 
 /**
  * Return the class namespace.
+ *
+ * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
 #[Pure] function getNamespace(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
@@ -66,6 +68,8 @@ use Lemuria\Version\VersionFinder;
 
 /**
  * Return the class name of an object without its namespace.
+ *
+ * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
 #[Pure] function getClass(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
