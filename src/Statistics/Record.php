@@ -13,7 +13,5 @@ interface Record
 
 	public function Identifiable(): ?Identifiable;
 
-	public function Round(): int;
-
 	public function Data(): ?Data;
 }
