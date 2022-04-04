@@ -10,7 +10,7 @@ use Lemuria\Statistics\Data;
  */
 class Number implements Data
 {
-	public function __construct(public int|float $value, public int|float|null $change = null) {
+	public function __construct(public int|float $value = 0, public int|float|null $change = null) {
 	}
 
 	public function serialize(): array {

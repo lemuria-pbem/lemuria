@@ -7,11 +7,31 @@ use Lemuria\Identifiable;
 /**
  * Represents statistical data records.
  */
-interface Record
+class Record
 {
-	public function Key(): string;
+	private ?Data $data = null;
 
-	public function Identifiable(): ?Identifiable;
+	public static function from(Metrics $metrics): Record {
+		return new self($metrics->Subject(), $metrics->Entity());
+	}
 
-	public function Data(): ?Data;
+	public function __construct(private string $key, private ?Identifiable $entity = null) {
+	}
+
+	public function Key(): string {
+		return $this->key;
+	}
+
+	public function Entity(): ?Identifiable {
+		return $this->entity;
+	}
+
+	public function Data(): ?Data {
+		return $this->data;
+	}
+
+	public function setData(?Data $data): Record {
+		$this->data = $data;
+		return $this;
+	}
 }
