@@ -9,6 +9,7 @@ use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
 use Lemuria\Log;
 use Lemuria\Registry;
+use Lemuria\Statistics;
 
 interface Config
 {
@@ -33,6 +34,8 @@ interface Config
 	public function Hostilities(): Hostilities;
 
 	public function Registry(): Registry;
+
+	public function Statistics(): Statistics;
 
 	public function Log(): Log;
 }

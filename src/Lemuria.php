@@ -202,6 +202,8 @@ final class Lemuria
 
 	private readonly Registry $registry;
 
+	private readonly Statistics $statistics;
+
 	private readonly Version $version;
 
 	/**
@@ -299,6 +301,13 @@ final class Lemuria
 	}
 
 	/**
+	 * Get the statistics.
+	 */
+	public static function Statistics(): Statistics {
+		return self::getInstance()->statistics;
+	}
+
+	/**
 	 * @return Version
 	 */
 	public static function Version(): Version {
@@ -324,6 +333,7 @@ final class Lemuria
 		self::Score()->load();
 		self::Hostilities()->load();
 		self::World()->load();
+		self::Statistics()->load();
 	}
 
 	/**
@@ -338,6 +348,7 @@ final class Lemuria
 		self::Score()->save();
 		self::Hostilities()->save();
 		self::World()->save();
+		self::Statistics()->save();
 	}
 
 	/**
@@ -364,6 +375,7 @@ final class Lemuria
 			$this->world       = $config->World();
 			$this->hostilities = $config->Hostilities();
 			$this->registry    = $config->Registry();
+			$this->statistics  = $config->Statistics();
 			$this->version     = new Version();
 			$this->addVersions();
 		} catch (\Exception $e) {
@@ -372,8 +384,9 @@ final class Lemuria
 	}
 
 	private function addVersions(): void {
-		$versionFinder                 = new VersionFinder(__DIR__ . '/..');
-		$this->version[Version::BASE]  = $versionFinder->get();
-		$this->version[Version::MODEL] = $this->catalog->getVersion();
+		$versionFinder                      = new VersionFinder(__DIR__ . '/..');
+		$this->version[Version::BASE]       = $versionFinder->get();
+		$this->version[Version::MODEL]      = $this->catalog->getVersion();
+		$this->version[Version::STATISTICS] = $this->statistics->getVersion();
 	}
 }

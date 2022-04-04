@@ -14,13 +14,15 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 
 	public final const MODEL = 'model';
 
+	public final const STATISTICS = 'statistics';
+
 	public final const ENGINE = 'engine';
 
 	public final const RENDERERS = 'renderers';
 
 	public final const GAME = 'game';
 
-	private const KEYS = [self::BASE, self::MODEL, self::ENGINE, self::RENDERERS, self::GAME];
+	private const KEYS = [self::BASE, self::MODEL, self::STATISTICS, self::ENGINE, self::RENDERERS, self::GAME];
 
 	private array $versions;
 

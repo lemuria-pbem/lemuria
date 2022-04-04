@@ -18,6 +18,8 @@ global eindeutige ID), sowie damit erstellbare _EntitySet_-Sammlungen
 Inventars
 - Definitionen von _Calendar_ und _World_ zur Abbildung von Spielzügen in einer
 veränderlichen Spielwelt in einem Koordinatensystem
+- Message-Queue-Implementierung _Statistics_ für Statistikfunktionen als Basis
+für die Generierung einer Spielstatistik in Auswertungen
 
 Lemuria unterstützt somit unterschiedliche Implementierungen von Spielwelten und
 Spielregeln, die sich an den Prinzipien der Vorbilder wie Eressea und Fantasya
