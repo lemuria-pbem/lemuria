@@ -13,4 +13,6 @@ interface Metrics
 	public function Entity(): ?Identifiable;
 
 	public function Subject(): string;
+
+	public function Data(): ?Data;
 }
