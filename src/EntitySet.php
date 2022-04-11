@@ -223,6 +223,16 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	}
 
 	/**
+	 * Get the last Entity.
+	 */
+	protected function last(): ?Id {
+		if ($this->count > 0) {
+			return $this->entities[$this->indices[$this->count - 1]];
+		}
+		return null;
+	}
+
+	/**
 	 * Add an entity's ID to the set.
 	 */
 	protected function addEntity(Id $id): void {
