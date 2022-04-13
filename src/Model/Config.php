@@ -7,6 +7,7 @@ use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
+use Lemuria\FeatureFlag;
 use Lemuria\Log;
 use Lemuria\Registry;
 use Lemuria\Statistics;
@@ -38,4 +39,6 @@ interface Config
 	public function Statistics(): Statistics;
 
 	public function Log(): Log;
+
+	public function FeatureFlag(): FeatureFlag;
 }

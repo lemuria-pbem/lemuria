@@ -178,6 +178,8 @@ final class Lemuria
 {
 	private static ?self $instance = null;
 
+	private readonly FeatureFlag $featureFlag;
+
 	private readonly Builder $builder;
 
 	private readonly Calendar $calendar;
@@ -205,6 +207,13 @@ final class Lemuria
 	private readonly Statistics $statistics;
 
 	private readonly Version $version;
+
+	/**
+	 * Get the feature flags.
+	 */
+	public static function FeatureFlag(): FeatureFlag {
+		return self::getInstance()->featureFlag;
+	}
 
 	/**
 	 * Get the builder.
@@ -366,6 +375,7 @@ final class Lemuria
 
 	private function __construct(Config $config) {
 		try {
+			$this->featureFlag = $config->FeatureFlag();
 			$this->log         = $config->Log()->getLogger();
 			$this->builder     = $config->Builder();
 			$this->game        = $config->Game();
