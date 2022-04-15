@@ -6,6 +6,8 @@ enum SortMode
 {
 	case BY_ID;
 
+	case BY_PARTY;
+
 	case BY_RESIDENTS;
 
 	case NORTH_TO_SOUTH;
