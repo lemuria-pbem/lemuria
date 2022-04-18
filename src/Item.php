@@ -17,7 +17,7 @@ abstract class Item implements \Stringable
 	/**
 	 * @noinspection PhpAttributeCanBeAddedToOverriddenMemberInspection
 	 */
-	#[Pure] protected function __construct(private Singleton $object, private int $count = 0) {
+	#[Pure] protected function __construct(private readonly Singleton $object, private int $count = 0) {
 	}
 
 	#[Pure] public function __toString(): string {

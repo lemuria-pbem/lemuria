@@ -15,7 +15,7 @@ class Record
 		return new self($metrics->Subject(), $metrics->Entity());
 	}
 
-	public function __construct(private string $subject, private ?Identifiable $entity = null) {
+	public function __construct(private readonly string $subject, private readonly ?Identifiable $entity = null) {
 	}
 
 	public function Subject(): string {

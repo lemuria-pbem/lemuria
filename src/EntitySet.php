@@ -31,7 +31,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Init the set for a Collector.
 	 */
-	#[Pure] public function __construct(private ?Collector $collector = null) {
+	#[Pure] public function __construct(private readonly ?Collector $collector = null) {
 	}
 
 	/**
