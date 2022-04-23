@@ -101,6 +101,15 @@ use Lemuria\Version\VersionFinder;
 }
 
 /**
+ * Checks if a number is greater than zero, less than zero or equal to zero.
+ *
+ * @return int 1 if argument is greater than zero, -1 if argument is less than zero, 0 otherwise.
+ */
+#[Pure] function direction(mixed $number): int {
+	return $number > 0 ? 1 : ($number < 0 ? -1 : 0);
+}
+
+/**
  * Implementation of multibyte str_pad.
  */
 #[Pure] function mbStrPad(string $string, int $length, string $char = ' ', int $padType = STR_PAD_RIGHT): string {
