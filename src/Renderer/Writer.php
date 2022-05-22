@@ -9,14 +9,19 @@ use Lemuria\Version\VersionTag;
 interface Writer
 {
 	/**
-	 * Set a message filter to prevent output of matching messages.
+	 * Set the path factory to use.
+	 */
+	public function __construct(PathFactory $pathFactory);
+
+	/**
+	 * Set a filter for content output.
 	 */
 	public function setFilter(Filter $filter): Writer;
 
 	/**
-	 * Render a party's report.
+	 * Render an entities' report.
 	 */
-	public function render(Id $party): Writer;
+	public function render(Id $entity): Writer;
 
 	/**
 	 * Get the version of the package of this writer.
