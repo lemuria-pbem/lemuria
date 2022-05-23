@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Factory;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\SingletonException;
 use Lemuria\Model\Builder;
@@ -18,7 +16,7 @@ class DefaultBuilder implements Builder
 
 	private readonly SingletonMap $singletonMap;
 
-	#[Pure] public function __construct() {
+	public function __construct() {
 		$this->singletonCache = new SingletonCache();
 		$this->singletonMap   = new SingletonMap();
 	}

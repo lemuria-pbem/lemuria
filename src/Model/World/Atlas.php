@@ -22,7 +22,7 @@ class Atlas extends EntitySet
 		return $this;
 	}
 
-	public function remove(Location $location): Atlas {
+	public function remove(Location $location): self {
 		parent::removeEntity($location->Id());
 		return $this;
 	}
@@ -30,7 +30,7 @@ class Atlas extends EntitySet
 	/**
 	 * Sort the locations.
 	 */
-	public function sort(SortMode $mode = SortMode::BY_ID): Atlas {
+	public function sort(SortMode $mode = SortMode::BY_ID): self {
 		switch ($mode) {
 			case SortMode::BY_ID :
 				$this->sortUsing(new ById());

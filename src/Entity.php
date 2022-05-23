@@ -2,9 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\IdException;
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Model\NamedId;
@@ -35,9 +32,9 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 
 	/**
 	 * Get a plain data array of the model's data.
+	 *
+	 * @return array<string, mixed>
 	 */
-	#[ArrayShape(['id' => 'int', 'name' => 'string', 'description' => 'string'])]
-	#[Pure]
 	public function serialize(): array {
 		return [
 			'id'          => $this->Id()->Id(),
@@ -48,17 +45,19 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 
 	/**
 	 * Restore the model's data from serialized data.
+	 *
+	 * @param array<string, mixed> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
 		return $this->setId(new Id($data['id']))->setName($data['name'])->setDescription($data['description']);
 	}
 
-	#[Pure] public function Name(): string {
+	public function Name(): string {
 		return $this->name;
 	}
 
-	#[Pure] public function Description(): string {
+	public function Description(): string {
 		return $this->description;
 	}
 
@@ -75,14 +74,14 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	/**
 	 * Get name and ID.
 	 */
-	#[Pure] public function __toString(): string {
+	public function __toString(): string {
 		return $this->Name() . ' [' . $this->Id() . ']';
 	}
 
 	/**
 	 * Check that a serialized data array is valid.
 	 *
-	 * @param array (string=>mixed) &$data
+	 * @param array<string, mixed> $data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(array &$data): void {

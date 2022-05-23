@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\ItemException;
 use Lemuria\Exception\LemuriaException;
 
@@ -14,27 +12,24 @@ use Lemuria\Exception\LemuriaException;
  */
 abstract class Item implements \Stringable
 {
-	/**
-	 * @noinspection PhpAttributeCanBeAddedToOverriddenMemberInspection
-	 */
-	#[Pure] protected function __construct(private readonly Singleton $object, private int $count = 0) {
+	protected function __construct(private readonly Singleton $object, private int $count = 0) {
 	}
 
-	#[Pure] public function __toString(): string {
+	public function __toString(): string {
 		return $this->count . ' ' . $this->object;
 	}
 
 	/**
 	 * Get the item size.
 	 */
-	#[Pure] public function Count(): int {
+	public function Count(): int {
 		return $this->count;
 	}
 
 	/**
 	 * Get the item object.
 	 */
-	#[Pure] public function getObject(): Singleton {
+	public function getObject(): Singleton {
 		return $this->object;
 	}
 

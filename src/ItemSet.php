@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\ItemSetException;
 use Lemuria\Exception\ItemSetFillException;
 use Lemuria\Exception\LemuriaException;
@@ -11,6 +9,9 @@ use Lemuria\Exception\UnserializeItemSetException;
 
 /**
  * Implementation of a set of items, where an item is a quantity of something.
+ *
+ * @\ArrayAccess <Item|Singleton|string, Item>
+ * @\Iterator <string, Item>
  */
 abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
@@ -23,7 +24,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	private array $indices = [];
 
 	/**
-	 * @var array(string=>Item)
+	 * @var array<string, Item>
 	 */
 	private array $items = [];
 
@@ -32,7 +33,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 *
 	 * @param Singleton|string $offset
 	 */
-	#[Pure] public function offsetExists(mixed $offset): bool {
+	public function offsetExists(mixed $offset): bool {
 		$class = $this->getClass($offset);
 		return isset($this->items[$class]);
 	}
@@ -86,23 +87,23 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 		}
 	}
 
-	#[Pure] public function current(): ?Item {
+	public function current(): ?Item {
 		$key = $this->key();
 		return $key !== null ? $this->items[$key] : null;
 	}
 
-	#[Pure] public function key(): ?string {
+	public function key(): ?string {
 		return $this->indices[$this->index] ?? null;
 	}
 
 	/**
 	 * Get a plain data array of the model's data.
 	 *
-	 * @return array[string=>int]
+	 * @return array<string, int>
 	 */
-	#[Pure] public function serialize(): array {
+	public function serialize(): array {
 		$data = [];
-		foreach ($this->items as $class => $item /* @var Item $item */) {
+		foreach ($this->items as $class => $item) {
 			$data[$class] = $item->Count();
 		}
 		return $data;
@@ -111,7 +112,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param array[string=>int] $data
+	 * @param array<string, int> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->clear();
@@ -165,7 +166,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 		if ($item->Count() > 0) {
 			$class = getClass($item->getObject());
 			if (isset($this->items[$class])) {
-				$currentItem = $this->items[$class]; /* @var Item $currentItem */
+				$currentItem = $this->items[$class];
 				$currentItem->addItem($item);
 			} else {
 				$this->items[$class] = $item;
@@ -186,7 +187,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 			if (!isset($this->items[$class])) {
 				throw new ItemSetException($item);
 			}
-			$currentItem = $this->items[$class]; /* @var Item $currentItem */
+			$currentItem = $this->items[$class];
 			$currentItem->removeItem($item);
 			if ($currentItem->Count() === 0) {
 				$this->delete($class);
@@ -213,7 +214,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Get the class of an offset.
 	 */
-	#[Pure] private function getClass(Singleton|string $offset): string {
+	private function getClass(Singleton|string $offset): string {
 		return $offset instanceof Singleton ? getClass($offset) : getClass((string)$offset);
 	}
 }

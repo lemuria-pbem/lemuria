@@ -2,9 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Exception\UnserializeException;
@@ -40,21 +37,20 @@ abstract class BaseMap implements World
 	private Coordinates $origin;
 
 	/**
-	 * @var array(int=>Coordinates)
+	 * @var array<int, Coordinates>
 	 */
 	private array $coordinates = [];
 
 	/**
 	 * Create an empty map.
 	 */
-	#[Pure] public function __construct() {
+	public function __construct() {
 		$this->origin = new MapCoordinates();
 	}
 
 	/**
-	 * Get a plain data array of the model's data.
+	 * @return array<string, array>
 	 */
-	#[ArrayShape(['origin' => 'array', 'map' => 'array'])]
 	public function serialize(): array {
 		$map = [];
 		foreach ($this->map as $ids) {
@@ -72,8 +68,7 @@ abstract class BaseMap implements World
 	}
 
 	/**
-	 * Restore the model's data from serialized data.
-	 *
+	 * @param array<string, array> $data
 	 * @throws UnserializeException
 	 */
 	public function unserialize(array $data): Serializable {
@@ -118,7 +113,7 @@ abstract class BaseMap implements World
 	/**
 	 * Check if a direction is valid in this world.
 	 */
-	#[Pure] public function isDirection(Direction $direction): bool {
+	public function isDirection(Direction $direction): bool {
 		return in_array($direction, $this->directions);
 	}
 
@@ -164,7 +159,7 @@ abstract class BaseMap implements World
 	/**
 	 * Check that a serialized data array is valid.
 	 *
-	 * @param array(string=>mixed) $data
+	 * @param array<string, array> $data
 	 * @throws UnserializeEntityException
 	 */
 	private function validateSerializedData(&$data): void {

@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
-use JetBrains\PhpStorm\ExpectedValues;
-
 use PHPUnit\Framework\TestCase;
 
 abstract class Test extends TestCase
@@ -16,9 +14,7 @@ abstract class Test extends TestCase
 	 * @param string|null $type
 	 * @param string $message
 	 */
-	public static function assertArray(mixed $actual, int $count = 0,
-									   #[ExpectedValues(values: ['array', 'bool', 'float', 'int', 'string'])] string $type = null,
-									   string $message = ''): void {
+	public static function assertArray(mixed $actual, int $count = 0, string $type = null, string $message = ''): void {
 		parent::assertIsArray($actual, $message);
 		$message = $message ?? 'Expected array of ' . $count . ' elements.';
 		parent::assertSame($count, count($actual), $message);

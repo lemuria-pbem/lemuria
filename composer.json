@@ -11,7 +11,7 @@
 		}
 	],
 	"version": "0.12.2",
-	"time": "2022-05-22",
+	"time": "2022-05-23",
 
 	"require": {
 		"php": "~8.1",
@@ -19,7 +19,6 @@
 		"psr/log": "~3.0"
 	},
 	"require-dev": {
-		"jetbrains/phpstorm-attributes": "~1.0",
 		"phpunit/phpunit": "~9.5"
 	},
 

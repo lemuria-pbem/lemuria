@@ -2,7 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
 use Psr\Log\LoggerInterface;
 
 use Lemuria\Engine\Debut;
@@ -22,7 +21,7 @@ use Lemuria\Version\VersionFinder;
 /**
  * Format a number.
  */
-#[Pure] function number(int|float $number): string {
+function number(int|float $number): string {
 	$formattedNumber = $number < 0 ? '-' : '';
 	$integer         = (int)abs($number);
 	$string          = (string)$integer;
@@ -50,17 +49,15 @@ use Lemuria\Version\VersionFinder;
 /**
  * Check if a type is a namespaced class name.
  */
-#[Pure] function isClass(string $type): bool {
+function isClass(string $type): bool {
 	$n = strlen($type);
 	return $n >= 3 && strpos($type, '\\') >= 1 && strrpos($type, '\\') <= $n - 2;
 }
 
 /**
  * Return the class namespace.
- *
- * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
-#[Pure] function getNamespace(object|string $object): string {
+function getNamespace(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
 	$i     = strrpos($class, '\\');
 	return $i > 0 ? substr($class, 0, $i) : $class;
@@ -68,10 +65,8 @@ use Lemuria\Version\VersionFinder;
 
 /**
  * Return the class name of an object without its namespace.
- *
- * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
  */
-#[Pure] function getClass(object|string $object): string {
+function getClass(object|string $object): string {
 	$class = is_object($object) ? $object::class : $object;
 	$i     = strrpos($class, '\\');
 	return $i > 0 ? substr($class, $i + 1) : $class;
@@ -80,14 +75,14 @@ use Lemuria\Version\VersionFinder;
 /**
  * Checks if a string has a given prefix.
  */
-#[Pure] function hasPrefix(string $prefix, mixed $subject): bool {
+function hasPrefix(string $prefix, mixed $subject): bool {
 	return $prefix === '' || str_starts_with((string)$subject, $prefix);
 }
 
 /**
  * Check if given string represents an integer.
  */
-#[Pure] function isInt(string $subject): bool {
+function isInt(string $subject): bool {
 	return (string)(int)$subject === $subject;
 }
 
@@ -96,7 +91,7 @@ use Lemuria\Version\VersionFinder;
  *
  * @return int 1 if argument is greater or equal to zero, -1 otherwise.
  */
-#[Pure] function sign(mixed $number): int {
+function sign(mixed $number): int {
 	return $number >= 0 ? 1 : -1;
 }
 
@@ -105,14 +100,14 @@ use Lemuria\Version\VersionFinder;
  *
  * @return int 1 if argument is greater than zero, -1 if argument is less than zero, 0 otherwise.
  */
-#[Pure] function direction(mixed $number): int {
+function direction(mixed $number): int {
 	return $number > 0 ? 1 : ($number < 0 ? -1 : 0);
 }
 
 /**
  * Implementation of multibyte str_pad.
  */
-#[Pure] function mbStrPad(string $string, int $length, string $char = ' ', int $padType = STR_PAD_RIGHT): string {
+function mbStrPad(string $string, int $length, string $char = ' ', int $padType = STR_PAD_RIGHT): string {
 	$additional = strlen($string) - mb_strlen($string);
 	return str_pad($string, $length + $additional, $char, $padType);
 }
@@ -120,7 +115,7 @@ use Lemuria\Version\VersionFinder;
 /**
  * Implementation of multibyte ucfirst.
  */
-#[Pure] function mbUcFirst(string $string): string {
+function mbUcFirst(string $string): string {
 	$f = mb_strtoupper(mb_substr($string, 0, 1));
 	return $f . mb_substr($string, 1);
 }

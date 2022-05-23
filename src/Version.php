@@ -5,6 +5,10 @@ namespace Lemuria;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Version\VersionTag;
 
+/**
+ * @\ArrayAccess <string, VersionTag>
+ * @\Iterator <string, VersionTag[]>
+ */
 final class Version implements \ArrayAccess, \Countable, \Iterator
 {
 	use CountableTrait;

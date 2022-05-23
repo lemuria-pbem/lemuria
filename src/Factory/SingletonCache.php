@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Factory;
 
-use JetBrains\PhpStorm\Pure;
-
 use function Lemuria\getClass;
 use Lemuria\Singleton;
 
@@ -13,11 +11,11 @@ use Lemuria\Singleton;
 class SingletonCache
 {
 	/**
-	 * @var array(string=>Singleton)
+	 * @var array<string, Singleton>
 	 */
 	private array $cache = [];
 
-	#[Pure] public function get(string $class): ?Singleton {
+	public function get(string $class): ?Singleton {
 		return $this->cache[$class] ?? null;
 	}
 

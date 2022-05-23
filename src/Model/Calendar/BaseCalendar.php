@@ -2,9 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\Calendar;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Lemuria;
 use Lemuria\Model\Calendar;
@@ -34,15 +31,17 @@ class BaseCalendar implements Calendar
 
 	/**
 	 * Get a plain data array of the model's data.
+	 *
+	 * @return array<string, int>
 	 */
-	#[ArrayShape(['round' => 'int'])]
-	#[Pure]
 	public function serialize(): array {
 		return ['round' => $this->round];
 	}
 
 	/**
 	 * Restore the model's data from serialized data.
+	 *
+	 * @param array<string, int> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -53,49 +52,43 @@ class BaseCalendar implements Calendar
 	/**
 	 * Get the month.
 	 */
-	#[Pure] public function Month(): int {
+	public function Month(): int {
 		return (int)($this->r / $this->weeks) % ($this->months * $this->seasons) + 1;
 	}
 
 	/**
 	 * Get the game round.
 	 */
-	#[Pure] public function Round(): int {
+	public function Round(): int {
 		return $this->round;
 	}
 
 	/**
 	 * Get the season.
 	 */
-	#[Pure] public function Season(): int {
+	public function Season(): int {
 		return (int)($this->r / ($this->months * $this->weeks)) % $this->seasons + 1;
 	}
 
 	/**
 	 * Get the week of the month.
 	 */
-	#[Pure] public function Week(): int {
+	public function Week(): int {
 		return $this->r % $this->weeks + 1;
 	}
 
 	/**
 	 * Get the year.
 	 */
-	#[Pure] public function Year(): int {
+	public function Year(): int {
 		return (int)floor($this->r / ($this->seasons * $this->months * $this->weeks)) + 1;
 	}
 
-	/**
-	 * Load game data.
-	 */
 	public function load(): Calendar {
 		$this->unserialize(Lemuria::Game()->getCalendar());
 		return $this;
 	}
 
-	/**
-	 * Save game data.
-	 */
 	public function save(): Calendar {
 		Lemuria::Game()->setCalendar($this->serialize());
 		return $this;
@@ -110,9 +103,7 @@ class BaseCalendar implements Calendar
 	}
 
 	/**
-	 * Check that a serialized data array is valid.
-	 *
-	 * @param array (string=>mixed) &$data
+	 * @param array<string, int> $data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(&$data): void {

@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Model\Exception\NeighbourException;
 use Lemuria\Model\World\Direction;
 
@@ -13,7 +11,7 @@ use Lemuria\Model\World\Direction;
 class Neighbours implements \ArrayAccess, \Countable
 {
 	/**
-	 * @var array(string=>Location)
+	 * @var array<string, Location>
 	 */
 	private array $locations = [];
 
@@ -22,7 +20,7 @@ class Neighbours implements \ArrayAccess, \Countable
 	 *
 	 * @param Direction|string $offset
 	 */
-	#[Pure] public function offsetExists(mixed $offset): bool {
+	public function offsetExists(mixed $offset): bool {
 		return isset($this->locations[$this->offset($offset)]);
 	}
 
@@ -31,7 +29,7 @@ class Neighbours implements \ArrayAccess, \Countable
 	 *
 	 * @param Direction|string $offset
 	 */
-	#[Pure] public function offsetGet(mixed $offset): ?Location {
+	public function offsetGet(mixed $offset): ?Location {
 		return $this->locations[$this->offset($offset)] ?? null;
 	}
 
@@ -57,16 +55,16 @@ class Neighbours implements \ArrayAccess, \Countable
 	/**
 	 * Count the locations.
 	 */
-	#[Pure] public function count(): int {
+	public function count(): int {
 		return count($this->locations);
 	}
 
 	/**
 	 * Get all neighbors.
 	 *
-	 * @return array(string=>Location)
+	 * @return array<string, Location>
 	 */
-	#[Pure] public function getAll(): array {
+	public function getAll(): array {
 		return $this->locations;
 	}
 
@@ -77,9 +75,9 @@ class Neighbours implements \ArrayAccess, \Countable
 	 */
 	public function getDirection(Location $neighbour): Direction
 	{
-		foreach ($this->locations as $direction => $location /* @var Direction $direction */) {
+		foreach ($this->locations as $direction => $location) {
 			if ($location === $neighbour) {
-				return $direction;
+				return Direction::from($direction);
 			}
 		}
 		throw new NeighbourException($neighbour);

@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\EmptySetException;
 use Lemuria\Exception\EntitySetException;
 use Lemuria\Exception\EntitySetReplaceException;
@@ -12,6 +10,9 @@ use Lemuria\Exception\UnserializeEntitySetException;
 
 /**
  * A simple set of entities.
+ *
+ * @\ArrayAccess<int|Id, Entity>
+ * @\Iterator<int, Entity>
  */
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
@@ -31,7 +32,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Init the set for a Collector.
 	 */
-	#[Pure] public function __construct(private readonly ?Collector $collector = null) {
+	public function __construct(private readonly ?Collector $collector = null) {
 	}
 
 	/**
@@ -39,7 +40,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 *
 	 * @param int|Id $offset
 	 */
-	#[Pure] public function offsetExists(mixed $offset): bool {
+	public function offsetExists(mixed $offset): bool {
 		$id = $offset instanceof Id ? $offset->Id() : $offset;
 		return isset($this->entities[$id]);
 	}
@@ -82,7 +83,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 		return $key ? $this->get($this->entities[$key]) : null;
 	}
 
-	#[Pure] public function key(): ?int {
+	public function key(): ?int {
 		return $this->indices[$this->index] ?? null;
 	}
 
@@ -91,9 +92,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 *
 	 * @return int[]
 	 */
-	#[Pure] public function serialize(): array {
+	public function serialize(): array {
 		$data = [];
-		foreach ($this->entities as $id /** @var Id $id */) {
+		foreach ($this->entities as $id /* @var Id $id */) {
 			$data[] = $id->Id();
 		}
 		return $data;
@@ -121,7 +122,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	/**
 	 * Check if an entity belongs to the set.
 	 */
-	#[Pure] public function has(Id $id): bool {
+	public function has(Id $id): bool {
 		return isset($this->entities[$id->Id()]);
 	}
 
@@ -141,8 +142,8 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	 */
 	public function addCollectorsToAll(): EntitySet {
 		if ($this->hasCollector()) {
-			foreach ($this->entities as $id/* @var Id $id */) {
-				/* @var Collectible $collectible */
+			foreach ($this->entities as $id /* @var Id $id */) {
+				/** @var Collectible $collectible */
 				$collectible = $this->get($id);
 				$collectible->addCollector($this->collector());
 			}

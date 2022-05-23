@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
-use JetBrains\PhpStorm\Pure;
-
 use function Lemuria\getClass;
 use Lemuria\Lemuria;
 use Lemuria\Singleton;
@@ -21,7 +19,7 @@ final class Dictionary
 		}
 	}
 
-	#[Pure] public function has(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): bool {
+	public function has(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): bool {
 		if ($index instanceof Singleton) {
 			$index = getClass($index);
 		} elseif ($index instanceof \BackedEnum) {
@@ -33,10 +31,8 @@ final class Dictionary
 
 	/**
 	 * Get a string.
-	 *
-	 * @noinspection PhpPureFunctionMayProduceSideEffectsInspection
 	 */
-	#[Pure] public function get(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): string {
+	public function get(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): string {
 		if ($index instanceof Singleton) {
 			$index = getClass($index);
 		} elseif ($index instanceof \BackedEnum) {

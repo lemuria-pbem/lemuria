@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Storage;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileException;
 use Lemuria\Exception\FileNotFoundException;
@@ -14,7 +12,6 @@ class FileProvider implements Provider
 {
 	private bool $isAvailable = false;
 
-	#[Pure]
 	public function __construct(private string $directory) {
 	}
 

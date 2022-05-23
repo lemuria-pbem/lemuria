@@ -10,26 +10,26 @@ use Lemuria\Exception\LemuriaException;
 trait CollectibleTrait
 {
 	/**
-	 * @var array(string=>Collector)
+	 * @var array<string, Collector>
 	 */
 	private array $collectors = [];
 
 	public function addCollector(Collector $collector): Collectible {
 		$this->collectors[$collector->getRelation()] = $collector;
-		/* @var Collectible $this */
+		/** @var Collectible $this */
 		return $this;
 	}
 
 	public function removeCollector(Collector $collector): Collectible {
 		$relation = $collector->getRelation();
 		if (isset($this->collectors[$relation])) {
-			/* @var Collector $oldCollector */
+			/** @var Collector $oldCollector */
 			$oldCollector = $this->collectors[$relation];
 			if ($oldCollector->Id()->Id() === $collector->Id()->Id()) {
 				unset($this->collectors[$relation]);
 			}
 		}
-		/* @var Collectible $this */
+		/** @var Collectible $this */
 		return $this;
 	}
 

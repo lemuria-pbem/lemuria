@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Engine\Instructions;
 
 class StringList implements Instructions
@@ -17,10 +15,6 @@ class StringList implements Instructions
 	 */
 	private array $list = [];
 
-	/**
-	 * @param int $offset
-	 */
-	#[Pure]
 	public function offsetExists(mixed $offset): bool {
 		return isset($this->list[$offset]);
 	}
@@ -33,7 +27,6 @@ class StringList implements Instructions
 	}
 
 	/**
-	 * @param int $offset
 	 * @param \Stringable|string $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
@@ -45,9 +38,6 @@ class StringList implements Instructions
 		}
 	}
 
-	/**
-	 * @param int $offset
-	 */
 	public function offsetUnset(mixed $offset): void {
 		if ($this->offsetExists($offset)) {
 			unset($this->list[$offset]);
@@ -65,7 +55,7 @@ class StringList implements Instructions
 	 *
 	 * @return string[]
 	 */
-	#[Pure] public function serialize(): array {
+	public function serialize(): array {
 		return $this->list;
 	}
 

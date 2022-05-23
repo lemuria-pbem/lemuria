@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 /**
  * A class that implements this Singleton is guaranteed to have only one instance.
  *
@@ -14,5 +12,5 @@ interface Singleton extends \Stringable
 	/**
 	 * Get the class of the singleton.
 	 */
-	#[Pure] public function __toString(): string;
+	public function __toString(): string;
 }

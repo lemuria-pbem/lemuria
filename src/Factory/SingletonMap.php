@@ -10,22 +10,22 @@ use Lemuria\Exception\SingletonException;
 class SingletonMap
 {
 	/**
-	 * @var array(int=>string)
+	 * @var array<int, string>
 	 */
 	private array $groups = [];
 
 	/**
-	 * @var array(int=>int)
+	 * @var array<int, int>
 	 */
 	private array $namespaceIndex = [];
 
 	/**
-	 * @var array(int=>string)
+	 * @var array<int, string>
 	 */
 	private array $namespaces = [];
 
 	/**
-	 * @var array(string=>int)
+	 * @var array<string, int>
 	 */
 	private array $map = [];
 

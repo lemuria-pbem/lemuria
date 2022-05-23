@@ -2,9 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\EntitySet;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeException;
@@ -18,11 +15,11 @@ abstract class Annals extends EntitySet
 	use SerializableTrait;
 
 	/**
-	 * @var array(int=>int)
+	 * @var array<int, int>
 	 */
 	private array $round = [];
 
-	#[Pure] public function __construct() {
+	public function __construct() {
 		parent::__construct();
 	}
 
@@ -37,12 +34,8 @@ abstract class Annals extends EntitySet
 	}
 
 	/**
-	 * Get a plain data array of the model's data.
-	 *
-	 * @return int[]
+	 * @return array<string, array>
 	 */
-	#[ArrayShape(['entities' => "array", 'rounds' => "array"])]
-	#[Pure]
 	public function serialize(): array {
 		$entities = [];
 		$rounds   = [];
@@ -54,9 +47,7 @@ abstract class Annals extends EntitySet
 	}
 
 	/**
-	 * Restore the model's data from serialized data.
-	 *
-	 * @param array(array) $data
+	 * @param array<string, array> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -100,9 +91,7 @@ abstract class Annals extends EntitySet
 	}
 
 	/**
-	 * Check that a serialized data array is valid.
-	 *
-	 * @param array(string=>mixed) $data
+	 * @param array<string, array> $data
 	 */
 	protected function validateSerializedData(array &$data): void {
 		$this->validate($data, 'entities', 'array');

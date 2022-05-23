@@ -2,9 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Serializable;
@@ -17,18 +14,18 @@ final class MapCoordinates implements Coordinates
 {
 	use SerializableTrait;
 
-	#[Pure] public function __construct(private int $x = 0, private int $y = 0) {
+	public function __construct(private int $x = 0, private int $y = 0) {
 	}
 
-	#[Pure] public function __toString(): string {
+	public function __toString(): string {
 		return '(' . $this->X() . ' ' . $this->Y() . ')';
 	}
 
 	/**
 	 * Get a plain data array of the model's data.
+	 *
+	 * @return array<string, int>
 	 */
-	#[ArrayShape(['x' => 'int', 'y' => 'int'])]
-	#[Pure]
 	public function serialize(): array {
 		return [
 			'x' => $this->X(),
@@ -38,6 +35,8 @@ final class MapCoordinates implements Coordinates
 
 	/**
 	 * Restore the model's data from serialized data.
+	 *
+	 * @param array<string, int> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
@@ -46,16 +45,16 @@ final class MapCoordinates implements Coordinates
 		return $this;
 	}
 
-	#[Pure] public function X(): int {
+	public function X(): int {
 		return $this->x;
 	}
 
-	#[Pure] public function Y(): int {
+	public function Y(): int {
 		return $this->y;
 	}
 
 	/**
-	 * @param array (string=>mixed) $data
+	 * @param array<string, int> $data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(&$data): void {

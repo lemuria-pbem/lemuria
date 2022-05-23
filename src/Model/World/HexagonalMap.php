@@ -14,8 +14,8 @@ final class HexagonalMap extends BaseMap
 	/**
 	 * @var string[]
 	 */
-	protected array $directions = [Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST, Direction::SOUTHWEST,
-								   Direction::WEST, Direction::NORTHWEST];
+	protected array $directions = [Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST,
+		                           Direction::SOUTHWEST, Direction::WEST, Direction::NORTHWEST];
 
 	/**
 	 * Get the shortest distance between two regions.

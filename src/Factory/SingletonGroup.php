@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Factory;
 
-use JetBrains\PhpStorm\Pure;
-
 use function Lemuria\hasPrefix;
 use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileNotFoundException;
@@ -17,11 +15,11 @@ class SingletonGroup
 
 	private readonly string $classDirectory;
 
-	#[Pure] public function getNamespace(): string {
+	public function getNamespace(): string {
 		return $this->namespace;
 	}
 
-	#[Pure] public function getGroup(): string {
+	public function getGroup(): string {
 		return $this->group;
 	}
 

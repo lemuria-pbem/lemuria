@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria;
 
-use JetBrains\PhpStorm\Pure;
-
 use Lemuria\Exception\SingletonSetException;
 use Lemuria\Exception\SingletonException;
 
@@ -27,7 +25,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	 *
 	 * @param Singleton|string $offset
 	 */
-	#[Pure] public function offsetExists(mixed $offset): bool {
+	public function offsetExists(mixed $offset): bool {
 		$class = getClass($offset);
 		return isset($this->singletons[$class]);
 	}
@@ -64,12 +62,12 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 		$this->delete($offset);
 	}
 
-	#[Pure] public function current(): ?Singleton {
+	public function current(): ?Singleton {
 		$key = $this->key();
 		return $key !== null ? $this->singletons[$key] : null;
 	}
 
-	#[Pure] public function key(): ?string {
+	public function key(): ?string {
 		return $this->indices[$this->index] ?? null;
 	}
 
@@ -78,7 +76,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	 *
 	 * @return string[]
 	 */
-	#[Pure] public function serialize(): array {
+	public function serialize(): array {
 		return array_keys($this->singletons);
 	}
 

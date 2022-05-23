@@ -26,7 +26,6 @@ class CommandFile implements \Stringable, Move
 	/**
 	 * Open specified file path to read commands from.
 	 *
-	 * @param string $path
 	 * @throws EngineException
 	 */
 	public function __construct(string $path) {
@@ -50,8 +49,6 @@ class CommandFile implements \Stringable, Move
 
 	/**
 	 * Get the path.
-	 *
-	 * @return string
 	 */
 	public function __toString(): string {
 		return $this->path;
@@ -59,8 +56,6 @@ class CommandFile implements \Stringable, Move
 
 	/**
 	 * Get current command.
-	 *
-	 * @return string
 	 */
 	public function current(): string {
 		return $this->line;
@@ -98,8 +93,6 @@ class CommandFile implements \Stringable, Move
 
 	/**
 	 * Get current line counter.
-	 *
-	 * @return int
 	 */
 	public function key(): int {
 		return $this->index;
@@ -107,8 +100,6 @@ class CommandFile implements \Stringable, Move
 
 	/**
 	 * Check if current command is valid.
-	 *
-	 * @return bool
 	 */
 	public function valid(): bool {
 		return $this->isValid;
