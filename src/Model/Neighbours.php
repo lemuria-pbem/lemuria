@@ -91,6 +91,17 @@ class Neighbours implements \ArrayAccess, \Countable, \Iterator
 	}
 
 	/**
+	 * @return Direction[]
+	 */
+	public function getDirections(): array {
+		$directions = [];
+		foreach (array_keys($this->locations) as $direction) {
+			$directions[] = Direction::from($direction);
+		}
+		return $directions;
+	}
+
+	/**
 	 * Get the direction to a neighbour location.
 	 *
 	 * @throws NeighbourException
