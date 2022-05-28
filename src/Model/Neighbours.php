@@ -7,13 +7,23 @@ use Lemuria\Model\World\Direction;
 
 /**
  * A helper class that encapsulates the neighbour locations of a location.
+ *
+ * @\ArrayAccess<Direction, Location>
+ * @\Iterator<Direction, Location>
  */
-class Neighbours implements \ArrayAccess, \Countable
+class Neighbours implements \ArrayAccess, \Countable, \Iterator
 {
 	/**
 	 * @var array<string, Location>
 	 */
 	private array $locations = [];
+
+	/**
+	 * @var string[]
+	 */
+	private array $indices;
+
+	private int $index;
 
 	/**
 	 * Check if a location in the specified direction exists.
@@ -59,13 +69,25 @@ class Neighbours implements \ArrayAccess, \Countable
 		return count($this->locations);
 	}
 
-	/**
-	 * Get all neighbors.
-	 *
-	 * @return array<string, Location>
-	 */
-	public function getAll(): array {
-		return $this->locations;
+	public function current(): Location {
+		return $this->locations[$this->indices[$this->index]];
+	}
+
+	public function key(): Direction {
+		return Direction::from($this->indices[$this->index]);
+	}
+
+	public function next(): void {
+		$this->index++;
+	}
+
+	public function rewind(): void {
+		$this->index   = 0;
+		$this->indices = array_keys($this->locations);
+	}
+
+	public function valid(): bool {
+		return $this->index < count($this->indices);
 	}
 
 	/**
