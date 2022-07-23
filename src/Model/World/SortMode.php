@@ -10,5 +10,7 @@ enum SortMode
 
 	case BY_RESIDENTS;
 
+	case BY_TYPE;
+
 	case NORTH_TO_SOUTH;
 }
