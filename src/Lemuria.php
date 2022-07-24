@@ -96,6 +96,13 @@ function sign(mixed $number): int {
 }
 
 /**
+ * Checks if a number is between two values, inclusively.
+ */
+function isBetween(mixed $minimum, mixed $value, mixed $maximum): bool {
+	return $value >= $minimum && $value <= $maximum;
+}
+
+/**
  * Checks if a number is greater than zero, less than zero or equal to zero.
  *
  * @return int 1 if argument is greater than zero, -1 if argument is less than zero, 0 otherwise.
