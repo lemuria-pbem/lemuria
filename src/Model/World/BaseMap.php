@@ -34,12 +34,12 @@ abstract class BaseMap implements World
 	 */
 	protected array $map = [];
 
-	private Coordinates $origin;
+	protected Coordinates $origin;
 
 	/**
 	 * @var array<int, Coordinates>
 	 */
-	private array $coordinates = [];
+	protected array $coordinates = [];
 
 	/**
 	 * Create an empty map.
