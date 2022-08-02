@@ -12,7 +12,7 @@ trait SerializableTrait
 	/**
 	 * Check that a serialized data array is valid.
 	 *
-	 * @param array (string=>mixed) &$data
+	 * @param array<string, mixed> &$data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(array &$data): void {
@@ -30,7 +30,7 @@ trait SerializableTrait
 	/**
 	 * Validate that a serialized data array has a specific value.
 	 *
-	 * @param array(string=>mixed) $data
+	 * @param array<string, mixed> $data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validate(array &$data, string $key, string $type): void

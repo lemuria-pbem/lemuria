@@ -23,7 +23,6 @@ trait CollectibleTrait
 	public function removeCollector(Collector $collector): Collectible {
 		$relation = $collector->getRelation();
 		if (isset($this->collectors[$relation])) {
-			/** @var Collector $oldCollector */
 			$oldCollector = $this->collectors[$relation];
 			if ($oldCollector->Id()->Id() === $collector->Id()->Id()) {
 				unset($this->collectors[$relation]);
