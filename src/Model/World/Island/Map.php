@@ -66,7 +66,7 @@ class Map implements \Countable, \Iterator
 		foreach ($this->findIslands($coordinates) as $island) {
 			try {
 				$island->add($coordinates, $location);
-				return $this->merge()->search($location);
+				return $this->merge()->mergeReverse()->search($location);
 			} catch (LemuriaException) {
 			}
 		}
@@ -132,6 +132,11 @@ class Map implements \Countable, \Iterator
 			}
 		} while ($merged);
 		return $this;
+	}
+
+	protected function mergeReverse(): Map {
+		$this->islands = array_reverse($this->islands);
+		return $this->merge();
 	}
 
 	protected function updatePointers(int $first, int $second): void {
