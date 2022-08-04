@@ -14,7 +14,7 @@ use Lemuria\Exception\UnserializeEntitySetException;
  * @\ArrayAccess<int|Id, Entity>
  * @\Iterator<int, Entity>
  */
-abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Serializable
+abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityContainer, Serializable
 {
 	use CountableTrait;
 	use IteratorTrait;
@@ -88,6 +88,20 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 	}
 
 	/**
+	 * Check if an entity belongs to the set.
+	 */
+	public function contains(Identifiable $identifiable): bool {
+		return $this->has($identifiable->Id());
+	}
+
+	/**
+	 * Check if an ID belongs to the set.
+	 */
+	public function has(Id $id): bool {
+		return isset($this->entities[$id->Id()]);
+	}
+
+	/**
 	 * Get a plain data array of the model's data.
 	 *
 	 * @return int[]
@@ -117,13 +131,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, Seriali
 			$this->addEntity(new Id($id));
 		}
 		return $this;
-	}
-
-	/**
-	 * Check if an entity belongs to the set.
-	 */
-	public function has(Id $id): bool {
-		return isset($this->entities[$id->Id()]);
 	}
 
 	/**
