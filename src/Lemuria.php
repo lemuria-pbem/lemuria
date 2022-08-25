@@ -140,6 +140,14 @@ function undupChar(string $char, string $string): string {
 }
 
 /**
+ * Check if a string ends with one of a given set of characters.
+ */
+function endsWith(string $string, array $chars): bool {
+	$last = substr($string, -1);
+	return in_array($last, $chars);
+}
+
+/**
  * Get a random number in the interval [0.0, 1.0].
  */
 function random(): float {

@@ -5,16 +5,17 @@ namespace Lemuria\Tests;
 
 use Psr\Log\LoggerInterface;
 
-use function Lemuria\isClass;
+use function Lemuria\endsWith;
 use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
+use function Lemuria\isClass;
 use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
-use function Lemuria\undupChar;
 use function Lemuria\randChance;
 use function Lemuria\randDistribution23;
 use function Lemuria\random;
 use function Lemuria\sign;
+use function Lemuria\undupChar;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
 
@@ -117,6 +118,14 @@ class LemuriaTest extends Test
 	 */
 	public function undupChar(): void {
 		$this->assertSame('Ein Satz mit X.', undupChar(' ', 'Ein Satz  mit    X.'));
+	}
+
+	/**
+	 * @test
+	 */
+	public function endsWith(): void {
+		$this->assertFalse(endsWith('Hilfe!', ['e', '.', '?']));
+		$this->assertTrue(endsWith('Hilfe!', ['e', '.', '?', '!']));
 	}
 
 	/**
