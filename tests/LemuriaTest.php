@@ -13,7 +13,6 @@ use function Lemuria\isInt;
 use function Lemuria\mbUcFirst;
 use function Lemuria\randChance;
 use function Lemuria\randDistribution23;
-use function Lemuria\random;
 use function Lemuria\sign;
 use function Lemuria\undupChar;
 use Lemuria\Exception\InitializationException;
@@ -126,17 +125,6 @@ class LemuriaTest extends Test
 	public function endsWith(): void {
 		$this->assertFalse(endsWith('Hilfe!', ['e', '.', '?']));
 		$this->assertTrue(endsWith('Hilfe!', ['e', '.', '?', '!']));
-	}
-
-	/**
-	 * @test
-	 */
-	public function random(): void {
-		for ($i = 0; $i < 1000; $i++) {
-			$random = random();
-			$this->assertGreaterThanOrEqual(0.0, $random);
-			$this->assertLessThanOrEqual(1.0, $random);
-		}
 	}
 
 	/**

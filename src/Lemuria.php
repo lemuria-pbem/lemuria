@@ -148,15 +148,6 @@ function endsWith(string $string, array $chars): bool {
 }
 
 /**
- * Get a random number in the interval [0.0, 1.0].
- *
- * @deprecated Use lcg_value() instead.
- */
-function random(): float {
-	return lcg_value();
-}
-
-/**
  * Calculate a random chance.
  */
 function randChance(float $chance): bool {
