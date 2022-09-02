@@ -29,13 +29,15 @@ class BaseCalendar implements Calendar
 
 	private int $r = 0;
 
+	private string $version = '';
+
 	/**
 	 * Get a plain data array of the model's data.
 	 *
 	 * @return array<string, int>
 	 */
 	public function serialize(): array {
-		return ['round' => $this->round];
+		return ['round' => $this->round, 'version' => $this->version];
 	}
 
 	/**
@@ -46,6 +48,9 @@ class BaseCalendar implements Calendar
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
 		$this->setRound($data['round']);
+		if (array_key_exists('version', $data)) {
+			$this->version = $data['version'];
+		}
 		return $this;
 	}
 
@@ -103,11 +108,19 @@ class BaseCalendar implements Calendar
 	}
 
 	/**
+	 * Get the required version for the game model containing this calendar.
+	 */
+	public function getCompatibility(): string {
+		return $this->version;
+	}
+
+	/**
 	 * @param array<string, int> $data
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateSerializedData(&$data): void {
 		$this->validate($data, 'round', 'int');
+		$this->validateIfExists($data, 'version', 'string');
 	}
 
 	protected function setRound(int $round): void

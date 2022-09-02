@@ -82,6 +82,14 @@ class BaseCalendarTest extends Test
 	 * @test
 	 * @depends construct
 	 */
+	public function getCompatibility(BaseCalendar $calendar): void {
+		$this->assertSame('', $calendar->getCompatibility());
+	}
+
+	/**
+	 * @test
+	 * @depends construct
+	 */
 	public function testChangeOfYear(Calendar $calendar): void {
 		$round = 24; // last week before year changes
 		$data  = ['round' => $round];
