@@ -78,6 +78,11 @@ interface Game
 	public function getUnica(): array;
 
 	/**
+	 * Get the trades' data.
+	 */
+	public function getTrades(): array;
+
+	/**
 	 * Get statistical data.
 	 */
 	public function getStatistics(): array;
@@ -156,6 +161,11 @@ interface Game
 	 * Set the unica data.
 	 */
 	public function setUnica(array $unica): Game;
+
+	/**
+	 * Set the trades' data.
+	 */
+	public function setTrades(array $trades): Game;
 
 	/**
 	 * Set statistical data.
