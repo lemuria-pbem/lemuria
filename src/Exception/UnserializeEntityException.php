@@ -7,7 +7,10 @@ namespace Lemuria\Exception;
  */
 class UnserializeEntityException extends UnserializeException
 {
-	public function __construct(string $key, string $type) {
+	public function __construct(int|string $key, string $type) {
+		if (is_int($key)) {
+			$key = 'index ' . $key;
+		}
 		$message = 'Serialized data has no ' . $key . ' of type ' . $type . '.';
 		parent::__construct($message);
 	}
