@@ -17,4 +17,6 @@ enum Domain : int
 	case CONTINENT = 600;
 
 	case UNICUM = 700;
+
+	case TRADE = 800;
 }

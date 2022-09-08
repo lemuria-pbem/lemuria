@@ -11,8 +11,8 @@ use Lemuria\Exception\UnserializeEntitySetException;
 /**
  * A simple set of entities.
  *
- * @\ArrayAccess<int|Id, Entity>
- * @\Iterator<int, Entity>
+ * @\ArrayAccess<int|Id, Identifiable>
+ * @\Iterator<int, Identifiable>
  */
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityContainer, Serializable
 {
@@ -51,7 +51,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 * @param int|Id $offset
 	 * @throws EntitySetException
 	 */
-	public function offsetGet(mixed $offset): Entity {
+	public function offsetGet(mixed $offset): Identifiable {
 		$id = $offset instanceof Id ? $offset : new Id($offset);
 		return $this->get($id);
 	}
@@ -78,7 +78,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 		$this->removeEntity($id);
 	}
 
-	public function current(): ?Entity {
+	public function current(): ?Identifiable {
 		$key = $this->key();
 		return $key ? $this->get($this->entities[$key]) : null;
 	}
@@ -193,7 +193,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 *
 	 * @throws EmptySetException
 	 */
-	public function random(): Entity {
+	public function random(): Identifiable {
 		if ($this->count > 0) {
 			$index = $this->indices[rand(0, $this->count - 1)];
 			return $this->get($this->entities[$index]);
@@ -204,7 +204,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Get an Entity by ID.
 	 */
-	abstract protected function get(Id $id): Entity;
+	abstract protected function get(Id $id): Identifiable;
 
 	/**
 	 * Check if a Collector is set.
