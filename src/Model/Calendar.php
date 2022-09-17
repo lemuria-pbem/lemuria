@@ -48,4 +48,9 @@ interface Calendar extends Serializable
 	 * Advance the Calendar to next round and return the new round.
 	 */
 	public function nextRound(): int;
+
+	/**
+	 * Get the required version for the game model containing this calendar.
+	 */
+	public function getCompatibility(): string;
 }

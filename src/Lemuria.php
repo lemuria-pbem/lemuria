@@ -10,6 +10,7 @@ use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
 use Lemuria\Exception\InitializationException;
+use Lemuria\Exception\VersionTooLowException;
 use Lemuria\Model\Builder;
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Catalog;
@@ -17,6 +18,7 @@ use Lemuria\Model\Config;
 use Lemuria\Model\Game;
 use Lemuria\Model\World;
 use Lemuria\Version\VersionFinder;
+use Lemuria\Version\VersionTag;
 
 /**
  * Format a number.
@@ -346,6 +348,7 @@ final class Lemuria
 	 */
 	public static function load(): void {
 		self::Calendar()->load();
+		self::validateVersion();
 		self::Catalog()->load();
 		self::Debut()->load();
 		self::Orders()->load();
@@ -409,5 +412,15 @@ final class Lemuria
 		$this->version[Version::BASE]       = $versionFinder->get();
 		$this->version[Version::MODEL]      = $this->catalog->getVersion();
 		$this->version[Version::STATISTICS] = $this->statistics->getVersion();
+	}
+
+	private static function validateVersion(): void {
+		$version = self::Version();
+		/** @var VersionTag $tag */
+		$tag = $version[Version::MODEL][0];
+		$compatibility = self::Calendar()->getCompatibility();
+		if ($compatibility > $tag->version) {
+			throw new VersionTooLowException($compatibility);
+		}
 	}
 }
