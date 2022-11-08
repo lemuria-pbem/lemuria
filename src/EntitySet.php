@@ -244,9 +244,10 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 * Add an entity's ID to the set.
 	 */
 	protected function addEntity(Id $id): void {
-		if (!isset($this->entities[$id->Id()])) {
-			$this->entities[$id->Id()]     = $id;
-			$this->indices[$this->count++] = $id->Id();
+		$i = $id->Id();
+		if (!isset($this->entities[$i])) {
+			$this->entities[$i]            = $id;
+			$this->indices[$this->count++] = $i;
 		}
 	}
 
@@ -328,7 +329,11 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 * Sort the set using specified order.
 	 */
 	protected function sortUsing(EntityOrder $order): void {
-		$this->indices = $order->sort($this);
+		$this->indices  = $order->sort($this);
+		$this->entities = [];
+		foreach ($this->indices as $id) {
+			$this->entities[$id] = new Id($id);
+		}
 		$this->rewind();
 	}
 }
