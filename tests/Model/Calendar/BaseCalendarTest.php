@@ -23,8 +23,9 @@ class BaseCalendarTest extends Test
 	 */
 	public function serialize(BaseCalendar $calendar): void {
 		$data = $calendar->serialize();
-		$this->assertArray($data, 1, 'int');
+		$this->assertArray($data, 2);
 		$this->assertArrayKey($data, 'round', 0);
+		$this->assertArrayKey($data, 'version', '');
 	}
 
 	/**
