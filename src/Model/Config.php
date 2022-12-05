@@ -7,6 +7,7 @@ use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
+use Lemuria\Factory\Namer;
 use Lemuria\FeatureFlag;
 use Lemuria\Log;
 use Lemuria\Registry;
@@ -41,4 +42,6 @@ interface Config
 	public function Log(): Log;
 
 	public function FeatureFlag(): FeatureFlag;
+
+	public function Namer(): Namer;
 }
