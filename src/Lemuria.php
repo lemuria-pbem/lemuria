@@ -3,6 +3,8 @@ declare (strict_types = 1);
 namespace Lemuria;
 
 use Psr\Log\LoggerInterface;
+use Random\Engine\Xoshiro256StarStar;
+use Random\Randomizer;
 
 use Lemuria\Engine\Debut;
 use Lemuria\Engine\Hostilities;
@@ -151,10 +153,24 @@ function endsWith(string $string, array $chars): bool {
 }
 
 /**
+ * Get a random integer.
+ */
+function randInt(int $min = 0, int $max = PHP_INT_MAX): int {
+	return Lemuria::Random()->getInt($min, $max);
+}
+
+/**
+ * Get a random float between 0 and 1.
+ */
+function randFloat(): float {
+	return randInt() / PHP_INT_MAX;
+}
+
+/**
  * Calculate a random chance.
  */
 function randChance(float $chance): bool {
-	return lcg_value() <= $chance;
+	return randFloat() <= $chance;
 }
 
 /**
@@ -192,6 +208,8 @@ final class Lemuria
 {
 	private static ?self $instance = null;
 
+	private static ?Randomizer $random = null;
+
 	private readonly FeatureFlag $featureFlag;
 
 	private readonly Builder $builder;
@@ -224,16 +242,11 @@ final class Lemuria
 
 	private readonly Version $version;
 
-	/**
-	 * Get the feature flags.
-	 */
 	public static function FeatureFlag(): FeatureFlag {
 		return self::getInstance()->featureFlag;
 	}
 
 	/**
-	 * Get the builder.
-	 *
 	 * @throws InitializationException
 	 */
 	public static function Builder(): Builder {
@@ -241,8 +254,6 @@ final class Lemuria
 	}
 
 	/**
-	 * Get the Calendar.
-	 *
 	 * @throws InitializationException
 	 */
 	public static function Calendar(): Calendar {
@@ -250,97 +261,71 @@ final class Lemuria
 	}
 
 	/**
-	 * Get the Catalog.
-	 *
 	 * @throws InitializationException
 	 */
 	public static function Catalog(): Catalog {
 		return self::getInstance()->catalog;
 	}
 
-	/**
-	 * Get the Debut.
-	 */
 	public static function Debut(): Debut {
 		return self::getInstance()->debut;
 	}
 
 	/**
-	 * Get the Game.
-	 *
 	 * @throws InitializationException
 	 */
 	public static function Game(): Game {
 		return self::getInstance()->game;
 	}
 
-	/**
-	 * Get the log.
-	 */
 	public static function Log(): LoggerInterface {
 		return self::getInstance()->log;
 	}
 
-	/**
-	 * Get the orders.
-	 */
 	public static function Orders(): Orders {
 		return self::getInstance()->orders;
 	}
 
-	/**
-	 * Get the report.
-	 */
 	public static function Report(): Report {
 		return self::getInstance()->report;
 	}
 
-	/**
-	 * Get the score.
-	 */
 	public static function Score(): Score {
 		return self::getInstance()->score;
 	}
 
-	/**
-	 * Get the hostilities.
-	 */
 	public static function Hostilities(): Hostilities {
 		return self::getInstance()->hostilities;
 	}
 
 	/**
-	 * Get the World.
-	 *
 	 * @throws InitializationException
 	 */
 	public static function World(): World {
 		return self::getInstance()->world;
 	}
 
-	/**
-	 * Get the registry.
-	 */
 	public static function Registry(): Registry {
 		return self::getInstance()->registry;
 	}
 
-	/**
-	 * Get the statistics.
-	 */
 	public static function Statistics(): Statistics {
 		return self::getInstance()->statistics;
 	}
 
-	/**
-	 * Get the namer.
-	 */
 	public static function Namer(): Namer {
 		return self::getInstance()->namer;
 	}
 
 	public static function Version(): Version {
 		return self::getInstance()->version;
+	}
+
+	public static function Random(): Randomizer {
+		if (!self::$random) {
+			self::$random = new Randomizer(new Xoshiro256StarStar());
+		}
+		return self::$random;
 	}
 
 	public static function init(Config $config): void {

@@ -195,7 +195,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 */
 	public function random(): Identifiable {
 		if ($this->count > 0) {
-			$index = $this->indices[rand(0, $this->count - 1)];
+			$index = $this->indices[randInt(max: $this->count - 1)];
 			return $this->get($this->entities[$index]);
 		}
 		throw new EmptySetException();
