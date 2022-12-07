@@ -2,9 +2,9 @@
 declare(strict_types = 1);
 namespace Lemuria;
 
-final class NullContainer implements EntityContainer
+final readonly class NullContainer implements EntityContainer
 {
-	public function __construct(private readonly bool $contains = true) {
+	public function __construct(private bool $contains = true) {
 	}
 
 	public function contains(Identifiable $identifiable): bool {

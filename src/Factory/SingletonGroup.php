@@ -7,13 +7,13 @@ use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileNotFoundException;
 use Lemuria\Exception\LemuriaException;
 
-class SingletonGroup
+readonly class SingletonGroup
 {
-	private readonly string $group;
+	private string $group;
 
-	private readonly string $namespace;
+	private string $namespace;
 
-	private readonly string $classDirectory;
+	private string $classDirectory;
 
 	public function getNamespace(): string {
 		return $this->namespace;

@@ -10,11 +10,11 @@ use Lemuria\Singleton;
 /**
  * A builder creates singleton objects.
  */
-class DefaultBuilder implements Builder
+readonly class DefaultBuilder implements Builder
 {
-	private readonly SingletonCache $singletonCache;
+	private SingletonCache $singletonCache;
 
-	private readonly SingletonMap $singletonMap;
+	private SingletonMap $singletonMap;
 
 	public function __construct() {
 		$this->singletonCache = new SingletonCache();
