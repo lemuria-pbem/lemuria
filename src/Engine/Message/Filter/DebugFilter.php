@@ -4,6 +4,7 @@ namespace Lemuria\Engine\Message\Filter;
 
 use Lemuria\Engine\Message;
 use Lemuria\Engine\Message\Filter;
+use Lemuria\Engine\Message\Result;
 
 /**
  * This filter retains all DEBUG messages.
@@ -11,6 +12,6 @@ use Lemuria\Engine\Message\Filter;
 class DebugFilter implements Filter
 {
 	public function retains(Message $message): bool {
-		return $message->Level() === Message::DEBUG;
+		return $message->Result() === Result::DEBUG;
 	}
 }

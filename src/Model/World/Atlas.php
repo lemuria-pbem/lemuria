@@ -11,6 +11,7 @@ use Lemuria\Model\Domain;
 use Lemuria\Model\Location;
 use Lemuria\Sorting\ById;
 use Lemuria\Sorting\Location\North2South;
+use Lemuria\SortMode;
 
 /**
  * An atlas is an ordered list of locations.

@@ -18,6 +18,7 @@ use Lemuria\Model\Catalog;
 use Lemuria\Model\Config;
 use Lemuria\Model\Game;
 use Lemuria\Model\World;
+use Lemuria\Version\Module;
 use Lemuria\Version\VersionFinder;
 
 /**
@@ -415,15 +416,15 @@ final class Lemuria
 	}
 
 	private function addVersions(): void {
-		$versionFinder                      = new VersionFinder(__DIR__ . '/..');
-		$this->version[Version::BASE]       = $versionFinder->get();
-		$this->version[Version::MODEL]      = $this->catalog->getVersion();
-		$this->version[Version::STATISTICS] = $this->statistics->getVersion();
+		$versionFinder                             = new VersionFinder(__DIR__ . '/..');
+		$this->version[Module::BASE]       = $versionFinder->get();
+		$this->version[Module::MODEL]      = $this->catalog->getVersion();
+		$this->version[Module::STATISTICS] = $this->statistics->getVersion();
 	}
 
 	private static function validateVersion(): void {
 		$version = self::Version();
-		$tag     = $version[Version::MODEL][0];
+		$tag     = $version[Module::MODEL][0];
 		$compatibility = self::Calendar()->getCompatibility();
 		if ($compatibility > $tag->version) {
 			throw new VersionTooLowException($compatibility);

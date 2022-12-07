@@ -6,9 +6,9 @@ use Lemuria\Exception\FileNotFoundException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\ReadException;
 
-class VersionFinder
+readonly class VersionFinder
 {
-	protected readonly string $composer;
+	protected string $composer;
 
 	/**
 	 * @throws FileNotFoundException
@@ -40,6 +40,6 @@ class VersionFinder
 			throw new LemuriaException('Invalid name or version in composer.json file: ' . $this->composer);
 		}
 		$names = explode('/', $name);
-		return new VersionTag(array_pop($names), $version);
+		return new VersionTag(Module::from(array_pop($names)), $version);
 	}
 }
