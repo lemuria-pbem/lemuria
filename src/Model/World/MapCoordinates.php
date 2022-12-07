@@ -6,6 +6,7 @@ use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
+use Lemuria\Validate;
 
 /**
  * Coordinates define the two-dimensional location on a map of Lemuria.
@@ -13,6 +14,10 @@ use Lemuria\SerializableTrait;
 final class MapCoordinates implements Coordinates
 {
 	use SerializableTrait;
+
+	private const X = 'x';
+
+	private const Y = 'y';
 
 	public function __construct(private int $x = 0, private int $y = 0) {
 	}
@@ -28,8 +33,8 @@ final class MapCoordinates implements Coordinates
 	 */
 	public function serialize(): array {
 		return [
-			'x' => $this->X(),
-			'y' => $this->Y()
+			self::X => $this->X(),
+			self::Y => $this->Y()
 		];
 	}
 
@@ -40,8 +45,8 @@ final class MapCoordinates implements Coordinates
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
-		$this->x = $data['x'];
-		$this->y = $data['y'];
+		$this->x = $data[self::X];
+		$this->y = $data[self::Y];
 		return $this;
 	}
 
@@ -57,8 +62,8 @@ final class MapCoordinates implements Coordinates
 	 * @param array<string, int> $data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateSerializedData(&$data): void {
-		$this->validate($data, 'x', 'int');
-		$this->validate($data, 'y', 'int');
+	protected function validateSerializedData($data): void {
+		$this->validate($data, self::X, Validate::Int);
+		$this->validate($data, self::Y, Validate::Int);
 	}
 }

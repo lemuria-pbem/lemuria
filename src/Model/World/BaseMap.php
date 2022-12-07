@@ -15,6 +15,7 @@ use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
+use Lemuria\Validate;
 
 /**
  * Representation of a two-dimensional world.
@@ -22,6 +23,10 @@ use Lemuria\SerializableTrait;
 abstract class BaseMap implements World
 {
 	use SerializableTrait;
+
+	protected final const ORIGIN = 'origin';
+
+	protected final const MAP = 'map';
 
 	/**
 	 * @var string[]
@@ -162,8 +167,8 @@ abstract class BaseMap implements World
 	 * @param array<string, array> $data
 	 * @throws UnserializeEntityException
 	 */
-	private function validateSerializedData(&$data): void {
-		$this->validate($data, 'origin', 'array');
-		$this->validate($data, 'map', 'array');
+	private function validateSerializedData($data): void {
+		$this->validate($data, 'origin', Validate::Array);
+		$this->validate($data, 'map', Validate::Array);
 	}
 }

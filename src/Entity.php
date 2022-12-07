@@ -14,6 +14,12 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	use IdentifiableTrait;
 	use SerializableTrait;
 
+	protected final const ID = 'id';
+
+	protected final const NAME = 'name';
+
+	protected final const DESCRIPTION = 'description';
+
 	private string $name = '';
 
 	private string $description = '';
@@ -37,9 +43,9 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	 */
 	public function serialize(): array {
 		return [
-			'id'          => $this->Id()->Id(),
-			'name'        => $this->Name(),
-			'description' => $this->Description()
+			self::ID          => $this->Id()->Id(),
+			self::NAME        => $this->Name(),
+			self::DESCRIPTION => $this->Description()
 		];
 	}
 
@@ -50,7 +56,7 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
-		return $this->setId(new Id($data['id']))->setName($data['name'])->setDescription($data['description']);
+		return $this->setId(new Id($data[self::ID]))->setName($data[self::NAME])->setDescription($data[self::DESCRIPTION]);
 	}
 
 	public function Name(): string {
@@ -84,9 +90,9 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	 * @param array<string, mixed> $data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateSerializedData(array &$data): void {
-		$this->validate($data, 'id', 'int');
-		$this->validate($data, 'name', 'string');
-		$this->validate($data, 'description', 'string');
+	protected function validateSerializedData(array $data): void {
+		$this->validate($data, self::ID, Validate::Int);
+		$this->validate($data, self::NAME, Validate::String);
+		$this->validate($data, self::DESCRIPTION, Validate::String);
 	}
 }

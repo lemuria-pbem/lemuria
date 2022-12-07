@@ -9,10 +9,15 @@ use Lemuria\Id;
 use Lemuria\Lemuria;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
+use Lemuria\Validate;
 
 abstract class Annals extends EntitySet
 {
 	use SerializableTrait;
+
+	protected final const ENTITIES = 'entities';
+
+	protected final const ROUNDS = 'rounds';
 
 	/**
 	 * @var array<int, int>
@@ -43,7 +48,7 @@ abstract class Annals extends EntitySet
 			$entities[] = $id;
 			$rounds[]   = $round;
 		}
-		return ['entities' => $entities, 'rounds' => $rounds];
+		return [self::ENTITIES => $entities, self::ROUNDS => $rounds];
 	}
 
 	/**
@@ -55,11 +60,13 @@ abstract class Annals extends EntitySet
 			$this->clear();
 		}
 
-		$entities = array_values($data['entities']);
-		$rounds   = array_values($data['rounds']);
+		$entities = array_values($data[self::ENTITIES]);
+		$rounds   = array_values($data[self::ROUNDS]);
 		$n        = count($entities);
 		if (count($rounds) !== $n) {
-			throw new UnserializeException('Mismatch of entities and rounds count.');
+			throw new UnserializeException(
+				'Mismatch of ' . self::ENTITIES . ' and ' . self::ROUNDS . ' count.'
+			);
 		}
 
 		for ($i = 0; $i < $n; $i++) {
@@ -93,9 +100,9 @@ abstract class Annals extends EntitySet
 	/**
 	 * @param array<string, array> $data
 	 */
-	protected function validateSerializedData(array &$data): void {
-		$this->validate($data, 'entities', 'array');
-		$this->validate($data, 'rounds', 'array');
+	protected function validateSerializedData(array $data): void {
+		$this->validate($data, self::ENTITIES, Validate::Array);
+		$this->validate($data, self::ROUNDS, Validate::Array);
 	}
 
 	protected function getRound(int $id): int {

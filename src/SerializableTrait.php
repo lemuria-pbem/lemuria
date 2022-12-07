@@ -12,16 +12,15 @@ trait SerializableTrait
 	/**
 	 * Check that a serialized data array is valid.
 	 *
-	 * @param array<string, mixed> &$data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateSerializedData(array &$data): void {
+	protected function validateSerializedData(array $data): void {
 	}
 
 	/**
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateIfExists(array &$data, int|string $key, string $type): void {
+	protected function validateIfExists(array $data, int|string $key, Validate $type): void {
 		if (isset($data[$key])) {
 			$this->validate($data, $key, $type);
 		}
@@ -30,19 +29,19 @@ trait SerializableTrait
 	/**
 	 * Validate that a serialized data array has a specific value.
 	 *
-	 * @param array<string, mixed> $data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validate(array &$data, int|string $key, string $type): void
+	protected function validate(array $data, int|string $key, Validate $type): void
 	{
-		if (str_starts_with($type, '?')) {
+		$validate = $type->value;
+		if (str_starts_with($validate, '?')) {
 			if (array_key_exists($key, $data) && $data[$key] === null) {
 				return;
 			}
-			$type = substr($type, 1);
+			$validate = substr($validate, 1);
 		}
 
-		$isType = 'is_' . $type;
+		$isType = 'is_' . $validate;
 		if (!isset($data[$key]) || !$isType($data[$key])) {
 			throw new UnserializeEntityException($key, $type);
 		}

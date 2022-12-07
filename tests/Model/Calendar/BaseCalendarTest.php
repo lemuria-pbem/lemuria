@@ -93,7 +93,7 @@ class BaseCalendarTest extends Test
 	 */
 	public function testChangeOfYear(Calendar $calendar): void {
 		$round = 24; // last week before year changes
-		$data  = ['round' => $round];
+		$data  = ['round' => $round, 'version' => '1.0.0'];
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(3, $calendar->Week());
@@ -107,6 +107,8 @@ class BaseCalendarTest extends Test
 		$this->assertSame(1, $calendar->Month());
 		$this->assertSame(1, $calendar->Season());
 		$this->assertSame(2, $calendar->Year());
+
+		$this->assertSame('1.0.0', $calendar->getCompatibility());
 	}
 
 	/**
@@ -115,12 +117,13 @@ class BaseCalendarTest extends Test
 	 */
 	public function unserialize(BaseCalendar $calendar): void {
 		$round = 2 + 6 + 24 ; // second week in third month in year 2
-		$data  = ['round' => $round];
+		$data  = ['round' => $round, 'version' => '1.0.0'];
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(2, $calendar->Week());
 		$this->assertSame(3, $calendar->Month());
 		$this->assertSame(2, $calendar->Season());
 		$this->assertSame(2, $calendar->Year());
+		$this->assertSame('1.0.0', $calendar->getCompatibility());
 	}
 }

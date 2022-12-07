@@ -7,6 +7,7 @@ use Lemuria\Lemuria;
 use Lemuria\Model\Calendar;
 use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
+use Lemuria\Validate;
 
 /**
  * Implementation of a base calendar with round counter.
@@ -18,6 +19,10 @@ use Lemuria\SerializableTrait;
 class BaseCalendar implements Calendar
 {
 	use SerializableTrait;
+
+	protected final const ROUND = 'round';
+
+	protected final const VERSION = 'version';
 
 	protected int $weeks = 3;
 
@@ -37,7 +42,7 @@ class BaseCalendar implements Calendar
 	 * @return array<string, int>
 	 */
 	public function serialize(): array {
-		return ['round' => $this->round, 'version' => $this->version];
+		return [self::ROUND => $this->round, self::VERSION => $this->version];
 	}
 
 	/**
@@ -47,10 +52,8 @@ class BaseCalendar implements Calendar
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->validateSerializedData($data);
-		$this->setRound($data['round']);
-		if (array_key_exists('version', $data)) {
-			$this->version = $data['version'];
-		}
+		$this->setRound($data[self::ROUND]);
+		$this->version = $data[self::VERSION];
 		return $this;
 	}
 
@@ -118,9 +121,9 @@ class BaseCalendar implements Calendar
 	 * @param array<string, int> $data
 	 * @throws UnserializeEntityException
 	 */
-	protected function validateSerializedData(&$data): void {
-		$this->validate($data, 'round', 'int');
-		$this->validateIfExists($data, 'version', 'string');
+	protected function validateSerializedData($data): void {
+		$this->validate($data, self::ROUND, Validate::Int);
+		$this->validate($data, self::VERSION, Validate::String);
 	}
 
 	protected function setRound(int $round): void
