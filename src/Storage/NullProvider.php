@@ -11,7 +11,7 @@ class NullProvider implements Provider
 		return true;
 	}
 
-	public function read(string $fileName): mixed {
+	public function read(string $fileName): null {
 		return null;
 	}
 
