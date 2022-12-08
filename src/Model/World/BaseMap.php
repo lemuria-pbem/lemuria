@@ -24,9 +24,9 @@ abstract class BaseMap implements World
 {
 	use SerializableTrait;
 
-	protected final const ORIGIN = 'origin';
+	private const ORIGIN = 'origin';
 
-	protected final const MAP = 'map';
+	private const MAP = 'map';
 
 	/**
 	 * @var string[]

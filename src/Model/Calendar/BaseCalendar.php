@@ -20,9 +20,9 @@ class BaseCalendar implements Calendar
 {
 	use SerializableTrait;
 
-	protected final const ROUND = 'round';
+	private const ROUND = 'round';
 
-	protected final const VERSION = 'version';
+	private const VERSION = 'version';
 
 	protected int $weeks = 3;
 

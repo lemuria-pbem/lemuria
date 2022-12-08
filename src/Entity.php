@@ -14,11 +14,11 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	use IdentifiableTrait;
 	use SerializableTrait;
 
-	protected final const ID = 'id';
+	private const ID = 'id';
 
-	protected final const NAME = 'name';
+	private const NAME = 'name';
 
-	protected final const DESCRIPTION = 'description';
+	private const DESCRIPTION = 'description';
 
 	private string $name = '';
 
