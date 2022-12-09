@@ -4,13 +4,13 @@ namespace Lemuria;
 
 enum SortMode
 {
-	case BY_ID;
+	case ById;
 
-	case BY_PARTY;
+	case ByParty;
 
-	case BY_RESIDENTS;
+	case ByResidents;
 
-	case BY_TYPE;
+	case ByType;
 
-	case NORTH_TO_SOUTH;
+	case NorthToSouth;
 }

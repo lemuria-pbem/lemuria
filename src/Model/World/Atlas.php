@@ -31,12 +31,12 @@ class Atlas extends EntitySet
 	/**
 	 * Sort the locations.
 	 */
-	public function sort(SortMode $mode = SortMode::BY_ID): self {
+	public function sort(SortMode $mode = SortMode::ById): self {
 		switch ($mode) {
-			case SortMode::BY_ID :
+			case SortMode::ById :
 				$this->sortUsing(new ById());
 				break;
-			case SortMode::NORTH_TO_SOUTH :
+			case SortMode::NorthToSouth :
 				$this->sortUsing(new North2South());
 				break;
 			default :
@@ -49,7 +49,7 @@ class Atlas extends EntitySet
 	 * Get an Entity by ID.
 	 */
 	protected function get(Id $id): Entity {
-		$location = Lemuria::Catalog()->get($id, Domain::LOCATION);
+		$location = Lemuria::Catalog()->get($id, Domain::Location);
 		if ($location instanceof Entity) {
 			return $location;
 		}

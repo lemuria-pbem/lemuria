@@ -31,8 +31,8 @@ abstract class BaseMap implements World
 	/**
 	 * @var string[]
 	 */
-	protected array $directions = [Direction::NORTH, Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST,
-		                           Direction::SOUTH, Direction::SOUTHWEST, Direction::WEST, Direction::NORTHWEST];
+	protected array $directions = [Direction::North, Direction::Northeast, Direction::East, Direction::Southeast,
+		                           Direction::South, Direction::Southwest, Direction::West, Direction::Northwest];
 
 	/**
 	 * @var array[]
@@ -141,7 +141,7 @@ abstract class BaseMap implements World
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {
 			$id       = new Id($id);
-			$location = Lemuria::Catalog()->get($id, Domain::LOCATION);
+			$location = Lemuria::Catalog()->get($id, Domain::Location);
 			if ($location instanceof Location) {
 				return $location;
 			}

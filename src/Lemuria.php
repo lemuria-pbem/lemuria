@@ -402,14 +402,14 @@ final class Lemuria
 
 	private function addVersions(): void {
 		$versionFinder                             = new VersionFinder(__DIR__ . '/..');
-		$this->version[Module::BASE]       = $versionFinder->get();
-		$this->version[Module::MODEL]      = $this->catalog->getVersion();
-		$this->version[Module::STATISTICS] = $this->statistics->getVersion();
+		$this->version[Module::Base->value]       = $versionFinder->get();
+		$this->version[Module::Model->value]      = $this->catalog->getVersion();
+		$this->version[Module::Statistics->value] = $this->statistics->getVersion();
 	}
 
 	private static function validateVersion(): void {
 		$version = self::Version();
-		$tag     = $version[Module::MODEL][0];
+		$tag     = $version[Module::Model->value][0];
 		$compatibility = self::Calendar()->getCompatibility();
 		if ($compatibility > $tag->version) {
 			throw new VersionTooLowException($compatibility);

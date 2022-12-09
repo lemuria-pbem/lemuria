@@ -278,7 +278,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 *
 	 * @throws EntitySetException One of the entities is not part of the set.
 	 */
-	protected function reorderEntity(Id $entity, Id $position, Reorder $reorder = Reorder::FLIP): void
+	protected function reorderEntity(Id $entity, Id $position, Reorder $reorder = Reorder::Flip): void
 	{
 		$e = $entity->Id();
 		if (!isset($this->entities[$e])) {
@@ -296,17 +296,17 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 		$newEntities = [];
 		foreach ($this->entities as $i => $id) {
 			if ($i === $e) {
-				if ($reorder === Reorder::FLIP) {
+				if ($reorder === Reorder::Flip) {
 					$newEntities[$p] = $position;
 					$newIndices[]    = $p;
 				}
 			} elseif ($i === $p) {
-				if ($reorder <= Reorder::BEFORE) {
+				if ($reorder <= Reorder::Before) {
 					$newEntities[$e] = $entity;
 					$newIndices[]    = $e;
 					$newEntities[$p] = $position;
 					$newIndices[]    = $p;
-				} elseif ($reorder >= Reorder::AFTER) {
+				} elseif ($reorder >= Reorder::After) {
 					$newEntities[$p] = $position;
 					$newIndices[]    = $p;
 					$newEntities[$e] = $entity;

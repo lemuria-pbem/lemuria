@@ -4,19 +4,19 @@ namespace Lemuria\Model;
 
 enum Domain : int
 {
-	case PARTY = 100;
+	case Party = 1;
 
-	case UNIT = 200;
+	case Unit = 2;
 
-	case LOCATION = 300;
+	case Location = 3;
 
-	case CONSTRUCTION = 400;
+	case Construction = 4;
 
-	case VESSEL = 500;
+	case Vessel = 5;
 
-	case CONTINENT = 600;
+	case Continent = 6;
 
-	case UNICUM = 700;
+	case Unicum = 7;
 
-	case TRADE = 800;
+	case Trade = 8;
 }

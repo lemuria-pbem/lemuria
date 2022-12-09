@@ -6,13 +6,13 @@ use Psr\Log\LogLevel;
 
 enum Result : string
 {
-	case SUCCESS = LogLevel::INFO;
+	case Success = LogLevel::INFO;
 
-	case ERROR = LogLevel::ERROR;
+	case Error = LogLevel::ERROR;
 
-	case FAILURE = LogLevel::NOTICE;
+	case Failure = LogLevel::NOTICE;
 
-	case DEBUG = LogLevel::DEBUG;
+	case Debug = LogLevel::DEBUG;
 
-	case EVENT = LogLevel::WARNING;
+	case Event = LogLevel::WARNING;
 }

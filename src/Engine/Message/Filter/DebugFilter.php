@@ -12,6 +12,6 @@ use Lemuria\Engine\Message\Result;
 class DebugFilter implements Filter
 {
 	public function retains(Message $message): bool {
-		return $message->Result() === Result::DEBUG;
+		return $message->Result() === Result::Debug;
 	}
 }

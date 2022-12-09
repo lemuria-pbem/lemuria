@@ -4,25 +4,25 @@ namespace Lemuria\Model\World;
 
 enum Direction : string
 {
-	public final const IN_DOCK = self::NONE;
+	public final const IN_DOCK = self::None;
 
-	public final const ROUTE_STOP = self::NONE;
+	public final const ROUTE_STOP = self::None;
 
-	case NONE = '';
+	case None = '';
 
-	case NORTH = 'N';
+	case North = 'N';
 
-	case NORTHEAST = 'NE';
+	case Northeast = 'NE';
 
-	case EAST = 'E';
+	case East = 'E';
 
-	case SOUTHEAST = 'SE';
+	case Southeast = 'SE';
 
-	case SOUTH = 'S';
+	case South = 'S';
 
-	case SOUTHWEST = 'SW';
+	case Southwest = 'SW';
 
-	case WEST = 'W';
+	case West = 'W';
 
-	case NORTHWEST = 'NW';
+	case Northwest = 'NW';
 }

@@ -30,14 +30,14 @@ final class OctagonalMap extends BaseMap
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
 		$neighbours  = new Neighbours();
-		$this->setNeighbour(Direction::NORTH, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::NORTHEAST, $y, ++$x, $neighbours);
-		$this->setNeighbour(Direction::EAST, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::SOUTHEAST, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::SOUTH, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::SOUTHWEST, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::WEST, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::NORTHWEST, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::North, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::Northeast, $y, ++$x, $neighbours);
+		$this->setNeighbour(Direction::East, --$y, $x, $neighbours);
+		$this->setNeighbour(Direction::Southeast, --$y, $x, $neighbours);
+		$this->setNeighbour(Direction::South, $y, --$x, $neighbours);
+		$this->setNeighbour(Direction::Southwest, $y, --$x, $neighbours);
+		$this->setNeighbour(Direction::West, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::Northwest, ++$y, $x, $neighbours);
 		return $neighbours;
 	}
 
@@ -46,14 +46,14 @@ final class OctagonalMap extends BaseMap
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
 		return match ($direction) {
-			Direction::NORTH     => $this->createWay($start, 1, 0, $distance),
-			Direction::NORTHEAST => $this->createWays($start, 1, 1, $distance),
-			Direction::EAST      => $this->createWay($start, 0, 1, $distance),
-			Direction::SOUTHEAST => $this->createWays($start, -1, 1, $distance),
-			Direction::SOUTH     => $this->createWay($start, -1, 0, $distance),
-			Direction::SOUTHWEST => $this->createWays($start, -1, -1, $distance),
-			Direction::WEST      => $this->createWay($start, 0, -1, $distance),
-			Direction::NORTHWEST => $this->createWays($start, 1, -1, $distance),
+			Direction::North     => $this->createWay($start, 1, 0, $distance),
+			Direction::Northeast => $this->createWays($start, 1, 1, $distance),
+			Direction::East      => $this->createWay($start, 0, 1, $distance),
+			Direction::Southeast => $this->createWays($start, -1, 1, $distance),
+			Direction::South     => $this->createWay($start, -1, 0, $distance),
+			Direction::Southwest => $this->createWays($start, -1, -1, $distance),
+			Direction::West      => $this->createWay($start, 0, -1, $distance),
+			Direction::Northwest => $this->createWays($start, 1, -1, $distance),
 			default              => throw new LemuriaException('Direction ' . $direction->value . ' is not supported.')
 		};
 	}

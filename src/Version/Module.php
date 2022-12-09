@@ -4,15 +4,15 @@ namespace Lemuria\Version;
 
 enum Module : string
 {
-	case BASE = 'base';
+	case Base = 'base';
 
-	case ENGINE = 'engine';
+	case Engine = 'engine';
 
-	case GAME = 'game';
+	case Game = 'game';
 
-	case MODEL = 'model';
+	case Model = 'model';
 
-	case RENDERERS = 'renderers';
+	case Renderers = 'renderers';
 
-	case STATISTICS = 'statistics';
+	case Statistics = 'statistics';
 }

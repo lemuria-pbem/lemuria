@@ -4,21 +4,21 @@ namespace Lemuria\Engine\Message;
 
 enum Section : int
 {
-	case BATTLE = 1;
+	case Battle = 1;
 
-	case ECONOMY = 2;
+	case Economy = 2;
 
-	case ERROR = 3;
+	case Error = 3;
 
-	case EVENT = 4;
+	case Event = 4;
 
-	case MAGIC = 5;
+	case Magic = 5;
 
-	case MAIL = 6;
+	case Mail = 6;
 
-	case MOVEMENT = 7;
+	case Movement = 7;
 
-	case PRODUCTION = 8;
+	case Production = 8;
 
-	case STUDY = 9;
+	case Study = 9;
 }

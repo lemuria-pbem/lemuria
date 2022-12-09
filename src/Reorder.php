@@ -4,9 +4,9 @@ namespace Lemuria;
 
 enum Reorder : int
 {
-	case AFTER = 1;
+	case After = 1;
 
-	case BEFORE = -1;
+	case Before = -1;
 
-	case FLIP = 0;
+	case Flip = 0;
 }

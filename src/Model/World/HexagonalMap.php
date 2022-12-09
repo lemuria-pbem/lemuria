@@ -14,8 +14,8 @@ final class HexagonalMap extends BaseMap
 	/**
 	 * @var string[]
 	 */
-	protected array $directions = [Direction::NORTHEAST, Direction::EAST, Direction::SOUTHEAST,
-		                           Direction::SOUTHWEST, Direction::WEST, Direction::NORTHWEST];
+	protected array $directions = [Direction::Northeast, Direction::East, Direction::Southeast,
+		                           Direction::Southwest, Direction::West, Direction::Northwest];
 
 	/**
 	 * Get the shortest distance between two regions.
@@ -53,12 +53,12 @@ final class HexagonalMap extends BaseMap
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
 		$neighbours  = new Neighbours();
-		$this->setNeighbour(Direction::NORTHEAST, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::EAST, --$y, ++$x, $neighbours);
-		$this->setNeighbour(Direction::SOUTHEAST, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::SOUTHWEST, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::WEST, ++$y, --$x, $neighbours);
-		$this->setNeighbour(Direction::NORTHWEST, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::Northeast, ++$y, $x, $neighbours);
+		$this->setNeighbour(Direction::East, --$y, ++$x, $neighbours);
+		$this->setNeighbour(Direction::Southeast, --$y, $x, $neighbours);
+		$this->setNeighbour(Direction::Southwest, $y, --$x, $neighbours);
+		$this->setNeighbour(Direction::West, ++$y, --$x, $neighbours);
+		$this->setNeighbour(Direction::Northwest, ++$y, $x, $neighbours);
 		return $neighbours;
 	}
 
@@ -67,12 +67,12 @@ final class HexagonalMap extends BaseMap
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
 		return match ($direction) {
-			Direction::NORTHEAST => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
-			Direction::EAST      => $this->createEastWays($start, $distance),
-			Direction::SOUTHEAST => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
-			Direction::SOUTHWEST => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
-			Direction::WEST      => $this->createWestWays($start, $distance),
-			Direction::NORTHWEST => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
+			Direction::Northeast => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
+			Direction::East      => $this->createEastWays($start, $distance),
+			Direction::Southeast => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
+			Direction::Southwest => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
+			Direction::West      => $this->createWestWays($start, $distance),
+			Direction::Northwest => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
 			default              => throw new LemuriaException()
 		};
 	}
