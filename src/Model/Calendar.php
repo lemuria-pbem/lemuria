@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Model\Calendar\Season;
 use Lemuria\Serializable;
 
 /**
@@ -22,7 +23,7 @@ interface Calendar extends Serializable
 	/**
 	 * Get the season.
 	 */
-	public function Season(): int;
+	public function Season(): Season;
 
 	/**
 	 * Get the week of the month.

@@ -4,6 +4,7 @@ namespace Lemuria\Tests\Model\Calendar;
 
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Calendar\BaseCalendar;
+use Lemuria\Model\Calendar\Season;
 use Lemuria\Tests\Test;
 
 class BaseCalendarTest extends Test
@@ -49,7 +50,7 @@ class BaseCalendarTest extends Test
 	 * @depends construct
 	 */
 	public function Season(BaseCalendar $calendar): void {
-		$this->assertSame(1, $calendar->Season());
+		$this->assertSame(Season::Spring, $calendar->Season());
 	}
 
 	/**
@@ -98,14 +99,14 @@ class BaseCalendarTest extends Test
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(3, $calendar->Week());
 		$this->assertSame(4 * 2, $calendar->Month());
-		$this->assertSame(4, $calendar->Season());
+		$this->assertSame(Season::Winter, $calendar->Season());
 		$this->assertSame(1, $calendar->Year());
 
 		$this->assertSame($round + 1, $calendar->nextRound());
 		$this->assertSame($round + 1, $calendar->Round());
 		$this->assertSame(1, $calendar->Week());
 		$this->assertSame(1, $calendar->Month());
-		$this->assertSame(1, $calendar->Season());
+		$this->assertSame(Season::Spring, $calendar->Season());
 		$this->assertSame(2, $calendar->Year());
 
 		$this->assertSame('1.0.0', $calendar->getCompatibility());
@@ -122,7 +123,7 @@ class BaseCalendarTest extends Test
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(2, $calendar->Week());
 		$this->assertSame(3, $calendar->Month());
-		$this->assertSame(2, $calendar->Season());
+		$this->assertSame(Season::Summer, $calendar->Season());
 		$this->assertSame(2, $calendar->Year());
 		$this->assertSame('1.0.0', $calendar->getCompatibility());
 	}

@@ -74,8 +74,9 @@ class BaseCalendar implements Calendar
 	/**
 	 * Get the season.
 	 */
-	public function Season(): int {
-		return (int)($this->r / ($this->months * $this->weeks)) % $this->seasons + 1;
+	public function Season(): Season {
+		$season = (int)($this->r / ($this->months * $this->weeks)) % $this->seasons + 1;
+		return Season::from($season);
 	}
 
 	/**
