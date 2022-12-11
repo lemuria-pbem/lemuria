@@ -40,6 +40,6 @@ readonly class VersionFinder
 			throw new LemuriaException('Invalid name or version in composer.json file: ' . $this->composer);
 		}
 		$names = explode('/', $name);
-		return new VersionTag(Module::from(array_pop($names)), $version);
+		return new VersionTag(array_pop($names), $version);
 	}
 }

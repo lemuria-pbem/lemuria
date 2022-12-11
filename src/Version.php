@@ -53,7 +53,7 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 		if (!isset($this->versions[$offset->value])) {
 			throw new LemuriaException();
 		}
-		$this->versions[$offset][] = $value;
+		$this->versions[$offset->value][] = $value;
 	}
 
 	/**
