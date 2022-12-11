@@ -12,6 +12,7 @@ use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
 use Lemuria\Exception\InitializationException;
+use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\VersionTooLowException;
 use Lemuria\Factory\Namer;
 use Lemuria\Model\Builder;
@@ -164,6 +165,47 @@ function randInt(int $min = 0, int $max = PHP_INT_MAX): int {
  */
 function randFloat(): float {
 	return randInt() / PHP_INT_MAX;
+}
+
+/**
+ * Get a random subset of keys from given array.
+ */
+function randKey(array $array): mixed {
+	return randKeys($array)[0];
+}
+
+/**
+ * Get a random subset of keys from given array.
+ */
+function randKeys(array $array, int $count = 1): array {
+	try {
+		return Lemuria::Random()->pickArrayKeys($array, $count);
+	} catch (\ValueError $e) {
+		throw new LemuriaException('Invalid element count given.', $e);
+	}
+}
+
+/**
+ * Get a random element from given array.
+ */
+function randElement(array $array): mixed {
+	try {
+		$keys = Lemuria::Random()->pickArrayKeys($array, 1);
+		return $array[$keys[0]];
+	} catch (\ValueError $e) {
+		throw new LemuriaException('Empty array given.', $e);
+	}
+}
+
+/**
+ * Get a random subset of elements from given array.
+ */
+function randArray(array $array, int $count = 1): array {
+	$values = [];
+	foreach (randKeys($array, $count) as $key) {
+		$values[$key] = $array[$key];
+	}
+	return $values;
 }
 
 /**
