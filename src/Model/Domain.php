@@ -4,6 +4,8 @@ namespace Lemuria\Model;
 
 enum Domain : int
 {
+	private const FACTOR = 100;
+
 	case Party = 1;
 
 	case Unit = 2;
@@ -19,4 +21,19 @@ enum Domain : int
 	case Unicum = 7;
 
 	case Trade = 8;
+
+	public static function isLegacy(int $value): bool {
+		return $value % self::FACTOR === 0 && $value >= self::FACTOR * self::Party->value && $value <= self::FACTOR * self::Trade->value;
+	}
+
+	public static function fromLegacy(int $value): self {
+		if (self::isLegacy($value)) {
+			return self::from((int)($value / 100));
+		}
+		return self::from($value);
+	}
+
+	public function getLegacyValue(): int {
+		return self::FACTOR * $this->value;
+	}
 }

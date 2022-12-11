@@ -12,7 +12,10 @@
     <inspection_tool class="PhpFullyQualifiedNameUsageInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="IGNORE_GLOBAL_NAMESPACE" value="true" />
     </inspection_tool>
-    <inspection_tool class="PhpIllegalArrayKeyTypeInspection" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="PhpIllegalArrayKeyTypeInspection" enabled="true" level="WEAK WARNING" enabled_by_default="false" editorAttributes="INFO_ATTRIBUTES">
+      <scope name="All Changed Files" level="WEAK WARNING" enabled="true" editorAttributes="INFO_ATTRIBUTES">
+        <option name="PHP8_SEVERITY" value="WEAK WARNING" />
+      </scope>
       <option name="PHP8_SEVERITY" value="WEAK WARNING" />
     </inspection_tool>
     <inspection_tool class="PhpUnused" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
