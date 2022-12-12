@@ -3,8 +3,8 @@ declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
 use Lemuria\Exception\LemuriaException;
+use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
-use Lemuria\Model\Neighbours;
 
 /**
  * Representation of a two-dimensional world with eight directions.
@@ -23,25 +23,6 @@ final class OctagonalMap extends BaseMap
 	}
 
 	/**
-	 * Get the neighbour regions of a location.
-	 */
-	public function getNeighbours(Location $location): Neighbours {
-		$coordinates = $this->getCoordinates($location);
-		$x           = $coordinates->X();
-		$y           = $coordinates->Y();
-		$neighbours  = new Neighbours();
-		$this->setNeighbour(Direction::North, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::Northeast, $y, ++$x, $neighbours);
-		$this->setNeighbour(Direction::East, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::Southeast, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::South, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::Southwest, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::West, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::Northwest, ++$y, $x, $neighbours);
-		return $neighbours;
-	}
-
-	/**
 	 * Get the path from a location to a distant point.
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
@@ -56,6 +37,25 @@ final class OctagonalMap extends BaseMap
 			Direction::Northwest => $this->createWays($start, 1, -1, $distance),
 			default              => throw new LemuriaException('Direction ' . $direction->value . ' is not supported.')
 		};
+	}
+
+	/**
+	 * @return array<string, Coordinates>
+	 */
+	protected function getNeighbourCoordinates(Location $location): array {
+		$coordinates = $this->getCoordinates($location);
+		$x           = $coordinates->X();
+		$y           = $coordinates->Y();
+		return [
+			Direction::North->value     => new MapCoordinates($x, ++$y),
+			Direction::Northeast->value => new MapCoordinates(++$x, $y),
+			Direction::East->value      => new MapCoordinates($x, --$y),
+			Direction::Southeast->value => new MapCoordinates($x, --$y),
+			Direction::South->value     => new MapCoordinates(--$x, $y),
+			Direction::Southwest->value => new MapCoordinates(--$x, $y),
+			Direction::West->value      => new MapCoordinates($x, ++$y),
+			Direction::Northwest->value => new MapCoordinates($x, ++$y)
+		];
 	}
 
 	private function createWay(Location $location, int $dY, int $dX, int $distance): Path {

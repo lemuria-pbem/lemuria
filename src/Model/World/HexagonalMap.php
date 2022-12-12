@@ -3,8 +3,8 @@ declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
 use Lemuria\Exception\LemuriaException;
+use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
-use Lemuria\Model\Neighbours;
 
 /**
  * Representation of a two-dimensional world with six directions.
@@ -46,23 +46,6 @@ final class HexagonalMap extends BaseMap
 	}
 
 	/**
-	 * Get the neighbour regions of a location.
-	 */
-	public function getNeighbours(Location $location): Neighbours {
-		$coordinates = $this->getCoordinates($location);
-		$x           = $coordinates->X();
-		$y           = $coordinates->Y();
-		$neighbours  = new Neighbours();
-		$this->setNeighbour(Direction::Northeast, ++$y, $x, $neighbours);
-		$this->setNeighbour(Direction::East, --$y, ++$x, $neighbours);
-		$this->setNeighbour(Direction::Southeast, --$y, $x, $neighbours);
-		$this->setNeighbour(Direction::Southwest, $y, --$x, $neighbours);
-		$this->setNeighbour(Direction::West, ++$y, --$x, $neighbours);
-		$this->setNeighbour(Direction::Northwest, ++$y, $x, $neighbours);
-		return $neighbours;
-	}
-
-	/**
 	 * Get the path from a location to a distant point.
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
@@ -75,6 +58,23 @@ final class HexagonalMap extends BaseMap
 			Direction::Northwest => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
 			default              => throw new LemuriaException()
 		};
+	}
+
+	/**
+	 * @return array<string, Coordinates>
+	 */
+	protected function getNeighbourCoordinates(Location $location): array {
+		$coordinates = $this->getCoordinates($location);
+		$x           = $coordinates->X();
+		$y           = $coordinates->Y();
+		return [
+			Direction::Northeast->value => new MapCoordinates($x, ++$y),
+			Direction::East->value      => new MapCoordinates(++$x, --$y),
+			Direction::Southeast->value => new MapCoordinates($x, --$y),
+			Direction::Southwest->value => new MapCoordinates(--$x, $y),
+			Direction::West->value      => new MapCoordinates(--$x, ++$y),
+			Direction::Northwest->value => new MapCoordinates($x, ++$y)
+		];
 	}
 
 	/**
