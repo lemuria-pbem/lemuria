@@ -78,6 +78,9 @@ class CommandFile implements \Stringable, Move
 				$line = substr($line, 0, strlen($line) - 1);
 				continue;
 			}
+			if (strlen($line) > 2 && str_starts_with($line, '//') && $line[2] !== ' ') {
+				$line = '//' . ' ' . substr($line, 2);
+			}
 			$comment = strpos($line, ';');
 			if ($comment !== false) {
 				$line = substr($line, 0, $comment);
