@@ -21,4 +21,6 @@ enum Section : int
 	case Production = 8;
 
 	case Study = 9;
+
+	case Guard = 10;
 }
