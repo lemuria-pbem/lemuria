@@ -13,8 +13,7 @@ class ById implements EntityOrder
 	/**
 	 * Sort entities and return the entity IDs in sorted order.
 	 *
-	 * @param EntitySet $set
-	 * @return int[]
+	 * @return array<int>
 	 */
 	public function sort(EntitySet $set): array {
 		$ids = [];

@@ -8,7 +8,7 @@ use Lemuria\Model\Location;
 class Path implements \ArrayAccess, \Countable, \Iterator
 {
 	/**
-	 * @var array[]
+	 * @var array<array<Location>>
 	 */
 	protected array $ways = [];
 
@@ -25,7 +25,7 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 
 	/**
 	 * @param int $offset
-	 * @return Location[]
+	 * @return array<Location>
 	 */
 	public function offsetGet(mixed $offset): array {
 		return $this->ways[$offset];
@@ -33,7 +33,7 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 
 	/**
 	 * @param int $offset
-	 * @param Location[] $value
+	 * @param array<Location> $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
 		if (!is_array($value)) {
@@ -60,7 +60,7 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 	}
 
 	/**
-	 * @return Location[]
+	 * @return array<Location>
 	 */
 	public function current(): array {
 		return $this->ways[$this->index];

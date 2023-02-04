@@ -222,7 +222,7 @@ function randChance(float $chance): bool {
  * represent a descending random chance, e.g. for amount of 3 it will return
  * [0.5, 0.833, 1.0] and for 4 it will return [0.4, 0.7, 0.9, 1.0].
  *
- * @return float[]
+ * @return array<float>
  */
 function randDistribution23(int $amount): array {
 	$amount = abs($amount);

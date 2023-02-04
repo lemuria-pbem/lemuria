@@ -32,7 +32,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends testFileExists
-	 * @return CommandFile
 	 */
 	public function construct(): CommandFile {
 		$file = new CommandFile(self::PATH);
@@ -54,7 +53,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param CommandFile $file
 	 */
 	public function toStringReturnsPath(CommandFile $file): void {
 		$path = realpath(self::PATH);
@@ -65,7 +63,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param CommandFile $file
 	 */
 	public function current(CommandFile $file): void {
 		$this->assertSame('', $file->current());
@@ -74,7 +71,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param CommandFile $file
 	 */
 	public function key(CommandFile $file): void {
 		$this->assertSame(0, $file->key());
@@ -83,7 +79,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param CommandFile $file
 	 */
 	public function valid(CommandFile $file): void {
 		$this->assertFalse($file->valid());
@@ -92,7 +87,6 @@ class CommandFileTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param CommandFile $file
 	 */
 	public function iteration(CommandFile $file): void {
 		$i = 0;

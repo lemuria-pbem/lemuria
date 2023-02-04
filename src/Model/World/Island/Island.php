@@ -23,7 +23,7 @@ class Island
 	private Coordinates $outer;
 
 	/**
-	 * @var array[]
+	 * @var array<int, array<int, Location>>
 	 */
 	private array $map;
 

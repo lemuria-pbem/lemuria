@@ -12,7 +12,7 @@ interface Score extends \Iterator
 	public function find(Identifiable $effect): ?Identifiable;
 
 	/**
-	 * @return Identifiable[]
+	 * @return array<Identifiable>
 	 */
 	public function findAll(Identifiable $entity): array;
 

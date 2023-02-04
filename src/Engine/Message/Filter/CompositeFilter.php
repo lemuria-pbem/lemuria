@@ -11,7 +11,7 @@ use Lemuria\Engine\Message\Filter;
 class CompositeFilter implements Filter
 {
 	/**
-	 * @var Filter[]
+	 * @var array<Filter>
 	 */
 	protected array $filters = [];
 

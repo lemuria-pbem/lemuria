@@ -5,7 +5,7 @@ namespace Lemuria\Factory;
 interface SingletonCatalog
 {
 	/**
-	 * @return SingletonGroup[]
+	 * @return array<SingletonGroup>
 	 */
 	public function getGroups(): array;
 }

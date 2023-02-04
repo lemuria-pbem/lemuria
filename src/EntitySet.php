@@ -10,9 +10,6 @@ use Lemuria\Exception\UnserializeEntitySetException;
 
 /**
  * A simple set of entities.
- *
- * @\ArrayAccess<int|Id, Identifiable>
- * @\Iterator<int, Identifiable>
  */
 abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityContainer, Serializable
 {
@@ -20,12 +17,12 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	use IteratorTrait;
 
 	/**
-	 * @var int[]
+	 * @var array<int>
 	 */
 	private array $indices = [];
 
 	/**
-	 * @var array(int=>Id)
+	 * @var array<int, Id>
 	 */
 	private array $entities = [];
 
@@ -59,8 +56,8 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Not implemented.
 	 *
-	 * @param mixed $offset
-	 * @param mixed $value
+	 * @param int|Id $offset
+	 * @param Identifiable $value
 	 * @throws LemuriaException
 	 */
 	public function offsetSet(mixed $offset, mixed $value): never {
@@ -104,11 +101,11 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Get a plain data array of the model's data.
 	 *
-	 * @return int[]
+	 * @return array<int>
 	 */
 	public function serialize(): array {
 		$data = [];
-		foreach ($this->entities as $id /* @var Id $id */) {
+		foreach ($this->entities as $id) {
 			$data[] = $id->Id();
 		}
 		return $data;
@@ -117,7 +114,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param int[] $data
+	 * @param array<int> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		if ($this->count > 0) {
@@ -149,7 +146,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 */
 	public function addCollectorsToAll(): EntitySet {
 		if ($this->hasCollector()) {
-			foreach ($this->entities as $id /* @var Id $id */) {
+			foreach ($this->entities as $id) {
 				/** @var Collectible $collectible */
 				$collectible = $this->get($id);
 				$collectible->addCollector($this->collector());

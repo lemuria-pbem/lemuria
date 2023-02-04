@@ -19,7 +19,7 @@ interface Debut extends \Countable
 	/**
 	 * Get all newcomers.
 	 *
-	 * @return Newcomer[]
+	 * @return array<Newcomer>
 	 */
 	public function getAll(): array;
 

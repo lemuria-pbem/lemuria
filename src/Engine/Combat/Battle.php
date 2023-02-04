@@ -11,7 +11,7 @@ interface Battle extends \Countable, \Iterator, Serializable
 	public function Location(): Location;
 
 	/**
-	 * @return Identifiable[]
+	 * @return array<Identifiable>
 	 */
 	public function Participants(): array;
 }

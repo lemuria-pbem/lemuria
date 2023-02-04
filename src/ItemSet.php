@@ -9,9 +9,6 @@ use Lemuria\Exception\UnserializeItemSetException;
 
 /**
  * Implementation of a set of items, where an item is a quantity of something.
- *
- * @\ArrayAccess <Item|Singleton|string, Item>
- * @\Iterator <string, Item>
  */
 abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 {
@@ -19,7 +16,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	use IteratorTrait;
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	private array $indices = [];
 

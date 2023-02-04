@@ -7,9 +7,6 @@ use Lemuria\Model\World\Direction;
 
 /**
  * A helper class that encapsulates the neighbour locations of a location.
- *
- * @\ArrayAccess<Direction, Location>
- * @\Iterator<Direction, Location>
  */
 class Neighbours implements \ArrayAccess, \Countable, \Iterator
 {
@@ -19,7 +16,7 @@ class Neighbours implements \ArrayAccess, \Countable, \Iterator
 	private array $locations = [];
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	private array $indices;
 
@@ -91,7 +88,7 @@ class Neighbours implements \ArrayAccess, \Countable, \Iterator
 	}
 
 	/**
-	 * @return Direction[]
+	 * @return array<Direction>
 	 */
 	public function getDirections(): array {
 		$directions = [];

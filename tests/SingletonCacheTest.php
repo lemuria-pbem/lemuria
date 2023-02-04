@@ -10,7 +10,6 @@ class SingletonCacheTest extends Test
 {
 	/**
 	 * @test
-	 * @return SingletonCache
 	 */
 	public function construct(): SingletonCache {
 		$cache = new SingletonCache();
@@ -23,7 +22,6 @@ class SingletonCacheTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param SingletonCache $cache
 	 */
 	public function getInitial(SingletonCache $cache): void {
 		$this->assertNull($cache->get('SingletonMock'));
@@ -32,8 +30,6 @@ class SingletonCacheTest extends Test
 	/**
 	 * @test
 	 * @depends construct
-	 * @param SingletonCache $cache
-	 * @return SingletonCache
 	 */
 	public function setFirstTime(SingletonCache $cache): SingletonCache {
 		$mock = new SingletonMock();
@@ -47,7 +43,6 @@ class SingletonCacheTest extends Test
 	/**
 	 * @test
 	 * @depends setFirstTime
-	 * @param SingletonCache $cache
 	 */
 	public function setSecondTime(SingletonCache $cache): void {
 		$previous = $cache->get('SingletonMock');

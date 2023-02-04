@@ -5,7 +5,6 @@ namespace Lemuria\Sorting\Location;
 use Lemuria\EntityOrder;
 use Lemuria\EntitySet;
 use Lemuria\Lemuria;
-use Lemuria\Model\Location;
 use Lemuria\Model\World\Atlas;
 
 /**
@@ -17,12 +16,12 @@ class North2South implements EntityOrder
 	 * Sort entities and return the entity IDs in sorted order.
 	 *
 	 * @param Atlas $set
-	 * @return int[]
+	 * @return array<int>
 	 */
 	public function sort(EntitySet $set): array {
 		$ids         = [];
 		$coordinates = [];
-		foreach ($set as $location /* @var Location $location */) {
+		foreach ($set as $location) {
 			$coord = Lemuria::World()->getCoordinates($location);
 			$x     = $coord->X();
 			$y     = $coord->Y();

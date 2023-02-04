@@ -16,14 +16,14 @@ interface Hostilities
 	/**
 	 * Search for all battles in a location.
 	 *
-	 * @return Battle[]
+	 * @return array<Battle>
 	 */
 	public function findAll(Location $location): array;
 
 	/**
 	 * Search for all battles where a specific entity is engaged.
 	 *
-	 * @return Battle[]
+	 * @return array<Battle>
 	 */
 	public function findFor(Identifiable $entity): array;
 

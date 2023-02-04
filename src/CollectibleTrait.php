@@ -44,7 +44,7 @@ trait CollectibleTrait
 	}
 
 	/**
-	 * @param string[] $availableCollectors
+	 * @param array<string> $availableCollectors
 	 */
 	public function findCollector(array $availableCollectors): Collector {
 		foreach ($availableCollectors as $collector) {

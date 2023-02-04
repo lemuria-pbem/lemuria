@@ -19,17 +19,17 @@ class Map implements \Countable, \Iterator
 	use IteratorTrait;
 
 	/**
-	 * @var Island[]
+	 * @var array<Island>
 	 */
 	protected array $islands = [];
 
 	/**
-	 * @var array(int=>array)
+	 * @var array<int, array<int>>
 	 */
 	protected array $longitude = [];
 
 	/**
-	 * @var array(int=>array)
+	 * @var array<int, array<int>>
 	 */
 	protected array $latitude = [];
 
@@ -86,7 +86,7 @@ class Map implements \Countable, \Iterator
 	}
 
 	/**
-	 * @return Island[]
+	 * @return array<Island>
 	 */
 	protected function findIslands(Coordinates $coordinates): array {
 		$longitude = $this->longitude[$coordinates->X()] ?? [];

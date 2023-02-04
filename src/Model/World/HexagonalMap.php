@@ -12,7 +12,7 @@ use Lemuria\Model\Location;
 final class HexagonalMap extends BaseMap
 {
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected array $directions = [Direction::Northeast, Direction::East, Direction::Southeast,
 		                           Direction::Southwest, Direction::West, Direction::Northwest];

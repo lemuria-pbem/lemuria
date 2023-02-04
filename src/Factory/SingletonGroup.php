@@ -30,7 +30,7 @@ readonly class SingletonGroup
 	}
 
 	/**
-	 * @return string[]
+	 * @return array<string>
 	 */
 	public function getSingletons(): array {
 		$singletons     = [];

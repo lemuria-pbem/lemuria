@@ -11,14 +11,20 @@ class StringList implements Instructions
 	use SerializableTrait;
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	private array $list = [];
 
+	/**
+	 * @var int $offset
+	 */
 	public function offsetExists(mixed $offset): bool {
 		return isset($this->list[$offset]);
 	}
 
+	/**
+	 * @var int $offset
+	 */
 	public function offsetGet(mixed $offset): string {
 		if ($this->offsetExists($offset)) {
 			return $this->list[$offset];
@@ -27,6 +33,7 @@ class StringList implements Instructions
 	}
 
 	/**
+	 * @param int $offset
 	 * @param \Stringable|string $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
@@ -38,6 +45,9 @@ class StringList implements Instructions
 		}
 	}
 
+	/**
+	 * @param int $offset
+	 */
 	public function offsetUnset(mixed $offset): void {
 		if ($this->offsetExists($offset)) {
 			unset($this->list[$offset]);
@@ -53,7 +63,7 @@ class StringList implements Instructions
 	/**
 	 * Get a plain data array.
 	 *
-	 * @return string[]
+	 * @return array<string>
 	 */
 	public function serialize(): array {
 		return $this->list;
@@ -62,7 +72,7 @@ class StringList implements Instructions
 	/**
 	 * Restore the list from serialized data.
 	 *
-	 * @param string[] $data
+	 * @param array<string> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->list  = array_values($data);

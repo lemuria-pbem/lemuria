@@ -10,7 +10,7 @@ interface Officer
 	public function Id(): int;
 
 	/**
-	 * @return string[]
+	 * @return array<string>
 	 */
 	public function Subjects(): array;
 

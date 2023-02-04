@@ -2,7 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
-use Lemuria\Entity;
 use Lemuria\EntitySet;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Id;
@@ -15,6 +14,9 @@ use Lemuria\SortMode;
 
 /**
  * An atlas is an ordered list of locations.
+ *
+ * @method Location offsetGet(int|Id $offset)
+ * @method Location current()
  */
 class Atlas extends EntitySet
 {
@@ -48,9 +50,9 @@ class Atlas extends EntitySet
 	/**
 	 * Get an Entity by ID.
 	 */
-	protected function get(Id $id): Entity {
+	protected function get(Id $id): Location {
 		$location = Lemuria::Catalog()->get($id, Domain::Location);
-		if ($location instanceof Entity) {
+		if ($location instanceof Location) {
 			return $location;
 		}
 		throw new LemuriaException('Location ' . $id . ' is not an Entity.');

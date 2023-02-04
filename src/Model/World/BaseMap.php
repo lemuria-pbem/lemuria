@@ -31,13 +31,13 @@ abstract class BaseMap implements Map, World
 	private const MAP = 'map';
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected array $directions = [Direction::North, Direction::Northeast, Direction::East, Direction::Southeast,
 		                           Direction::South, Direction::Southwest, Direction::West, Direction::Northwest];
 
 	/**
-	 * @var array[]
+	 * @var array<int, array<int, int>>
 	 */
 	protected array $map = [];
 

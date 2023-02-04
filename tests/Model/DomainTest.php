@@ -55,7 +55,7 @@ class DomainTest extends Test
 	 * @test
 	 */
 	public function fromLegacyRejectsOtherValues(): void {
-		$this->expectError();
+		$this->expectException(\ValueError::class);
 		Domain::fromLegacy(123);
 	}
 

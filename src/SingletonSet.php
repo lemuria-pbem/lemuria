@@ -11,12 +11,12 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	use IteratorTrait;
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	private array $indices = [];
 
 	/**
-	 * @var array(string=>Singleton)
+	 * @var array<string, Singleton>
 	 */
 	private array $singletons = [];
 
@@ -35,7 +35,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	 *
 	 * @param Singleton|string $offset
 	 */
-	public function offsetGet(mixed $offset): Item {
+	public function offsetGet(mixed $offset): Singleton {
 		$class = getClass($offset);
 		if (isset($this->singletons[$class])) {
 			return $this->singletons[$class];
@@ -46,7 +46,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	/**
 	 * Add a singleton to the set.
 	 *
-	 * @param mixed $offset
+	 * @param string|Singleton $offset
 	 * @param Singleton $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
@@ -74,7 +74,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	/**
 	 * Get a plain data array of the model's data.
 	 *
-	 * @return string[]
+	 * @return array<string>
 	 */
 	public function serialize(): array {
 		return array_keys($this->singletons);
@@ -83,7 +83,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	/**
 	 * Restore the model's data from serialized data.
 	 *
-	 * @param string[] $data
+	 * @param array<string> $data
 	 */
 	public function unserialize(array $data): Serializable {
 		$this->clear();

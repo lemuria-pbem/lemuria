@@ -6,10 +6,6 @@ use Lemuria\Exception\LemuriaException;
 use Lemuria\Version\Module;
 use Lemuria\Version\VersionTag;
 
-/**
- * @\ArrayAccess <Module, VersionTag>
- * @\Iterator <Module, VersionTag[]>
- */
 final class Version implements \ArrayAccess, \Countable, \Iterator
 {
 	use CountableTrait;
@@ -36,7 +32,7 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 
 	/**
 	 * @param Module $offset
-	 * @return VersionTag[]
+	 * @return array<VersionTag>
 	 */
 	public function offsetGet(mixed $offset): array {
 		if (!isset($this->versions[$offset->value])) {
@@ -71,7 +67,7 @@ final class Version implements \ArrayAccess, \Countable, \Iterator
 	}
 
 	/**
-	 * @return VersionTag[]
+	 * @return array<VersionTag>
 	 */
 	public function current(): array {
 		return $this->versions[$this->modules[$this->index]];
