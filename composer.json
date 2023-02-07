@@ -11,7 +11,7 @@
 		}
 	],
 	"version": "1.2.3",
-	"time": "2023-02-04",
+	"time": "2023-02-08",
 
 	"require": {
 		"php": "~8.2",
@@ -19,13 +19,18 @@
 		"psr/log": "~3.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~9.5|~10.0"
+		"phpunit/phpunit": "~10.0"
 	},
 
 	"autoload": {
 		"psr-4": {
-			"Lemuria\\": "src/",
-			"Lemuria\\Tests\\": "tests/"
+			"Lemuria\\": "src/"
 		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Lemuria\\Tests\\": "tests/"
+		},
+		"files": ["src/Lemuria.php"]
 	}
 }

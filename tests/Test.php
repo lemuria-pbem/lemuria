@@ -32,14 +32,6 @@ abstract class Test extends TestCase
 	}
 
 	/**
-	 * Load Lemuria functions.
-	 */
-	protected function setUp(): void {
-		parent::setUp();
-		require_once __DIR__ . '/../src/Lemuria.php';
-	}
-
-	/**
 	 * Mark a test incomplete.
 	 */
 	protected function incomplete(string $message = 'is incomplete'): void {
