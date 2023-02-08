@@ -408,12 +408,6 @@ final class Lemuria
 		self::Statistics()->save();
 	}
 
-	/**
-	 * Dummy function for class loading when functions are used.
-	 */
-	public static function useFunctions(): void {
-	}
-
 	private static function getInstance(): Lemuria {
 		if (!self::$instance) {
 			throw new InitializationException();
