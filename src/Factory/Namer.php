@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Factory;
 
+use Lemuria\Entity;
 use Lemuria\Exception\NamerException;
 use Lemuria\Identifiable;
 use Lemuria\Model\Domain;
@@ -12,9 +13,9 @@ use Lemuria\Model\Domain;
 interface Namer
 {
 	/**
-	 * Name an entity.
+	 * Name an entity or get a suitable name for an identifiable or domain.
 	 *
 	 * @throws NamerException
 	 */
-	public function name(Domain|Identifiable $entity): string;
+	public function name(Domain|Identifiable|Entity $entity): string;
 }
