@@ -10,6 +10,8 @@ enum SortMode
 
 	case ByResidents;
 
+	case BySize;
+
 	case ByType;
 
 	case NorthToSouth;
