@@ -3,8 +3,12 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
+use Lemuria\Tests\Mock\LogMock;
+use Lemuria\Tests\Mock\Model\CatalogMock;
+use Lemuria\Tests\Mock\Model\ConfigMock;
 use Psr\Log\LoggerInterface;
 
+use Psr\Log\NullLogger;
 use function Lemuria\endsWith;
 use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
@@ -181,5 +185,16 @@ class LemuriaTest extends Test
 	public function testLog(): void {
 		$this->expectException(InitializationException::class);
 		Lemuria::Log();
+	}
+
+	/**
+	 * @test
+	 * @depends testLog
+	 */
+	public function testInit(): void {
+		Lemuria::init(new ConfigMock());
+
+		$this->assertInstanceOf(NullLogger::class, Lemuria::Log());
+		$this->assertInstanceOf(CatalogMock::class, Lemuria::Catalog());
 	}
 }
