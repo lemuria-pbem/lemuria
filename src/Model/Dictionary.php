@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Model\Exception\KeyPathException;
 use function Lemuria\getClass;
 use Lemuria\Lemuria;
 use Lemuria\Singleton;
@@ -76,5 +77,16 @@ final class Dictionary
 			}
 			return $default;
 		}
+	}
+
+	public function raw(string $keyPath): mixed {
+		$strings =& self::$strings;
+		foreach (explode('.', $keyPath) as $key) {
+			if (!is_array($strings) || !array_key_exists($key, $strings)) {
+				throw new KeyPathException($keyPath);
+			}
+			$strings =& $strings[$key];
+		}
+		return $strings;
 	}
 }
