@@ -447,7 +447,7 @@ final class Lemuria
 		$version       = self::Version();
 		$tag           = $version[Module::Model][0];
 		$compatibility = self::Calendar()->getCompatibility();
-		if ($compatibility > $tag->version) {
+		if (version_compare($compatibility, $tag->version) > 0) {
 			throw new VersionTooLowException($compatibility);
 		}
 	}
