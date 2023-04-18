@@ -7,14 +7,14 @@ use Lemuria\Identifiable;
 
 class ScoreMock implements Score
 {
-	public function current(): mixed {
+	public function current(): null {
 		return null;
 	}
 
 	public function next(): void {
 	}
 
-	public function key(): mixed {
+	public function key(): null {
 		return null;
 	}
 

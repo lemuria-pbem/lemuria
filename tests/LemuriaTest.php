@@ -3,7 +3,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
-use Lemuria\Tests\Mock\LogMock;
 use Lemuria\Tests\Mock\Model\CatalogMock;
 use Lemuria\Tests\Mock\Model\ConfigMock;
 use Psr\Log\LoggerInterface;

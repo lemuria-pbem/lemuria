@@ -2,8 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\Exception;
 
-use Lemuria\Model\Location;
-
 final class KeyPathException extends ModelException
 {
 	public function __construct(string $keyPath) {
