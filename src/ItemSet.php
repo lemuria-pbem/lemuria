@@ -141,7 +141,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 			if (!$this->isValidItem($item)) {
 				throw new ItemSetFillException($item, $this);
 			}
-			$this->addItem($item);
+			$this->addItem(clone $item);
 		}
 		return $this;
 	}
