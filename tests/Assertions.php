@@ -2,11 +2,9 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
-use PHPUnit\Framework\TestCase;
-
 use function Lemuria\getClass;
 
-abstract class Test extends TestCase
+trait Assertions
 {
 	/**
 	 * Assert that the actual value is an array containing an exact number of elements that may have a defined type.

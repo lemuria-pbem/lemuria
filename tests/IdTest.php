@@ -2,16 +2,17 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Exception\IdException;
 use Lemuria\Id;
 
-class IdTest extends Test
+class IdTest extends Base
 {
 	private const ID = 100;
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function construct(): Id {
 		$id = new Id(self::ID);
 
@@ -20,24 +21,18 @@ class IdTest extends Test
 		return $id;
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Id(Id $id): void {
 		$this->assertSame(self::ID, $id->Id());
 	}
 
-	/**
-	 * @depends construct
-	 */
-	public function testToString(Id $id): void {
+	#[Depends('construct')]
+	public function toStringCreatesBase36String(Id $id): void {
 		$this->assertSame('2s', (string)$id);
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function fromId(): void {
 		$id = Id::fromId(' A8 ');
 
@@ -45,9 +40,7 @@ class IdTest extends Test
 		$this->assertSame(10 * 36 + 8, $id->Id());
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function fromIdFailsOnInvalidCharacters(): void {
 		$this->expectException(IdException::class);
 		Id::fromId('xö');

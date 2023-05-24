@@ -2,15 +2,16 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Factory\SingletonCache;
 
 use Lemuria\Tests\Mock\SingletonMock;
 
-class SingletonCacheTest extends Test
+class SingletonCacheTest extends Base
 {
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function construct(): SingletonCache {
 		$cache = new SingletonCache();
 
@@ -19,18 +20,14 @@ class SingletonCacheTest extends Test
 		return $cache;
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function getInitial(SingletonCache $cache): void {
 		$this->assertNull($cache->get('SingletonMock'));
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function setFirstTime(SingletonCache $cache): SingletonCache {
 		$mock = new SingletonMock();
 
@@ -40,10 +37,8 @@ class SingletonCacheTest extends Test
 		return $cache;
 	}
 
-	/**
-	 * @test
-	 * @depends setFirstTime
-	 */
+	#[Test]
+	#[Depends('setFirstTime')]
 	public function setSecondTime(SingletonCache $cache): void {
 		$previous = $cache->get('SingletonMock');
 

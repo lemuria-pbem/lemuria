@@ -2,26 +2,26 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests\Model\Calendar;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Calendar\BaseCalendar;
 use Lemuria\Model\Calendar\Season;
-use Lemuria\Tests\Test;
 
-class BaseCalendarTest extends Test
+use Lemuria\Tests\Base;
+
+class BaseCalendarTest extends Base
 {
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function construct(): BaseCalendar {
 		$calendar = new BaseCalendar();
 		$this->assertInstanceOf(BaseCalendar::class, $calendar);
 		return $calendar;
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function serialize(BaseCalendar $calendar): void {
 		$data = $calendar->serialize();
 		$this->assertArray($data, 2);
@@ -29,50 +29,38 @@ class BaseCalendarTest extends Test
 		$this->assertArrayKey($data, 'version', '');
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Month(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Month());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Round(BaseCalendar $calendar): void {
 		$this->assertSame(0, $calendar->Round());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Season(BaseCalendar $calendar): void {
 		$this->assertSame(Season::Spring, $calendar->Season());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Week(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Week());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function Year(BaseCalendar $calendar): void {
 		$this->assertSame(1, $calendar->Year());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function nextRound(BaseCalendar $calendar): void {
 		/** @noinspection PhpIdempotentOperationInspection */
 		$expected = 0 + 1;
@@ -80,18 +68,14 @@ class BaseCalendarTest extends Test
 		$this->assertSame($expected, $calendar->Round());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function getCompatibility(BaseCalendar $calendar): void {
 		$this->assertSame('', $calendar->getCompatibility());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function testChangeOfYear(Calendar $calendar): void {
 		$round = 24; // last week before year changes
 		$data  = ['round' => $round, 'version' => '1.0.0'];
@@ -112,10 +96,8 @@ class BaseCalendarTest extends Test
 		$this->assertSame('1.0.0', $calendar->getCompatibility());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function unserialize(BaseCalendar $calendar): void {
 		$round = 2 + 6 + 24 ; // second week in third month in year 2
 		$data  = ['round' => $round, 'version' => '1.0.0'];

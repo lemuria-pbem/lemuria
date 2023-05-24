@@ -3,11 +3,11 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
-use Lemuria\Tests\Mock\Model\CatalogMock;
-use Lemuria\Tests\Mock\Model\ConfigMock;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\LoggerInterface;
-
 use Psr\Log\NullLogger;
+
 use function Lemuria\endsWith;
 use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
@@ -21,11 +21,12 @@ use function Lemuria\undupChar;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Lemuria;
 
-class LemuriaTest extends Test
+use Lemuria\Tests\Mock\Model\CatalogMock;
+use Lemuria\Tests\Mock\Model\ConfigMock;
+
+class LemuriaTest extends Base
 {
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function isClass(): void {
 		$this->assertFalse(isClass(''));
 		$this->assertFalse(isClass('X'));
@@ -41,30 +42,22 @@ class LemuriaTest extends Test
 		$this->assertTrue(isClass('A\\B\\C'));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function getClass(): void {
 		$this->assertSame('LemuriaTest', getClass($this));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function hasPrefix(): void {
 		$this->assertTrue(hasPrefix('Psr', LoggerInterface::class));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function hasPrefixFalse(): void {
 		$this->assertFalse(hasPrefix('Test', self::class));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function isInt(): void {
 		$this->assertTrue(isInt('-1'));
 		$this->assertTrue(isInt('0'));
@@ -72,9 +65,7 @@ class LemuriaTest extends Test
 		$this->assertTrue(isInt('1234567890'));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function isIntFalse(): void {
 		$this->assertFalse(isInt(''));
 		$this->assertFalse(isInt('null'));
@@ -83,9 +74,7 @@ class LemuriaTest extends Test
 		$this->assertFalse(isInt('1e1'));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function sign(): void {
 		$this->assertSame(-1, sign(-0.123));
 		$this->assertSame(-1, sign(-0.123e3));
@@ -107,41 +96,33 @@ class LemuriaTest extends Test
 	}
 
 	/**
-	 * @test
 	 * @noinspection SpellCheckingInspection
 	 */
+	#[Test]
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));
 		$this->assertSame('Älchemie', mbUcFirst('älchemie'));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function undupChar(): void {
 		$this->assertSame('Ein Satz mit X.', undupChar(' ', 'Ein Satz  mit    X.'));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function endsWith(): void {
 		$this->assertFalse(endsWith('Hilfe!', ['e', '.', '?']));
 		$this->assertTrue(endsWith('Hilfe!', ['e', '.', '?', '!']));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function randChanceZero(): void {
 		for ($i = 0; $i < 1000; $i++) {
 			$this->assertFalse(randChance(0.0));
 		}
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function randChanceEqual(): void {
 		$above = 0;
 		$below = 0;
@@ -152,18 +133,14 @@ class LemuriaTest extends Test
 		$this->assertGreaterThan(0, $below);
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function randChanceOne(): void {
 		for ($i = 0; $i < 1000; $i++) {
 			$this->assertTrue(randChance(1.0));
 		}
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function randDistribution23(): void {
 		$this->assertSame([0.0], randDistribution23(0));
 		$this->assertSame([1.0], randDistribution23(-1));
@@ -178,18 +155,14 @@ class LemuriaTest extends Test
 		$this->assertSame([0.3333333, 0.6, 0.8, 0.9333333, 1.0], randDistribution23(5));
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function testLog(): void {
 		$this->expectException(InitializationException::class);
 		Lemuria::Log();
 	}
 
-	/**
-	 * @test
-	 * @depends testLog
-	 */
+	#[Test]
+	#[Depends('testLog')]
 	public function testInit(): void {
 		Lemuria::init(new ConfigMock());
 

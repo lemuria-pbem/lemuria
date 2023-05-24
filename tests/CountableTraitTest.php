@@ -2,9 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Tests\Mock\CountableMock;
 
-class CountableTraitTest extends Test
+class CountableTraitTest extends Base
 {
 	protected CountableMock $sut;
 
@@ -13,16 +15,12 @@ class CountableTraitTest extends Test
 		$this->sut = new CountableMock();
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function construct(): void {
 		$this->assertSame(0, $this->sut->count());
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function increase(): void {
 		$this->sut->increase();
 

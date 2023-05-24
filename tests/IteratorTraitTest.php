@@ -2,9 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Tests\Mock\IteratorMock;
 
-class IteratorTraitTest extends Test
+class IteratorTraitTest extends Base
 {
 	protected IteratorMock $sut;
 
@@ -13,9 +15,7 @@ class IteratorTraitTest extends Test
 		$this->sut = new IteratorMock();
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function construct(): void {
 		$i = 0;
 		foreach ($this->sut as $item) {
@@ -26,9 +26,7 @@ class IteratorTraitTest extends Test
 		$this->assertSame(0, $this->sut->count());
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function addItem(): void {
 		$item = 'I am a test item';
 		$this->sut->add($item);

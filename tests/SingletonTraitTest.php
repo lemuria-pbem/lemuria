@@ -2,14 +2,15 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Singleton;
+
 use Lemuria\Tests\Mock\SingletonMock;
 
-class SingletonTraitTest extends Test
+class SingletonTraitTest extends Base
 {
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function testToString(): void {
 		$mock = new SingletonMock();
 

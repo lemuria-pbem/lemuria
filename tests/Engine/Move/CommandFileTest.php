@@ -2,12 +2,15 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests\Engine\Move;
 
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Test;
+
 use Lemuria\Engine\Exception\EngineException;
 use Lemuria\Engine\Move\CommandFile;
 
-use Lemuria\Tests\Test;
+use Lemuria\Tests\Base;
 
-class CommandFileTest extends Test
+class CommandFileTest extends Base
 {
 	private const PATH = __DIR__ . '/../../storage/orders/test.order';
 
@@ -22,17 +25,13 @@ class CommandFileTest extends Test
 		'NÄCHSTER'
 	];
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function testFileExists(): void {
 		$this->assertIsString(realpath(self::PATH));
 	}
 
-	/**
-	 * @test
-	 * @depends testFileExists
-	 */
+	#[Test]
+	#[Depends('testFileExists')]
 	public function construct(): CommandFile {
 		$file = new CommandFile(self::PATH);
 
@@ -41,53 +40,41 @@ class CommandFileTest extends Test
 		return $file;
 	}
 
-	/**
-	 * @test
-	 */
+	#[Test]
 	public function constructThrowsException(): void {
 		$this->expectException(EngineException::class);
 
 		new CommandFile(__DIR__ . '/i-do-not-exist');
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function toStringReturnsPath(CommandFile $file): void {
 		$path = realpath(self::PATH);
 
 		$this->assertSame($path, (string)$file);
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function current(CommandFile $file): void {
 		$this->assertSame('', $file->current());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function key(CommandFile $file): void {
 		$this->assertSame(0, $file->key());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function valid(CommandFile $file): void {
 		$this->assertFalse($file->valid());
 	}
 
-	/**
-	 * @test
-	 * @depends construct
-	 */
+	#[Test]
+	#[Depends('construct')]
 	public function iteration(CommandFile $file): void {
 		$i = 0;
 
