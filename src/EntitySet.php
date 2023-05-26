@@ -141,6 +141,14 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 		return $this;
 	}
 
+	public function fill(EntitySet $set): EntitySet {
+		$this->indices  = $set->indices;
+		$this->entities = $set->entities;
+		$this->index    = 0;
+		$this->count    = $set->count;
+		return $this;
+	}
+
 	/**
 	 * Set the Collector in all entities.
 	 */

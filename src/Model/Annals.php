@@ -78,9 +78,17 @@ abstract class Annals extends EntitySet
 	/**
 	 * Clear the set.
 	 */
-	public function clear(): EntitySet {
+	public function clear(): Annals {
 		$this->round = [];
 		return parent::clear();
+	}
+
+	public function fill(EntitySet $set): Annals {
+		if ($set instanceof Annals) {
+			$this->round = $set->round;
+			return parent::fill($set);
+		}
+		throw new \InvalidArgumentException();
 	}
 
 	protected function addEntity(Id $id, int $round = null): void {
