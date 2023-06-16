@@ -2,7 +2,7 @@
 	"name": "lemuria-pbem/lemuria",
 	"description": "This library is part of the PbeM Lemuria. It contains common code.",
 	"type": "library",
-	"keywords": ["atlantis", "eressea", "fantasya", "game", "lemuria", "pbem", "rpg", "strategy", "world"],
+	"keywords": ["atlantis", "eressea", "fantasy", "fantasya", "game", "lemuria", "pbem", "pbm", "rpg", "strategy", "world"],
 	"license": "GPL-3.0",
 	"authors": [
 		{
@@ -10,7 +10,7 @@
 			"email": "lemuria@online.de"
 		}
 	],
-	"version": "1.3.4",
+	"version": "1.4.0",
 	"time": "2023-07-24",
 
 	"require": {
@@ -19,7 +19,7 @@
 		"psr/log": "~3.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~10.0"
+		"phpunit/phpunit": "~10.2"
 	},
 
 	"autoload": {
