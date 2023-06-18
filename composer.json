@@ -19,8 +19,14 @@
 		"psr/log": "~3.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~10.2"
+		"sat-hub/phpunit": "~1.10.1"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:sat-hub/phpunit.git"
+		}
+	],
 
 	"autoload": {
 		"psr-4": {

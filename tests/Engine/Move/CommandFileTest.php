@@ -4,11 +4,10 @@ namespace Lemuria\Tests\Engine\Move;
 
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Engine\Exception\EngineException;
 use Lemuria\Engine\Move\CommandFile;
-
-use Lemuria\Tests\Base;
 
 class CommandFileTest extends Base
 {

@@ -3,10 +3,9 @@ declare (strict_types = 1);
 namespace Lemuria\Tests\Model;
 
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Model\Domain;
-
-use Lemuria\Tests\Base;
 
 class DomainTest extends Base
 {
@@ -46,6 +45,7 @@ class DomainTest extends Base
 	#[Test]
 	public function fromLegacyRejectsOtherValues(): void {
 		$this->expectException(\ValueError::class);
+
 		Domain::fromLegacy(123);
 	}
 

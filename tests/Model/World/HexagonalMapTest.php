@@ -4,12 +4,11 @@ namespace Lemuria\Tests\Model\World;
 
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Exception\UnserializeException;
 use Lemuria\Model\World\Geometry;
 use Lemuria\Model\World\HexagonalMap;
-
-use Lemuria\Tests\Base;
 
 class HexagonalMapTest extends Base
 {
@@ -23,7 +22,7 @@ class HexagonalMapTest extends Base
 	public function construct(): HexagonalMap {
 		$map = new HexagonalMap();
 
-		$this->assertNotNull($map);
+		$this->pass();
 
 		return $map;
 	}
@@ -62,6 +61,7 @@ class HexagonalMapTest extends Base
 		$data['geometry'] = 'invalid';
 
 		$this->expectException(UnserializeException::class);
+
 		$map->unserialize($data);
 	}
 }

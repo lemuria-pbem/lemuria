@@ -4,6 +4,7 @@ namespace Lemuria\Tests;
 
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Factory\SingletonCache;
 
@@ -15,7 +16,7 @@ class SingletonCacheTest extends Base
 	public function construct(): SingletonCache {
 		$cache = new SingletonCache();
 
-		$this->assertNotNull($cache);
+		$this->pass();
 
 		return $cache;
 	}

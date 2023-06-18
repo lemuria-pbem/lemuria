@@ -4,19 +4,20 @@ namespace Lemuria\Tests\Model\Calendar;
 
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Model\Calendar;
 use Lemuria\Model\Calendar\BaseCalendar;
 use Lemuria\Model\Calendar\Season;
-
-use Lemuria\Tests\Base;
 
 class BaseCalendarTest extends Base
 {
 	#[Test]
 	public function construct(): BaseCalendar {
 		$calendar = new BaseCalendar();
-		$this->assertInstanceOf(BaseCalendar::class, $calendar);
+
+		$this->pass();
+
 		return $calendar;
 	}
 
@@ -24,6 +25,7 @@ class BaseCalendarTest extends Base
 	#[Depends('construct')]
 	public function serialize(BaseCalendar $calendar): void {
 		$data = $calendar->serialize();
+
 		$this->assertArray($data, 2);
 		$this->assertArrayKey($data, 'round', 0);
 		$this->assertArrayKey($data, 'version', '');
@@ -64,6 +66,7 @@ class BaseCalendarTest extends Base
 	public function nextRound(BaseCalendar $calendar): void {
 		/** @noinspection PhpIdempotentOperationInspection */
 		$expected = 0 + 1;
+
 		$this->assertSame($expected, $calendar->nextRound());
 		$this->assertSame($expected, $calendar->Round());
 	}
@@ -79,6 +82,7 @@ class BaseCalendarTest extends Base
 	public function testChangeOfYear(Calendar $calendar): void {
 		$round = 24; // last week before year changes
 		$data  = ['round' => $round, 'version' => '1.0.0'];
+
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(3, $calendar->Week());
@@ -101,6 +105,7 @@ class BaseCalendarTest extends Base
 	public function unserialize(BaseCalendar $calendar): void {
 		$round = 2 + 6 + 24 ; // second week in third month in year 2
 		$data  = ['round' => $round, 'version' => '1.0.0'];
+
 		$this->assertSame($calendar, $calendar->unserialize($data));
 		$this->assertSame($round, $calendar->Round());
 		$this->assertSame(2, $calendar->Week());

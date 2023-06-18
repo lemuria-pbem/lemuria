@@ -2,7 +2,9 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Tests\Mock\IteratorMock;
 
@@ -10,8 +12,8 @@ class IteratorTraitTest extends Base
 {
 	protected IteratorMock $sut;
 
-	protected function setUp(): void {
-		parent::setUp();
+	#[Before]
+	protected function initSUT(): void {
 		$this->sut = new IteratorMock();
 	}
 

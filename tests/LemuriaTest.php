@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use SATHub\PHPUnit\Base;
 
 use function Lemuria\endsWith;
 use function Lemuria\getClass;

@@ -3,11 +3,10 @@ declare(strict_types = 1);
 namespace Lemuria\Tests\Factory;
 
 use PHPUnit\Framework\Attributes\Test;
+use SATHub\PHPUnit\Base;
 
 use Lemuria\Factory\DefaultBuilder;
 use Lemuria\Model\Builder;
-
-use Lemuria\Tests\Base;
 
 class DefaultBuilderTest extends Base
 {
