@@ -83,6 +83,11 @@ interface Game
 	public function getTrades(): array;
 
 	/**
+	 * Get the realms' data.
+	 */
+	public function getRealms(): array;
+
+	/**
 	 * Get statistical data.
 	 */
 	public function getStatistics(): array;
@@ -166,6 +171,11 @@ interface Game
 	 * Set the trades' data.
 	 */
 	public function setTrades(array $trades): Game;
+
+	/**
+	 * Set the realms' data.
+	 */
+	public function setRealms(array $realms): Game;
 
 	/**
 	 * Set statistical data.

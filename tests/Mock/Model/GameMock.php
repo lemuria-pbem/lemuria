@@ -66,6 +66,10 @@ class GameMock implements Game
 		return [];
 	}
 
+	public function getRealms(): array {
+		return [];
+	}
+
 	public function getStatistics(): array {
 		return [];
 	}
@@ -131,6 +135,10 @@ class GameMock implements Game
 	}
 
 	public function setTrades(array $trades): Game {
+		return $this;
+	}
+
+	public function setRealms(array $realms): Game {
 		return $this;
 	}
 

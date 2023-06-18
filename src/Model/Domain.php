@@ -22,8 +22,10 @@ enum Domain : int
 
 	case Trade = 8;
 
+	case Realm = 9;
+
 	public static function isLegacy(int $value): bool {
-		return $value % self::FACTOR === 0 && $value >= self::FACTOR * self::Party->value && $value <= self::FACTOR * self::Trade->value;
+		return $value % self::FACTOR === 0 && $value >= self::FACTOR * self::Party->value && $value <= self::FACTOR * self::Realm->value;
 	}
 
 	public static function fromLegacy(int $value): self {
