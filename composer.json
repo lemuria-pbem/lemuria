@@ -19,7 +19,7 @@
 		"psr/log": "~3.0"
 	},
 	"require-dev": {
-		"sat-hub/phpunit": "~1.10.1"
+		"phpunit/phpunit": "~10.2"
 	},
 	"repositories": [
 		{
