@@ -14,7 +14,7 @@ interface Turn
 	/**
 	 * Add commands.
 	 */
-	public function add(Move $move): EntitySet;
+	public function add(Move $move): Turn;
 
 	/**
 	 * Bring a new party into the game.
