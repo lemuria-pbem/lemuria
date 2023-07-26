@@ -49,11 +49,26 @@ trait SerializableTrait
 	}
 
 	protected function validateEnum(array $data, int|string $key, string $enum): void {
-		if (!class_exists($enum) || !method_exists($enum, 'tryFrom')) {
-			throw new LemuriaException('This method must be called with a enum class name.');
+		if (class_exists($enum)) {
+			$reflection = new \ReflectionClass($enum);
+			if ($reflection->isEnum()) {
+				if ($reflection->hasMethod('tryFrom')) {
+					if (isset($data[$key]) && $enum::tryFrom($data[$key])) {
+						return;
+					}
+				} else {
+					if (isset($data[$key])) {
+						$value = $data[$key];
+						foreach ($enum::cases() as $case) {
+							if ($value === $case->name) {
+								return;
+							}
+						}
+					}
+				}
+				throw new UnserializeException('Serialized data has no ' . $key . ' of type ' . getClass($enum) . '.');
+			}
 		}
-		if (!isset($data[$key]) || !$enum::tryFrom($data[$key])) {
-			throw new UnserializeException('Serialized data has no ' . $key . ' of type ' . getClass($enum) . '.');
-		}
+		throw new LemuriaException('This method must be called with a enum class name.');
 	}
 }
