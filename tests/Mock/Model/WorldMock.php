@@ -36,6 +36,10 @@ class WorldMock implements World
 		return new Path();
 	}
 
+	public function getAlternatives(Location $location, Direction $direction): Neighbours {
+		return new Neighbours();
+	}
+
 	public function isDirection(Direction $direction): bool {
 		return true;
 	}

@@ -188,6 +188,17 @@ abstract class BaseMap implements Map, World
 	}
 
 	/**
+	 * Get the neighbours of a region in alternative directions.
+	 */
+	public function getAlternatives(Location $location, Direction $direction): Neighbours {
+		$neighbours = new Neighbours();
+		foreach ($this->getAlternativeCoordinates($location, $direction) as $direction => $coordinate) {
+			$this->setNeighbour(Direction::from($direction), $coordinate, $neighbours);
+		}
+		return $neighbours;
+	}
+
+	/**
 	 * Check if a direction is valid in this world.
 	 */
 	public function isDirection(Direction $direction): bool {
@@ -214,6 +225,11 @@ abstract class BaseMap implements Map, World
 	 * @return array<string, Coordinates>
 	 */
 	abstract protected function getNeighbourCoordinates(Location $location): array;
+
+	/**
+	 * @return array<string, Coordinates>
+	 */
+	abstract protected function getAlternativeCoordinates(Location $location, Direction $direction): array;
 
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {

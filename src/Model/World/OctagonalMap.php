@@ -58,6 +58,66 @@ final class OctagonalMap extends BaseMap
 		];
 	}
 
+	/**
+	 * @return array<string, Coordinates>
+	 */
+	protected function getAlternativeCoordinates(Location $location, Direction $direction): array {
+		$coordinates = $this->getCoordinates($location);
+		$x           = $coordinates->X();
+		$y           = $coordinates->Y();
+		return match ($direction) {
+			Direction::North => [
+				Direction::Northwest->value => new MapCoordinates($x, ++$y),
+				Direction::Northeast->value => new MapCoordinates(++$x, $y),
+				Direction::West->value      => new MapCoordinates($x, ++$y),
+				Direction::East->value      => new MapCoordinates($x, --$y)
+			],
+			Direction::Northeast => [
+				Direction::North->value     => new MapCoordinates($x, ++$y),
+				Direction::East->value      => new MapCoordinates($x, --$y),
+				Direction::Northwest->value => new MapCoordinates($x, ++$y),
+				Direction::Southeast->value => new MapCoordinates($x, --$y)
+			],
+			Direction::East => [
+				Direction::Northeast->value => new MapCoordinates(++$x, $y),
+				Direction::Southeast->value => new MapCoordinates($x, --$y),
+				Direction::North->value     => new MapCoordinates($x, ++$y),
+				Direction::South->value     => new MapCoordinates(--$x, $y)
+			],
+			Direction::Southeast => [
+				Direction::East->value      => new MapCoordinates($x, --$y),
+				Direction::South->value     => new MapCoordinates(--$x, $y),
+				Direction::Northeast->value => new MapCoordinates(++$x, $y),
+				Direction::Southwest->value => new MapCoordinates(--$x, $y)
+			],
+			Direction::South => [
+				Direction::Southeast->value => new MapCoordinates($x, --$y),
+				Direction::Southwest->value => new MapCoordinates(--$x, $y),
+				Direction::East->value      => new MapCoordinates($x, --$y),
+				Direction::West->value      => new MapCoordinates($x, ++$y)
+			],
+			Direction::Southwest => [
+				Direction::South->value     => new MapCoordinates(--$x, $y),
+				Direction::West->value      => new MapCoordinates($x, ++$y),
+				Direction::Southeast->value => new MapCoordinates($x, --$y),
+				Direction::Northwest->value => new MapCoordinates($x, ++$y)
+			],
+			Direction::West => [
+				Direction::Southwest->value => new MapCoordinates(--$x, $y),
+				Direction::Northwest->value => new MapCoordinates($x, ++$y),
+				Direction::South->value     => new MapCoordinates(--$x, $y),
+				Direction::North->value     => new MapCoordinates($x, ++$y)
+			],
+			Direction::Northwest => [
+				Direction::West->value      => new MapCoordinates($x, ++$y),
+				Direction::North->value     => new MapCoordinates($x, ++$y),
+				Direction::Southwest->value => new MapCoordinates(--$x, $y),
+				Direction::Northeast->value => new MapCoordinates(++$x, $y)
+			],
+			default => throw new LemuriaException()
+		};
+	}
+
 	private function createWay(Location $location, int $dY, int $dX, int $distance): Path {
 		$path        = new Path();
 		$way         = [$location];

@@ -28,8 +28,6 @@ interface World extends Serializable
 
 	/**
 	 * Get the neighbour regions of a region.
-	 *
-	 * @throws MapException
 	 */
 	public function getNeighbours(Location $location): Neighbours;
 
@@ -39,6 +37,11 @@ interface World extends Serializable
 	 * @throws MapException
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path;
+
+	/**
+	 * Get the neighbours of a region in alternative directions.
+	 */
+	public function getAlternatives(Location $location, Direction $direction): Neighbours;
 
 	/**
 	 * Check if a direction is valid in this world.

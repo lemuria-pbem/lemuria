@@ -78,6 +78,42 @@ final class HexagonalMap extends BaseMap
 	}
 
 	/**
+	 * @return array<string, Coordinates>
+	 */
+	protected function getAlternativeCoordinates(Location $location, Direction $direction): array {
+		$coordinates = $this->getCoordinates($location);
+		$x           = $coordinates->X();
+		$y           = $coordinates->Y();
+		return match ($direction) {
+			Direction::Northeast => [
+				Direction::Northwest->value => new MapCoordinates($x, ++$y),
+				Direction::East->value      => new MapCoordinates(++$x, --$y)
+			],
+			Direction::East => [
+				Direction::Northeast->value => new MapCoordinates($x, ++$y),
+				Direction::Southeast->value => new MapCoordinates($x, --$y)
+			],
+			Direction::Southeast => [
+				Direction::East->value      => new MapCoordinates(++$x, --$y),
+				Direction::Southwest->value => new MapCoordinates(--$x, $y)
+			],
+			Direction::Southwest => [
+				Direction::Southeast->value => new MapCoordinates($x, --$y),
+				Direction::West->value      => new MapCoordinates(--$x, ++$y)
+			],
+			Direction::West => [
+				Direction::Southwest->value => new MapCoordinates(--$x, $y),
+				Direction::Northwest->value => new MapCoordinates($x, ++$y)
+			],
+			Direction::Northwest => [
+				Direction::West->value      => new MapCoordinates(--$x, ++$y),
+				Direction::Northeast->value => new MapCoordinates($x, ++$y)
+			],
+			default => throw new LemuriaException()
+		};
+	}
+
+	/**
 	 * Create all possible ways east from location, including diagonals to north/south.
 	 */
 	private function createEastWays(Location $location, int $distance): Path {
