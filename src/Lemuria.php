@@ -93,6 +93,17 @@ function isInt(string $subject): bool {
 }
 
 /**
+ * Check if given string represents a percentage.
+ */
+function isPercentage(string $subject): bool {
+	$n = strlen($subject);
+	if ($n-- <= 1 || $subject[$n] !== '%') {
+		return false;
+	}
+	return isInt(substr($subject, 0, $n));
+}
+
+/**
  * The mathematical signum function.
  *
  * @return int 1 if argument is greater or equal to zero, -1 otherwise.

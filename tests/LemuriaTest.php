@@ -14,6 +14,7 @@ use function Lemuria\getClass;
 use function Lemuria\hasPrefix;
 use function Lemuria\isClass;
 use function Lemuria\isInt;
+use function Lemuria\isPercentage;
 use function Lemuria\mbUcFirst;
 use function Lemuria\randChance;
 use function Lemuria\randDistribution23;
@@ -73,6 +74,26 @@ class LemuriaTest extends Base
 		$this->assertFalse(isInt('1.23'));
 		$this->assertFalse(isInt('-0.95'));
 		$this->assertFalse(isInt('1e1'));
+	}
+
+	#[Test]
+	public function isPercentage(): void {
+		$this->assertTrue(isPercentage('-1%'));
+		$this->assertTrue(isPercentage('0%'));
+		$this->assertTrue(isPercentage('1%'));
+		$this->assertTrue(isPercentage('123%'));
+	}
+
+	#[Test]
+	public function isPercentageFalse(): void {
+		$this->assertFalse(isPercentage(''));
+		$this->assertFalse(isPercentage('-1'));
+		$this->assertFalse(isPercentage('1'));
+		$this->assertFalse(isPercentage('null'));
+		$this->assertFalse(isPercentage('1.23'));
+		$this->assertFalse(isPercentage('1.23%'));
+		$this->assertFalse(isPercentage('-0.95%'));
+		$this->assertFalse(isPercentage('123'));
 	}
 
 	#[Test]
