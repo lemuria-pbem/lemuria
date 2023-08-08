@@ -53,6 +53,24 @@ function number(int|float $number): string {
 }
 
 /**
+ * Format a memory amount.
+ */
+function memory(int $bytes): string {
+	if ($bytes < 1024) {
+		return number($bytes) . ' B';
+	}
+	$bytes /= 1024;
+	if ($bytes < 1024.0) {
+		return number((int)round($bytes)) . ' kB';
+	}
+	$bytes /= 1024;
+	if ($bytes < 1024.0) {
+		return number((int)round($bytes)) . ' MB';
+	}
+	return number((int)round($bytes / 1024.0)) . ' GB';
+}
+
+/**
  * Check if a type is a namespaced class name.
  */
 function isClass(string $type): bool {
@@ -295,6 +313,8 @@ final class Lemuria
 
 	private readonly Version $version;
 
+	private readonly Profiler $profiler;
+
 	public static function FeatureFlag(): FeatureFlag {
 		return self::getInstance()->featureFlag;
 	}
@@ -374,6 +394,10 @@ final class Lemuria
 		return self::getInstance()->version;
 	}
 
+	public static function Profiler(): Profiler {
+		return self::getInstance()->profiler;
+	}
+
 	public static function Random(): Randomizer {
 		if (!self::$random) {
 			self::$random = new Randomizer(new Xoshiro256StarStar());
@@ -428,6 +452,7 @@ final class Lemuria
 
 	private function __construct(Config $config) {
 		try {
+			$this->profiler    = new Profiler();
 			$this->featureFlag = $config->FeatureFlag();
 			$this->log         = $config->Log()->getLogger();
 			$this->builder     = $config->Builder();

@@ -26,6 +26,12 @@ Spielregeln, die sich an den Prinzipien der Vorbilder wie Eressea und Fantasya
 orientieren. Dabei ist die Form der Befehlsabgabe oder der Aufbau von
 Spielbefehlen nicht vorgegeben.
 
+### Profiler
+
+Lemuria bietet eine Profiler-Klasse, mittels der Profilingdaten ausgelesen
+werden können. Zu beliebigen Zeitpunkten können Momentaufnahmen des
+Speicherverbrauchs aufgezeichnet und später abgerufen werden.
+
 ### Exceptions
 
 Lemuria folgt der Unterscheidung von Logikfehlern und Laufzeitfehlern aus PHP.

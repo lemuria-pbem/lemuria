@@ -1,6 +1,7 @@
 /vendor
 
 /.idea/deployment.xml
+/.idea/php-test-framework.xml
 /.idea/workspace.xml
 /.phpunit.result.cache
 /composer.lock
