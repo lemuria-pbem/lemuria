@@ -1,5 +1,4 @@
 <?php
-/** @noinspection SpellCheckingInspection */
 declare(strict_types = 1);
 namespace Lemuria\Tests;
 
@@ -117,9 +116,6 @@ class LemuriaTest extends Base
 		$this->assertSame(1, sign('0.123e-1'));
 	}
 
-	/**
-	 * @noinspection SpellCheckingInspection
-	 */
 	#[Test]
 	public function mbUcFirst(): void {
 		$this->assertSame('Kräuterkunde', mbUcFirst('kräuterkunde'));

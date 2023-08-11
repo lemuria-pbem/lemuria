@@ -2,7 +2,6 @@
 declare (strict_types = 1);
 namespace Lemuria\Engine;
 
-use Lemuria\EntitySet;
 use Lemuria\Identifiable;
 use Lemuria\Version\VersionTag;
 
