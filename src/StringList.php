@@ -74,7 +74,7 @@ class StringList implements Instructions
 	 *
 	 * @param array<string> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->list  = array_values($data);
 		$this->index = 0;
 		$this->count = count($this->list);
@@ -84,7 +84,7 @@ class StringList implements Instructions
 	/**
 	 * Clear the list.
 	 */
-	public function clear(): Instructions {
+	public function clear(): static {
 		$this->list  = [];
 		$this->index = 0;
 		$this->count = 0;

@@ -111,7 +111,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	 *
 	 * @param array<string, int> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->clear();
 		foreach ($data as $class => $count) {
 			if (!is_string($class) || !is_int($count)) {
@@ -125,7 +125,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Clear the set.
 	 */
-	public function clear(): ItemSet {
+	public function clear(): static {
 		$this->indices = [];
 		$this->items   = [];
 		$this->index   = 0;
@@ -136,7 +136,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	/**
 	 * Fill the set with a copy of the items of given set.
 	 */
-	public function fill(ItemSet $set): ItemSet {
+	public function fill(ItemSet $set): static {
 		foreach ($set->items as $item) {
 			if (!$this->isValidItem($item)) {
 				throw new ItemSetFillException($item, $this);

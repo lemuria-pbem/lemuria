@@ -16,15 +16,15 @@ interface Statistics
 
 	public function save(): void;
 
-	public function register(Officer $officer): Statistics;
+	public function register(Officer $officer): static;
 
-	public function resign(Officer $officer): Statistics;
+	public function resign(Officer $officer): static;
 
-	public function enqueue(Metrics $message): Statistics;
+	public function enqueue(Metrics $message): static;
 
 	public function request(Record $record): Record;
 
-	public function store(Record $record): Statistics;
+	public function store(Record $record): static;
 
 	public function getVersion(): VersionTag;
 }

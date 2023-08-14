@@ -102,7 +102,7 @@ class Map implements \Countable, \Iterator
 		return $islands;
 	}
 
-	protected function merge(): Map {
+	protected function merge(): static {
 		do {
 			$merged = null;
 			$last   = $this->count - 1;
@@ -134,7 +134,7 @@ class Map implements \Countable, \Iterator
 		return $this;
 	}
 
-	protected function mergeReverse(): Map {
+	protected function mergeReverse(): static {
 		$this->islands = array_reverse($this->islands);
 		return $this->merge();
 	}

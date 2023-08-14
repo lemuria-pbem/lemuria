@@ -8,7 +8,6 @@ use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
-use Lemuria\Serializable;
 
 class WorldMock implements World
 {
@@ -16,7 +15,7 @@ class WorldMock implements World
 		return [];
 	}
 
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		return $this;
 	}
 
@@ -44,11 +43,11 @@ class WorldMock implements World
 		return true;
 	}
 
-	public function load(): World {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): World {
+	public function save(): static {
 		return $this;
 	}
 }

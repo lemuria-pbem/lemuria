@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace Lemuria\Statistics\Data;
 
-use Lemuria\Statistics\Data;
-
 /**
  * Statistical data that consists of a numerical value and optional change value.
  */
@@ -17,7 +15,7 @@ class Prognosis extends Number
 		return [$this->value, $this->change, $this->eta];
 	}
 
-	public function unserialize(mixed $data): Data {
+	public function unserialize(mixed $data): static {
 		parent::unserialize($data);
 		if (is_array($data) && count($data) >= 3) {
 			$this->eta = array_key_exists(2, $data) && is_int($data[2]) ? $data[2] : 0;

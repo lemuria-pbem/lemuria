@@ -19,20 +19,20 @@ interface Score extends \Iterator
 	/**
 	 * Add an Effect to persistence.
 	 */
-	public function add(Identifiable $effect): Score;
+	public function add(Identifiable $effect): static;
 
 	/**
 	 * Remove an Effect from persistence.
 	 */
-	public function remove(Identifiable $effect): Score;
+	public function remove(Identifiable $effect): static;
 
 	/**
 	 * Load message data into score.
 	 */
-	public function load(): Score;
+	public function load(): static;
 
 	/**
 	 * Save message data from score.
 	 */
-	public function save(): Score;
+	public function save(): static;
 }

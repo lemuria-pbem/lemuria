@@ -11,7 +11,7 @@ trait CollectorTrait
 	 * This method will be called by the Catalog after loading is finished; the Collector can initialize its collections
 	 * then.
 	 */
-	public function collectAll(): Collector {
+	public function collectAll(): static {
 		/** @var Collector $this */
 		return $this;
 	}

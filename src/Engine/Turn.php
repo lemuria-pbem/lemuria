@@ -13,22 +13,22 @@ interface Turn
 	/**
 	 * Add commands.
 	 */
-	public function add(Move $move): Turn;
+	public function add(Move $move): static;
 
 	/**
 	 * Bring a new party into the game.
 	 */
-	public function initiate(Newcomer $newcomer): Turn;
+	public function initiate(Newcomer $newcomer): static;
 
 	/**
 	 * Add default commands of given entity.
 	 */
-	public function substitute(Identifiable $entity): Turn;
+	public function substitute(Identifiable $entity): static;
 
 	/**
 	 * Evaluate the whole turn.
 	 */
-	public function evaluate(): Turn;
+	public function evaluate(): static;
 
 	/**
 	 * Get the version of the engine package of this engine.

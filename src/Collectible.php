@@ -10,10 +10,10 @@ interface Collectible
 	/**
 	 * Set the Collector.
 	 */
-	public function addCollector(Collector $collector): Collectible;
+	public function addCollector(Collector $collector): static;
 
 	/**
 	 * Remove the Collector.
 	 */
-	public function removeCollector(Collector $collector): Collectible;
+	public function removeCollector(Collector $collector): static;
 }

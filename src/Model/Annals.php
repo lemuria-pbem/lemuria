@@ -7,7 +7,6 @@ use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeException;
 use Lemuria\Id;
 use Lemuria\Lemuria;
-use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
 use Lemuria\Validate;
 
@@ -54,7 +53,7 @@ abstract class Annals extends EntitySet
 	/**
 	 * @param array<string, array> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->validateSerializedData($data);
 		if ($this->count() > 0) {
 			$this->clear();
@@ -78,12 +77,12 @@ abstract class Annals extends EntitySet
 	/**
 	 * Clear the set.
 	 */
-	public function clear(): Annals {
+	public function clear(): static {
 		$this->round = [];
 		return parent::clear();
 	}
 
-	public function fill(EntitySet $set): Annals {
+	public function fill(EntitySet $set): static {
 		if ($set instanceof Annals) {
 			$this->round = $set->round;
 			return parent::fill($set);

@@ -38,33 +38,33 @@ interface Catalog
 	/**
 	 * Load game data into catalog.
 	 */
-	public function load(): Catalog;
+	public function load(): static;
 
 	/**
 	 * Save game data from catalog.
 	 */
-	public function save(): Catalog;
+	public function save(): static;
 
 	/**
 	 * Register an entity.
 	 *
 	 * @throws DuplicateIdException
 	 */
-	public function register(Identifiable $identifiable): Catalog;
+	public function register(Identifiable $identifiable): static;
 
 	/**
 	 * Remove an entity.
 	 *
 	 * @throws NotRegisteredException
 	 */
-	public function remove(Identifiable $identifiable): Catalog;
+	public function remove(Identifiable $identifiable): static;
 
 	/**
 	 * Propagate change of an entity's ID.
 	 *
 	 * If old ID is null, propagate removal instead of reassignment.
 	 */
-	public function reassign(Identifiable $identifiable, ?Id $oldId = null): Catalog;
+	public function reassign(Identifiable $identifiable, ?Id $oldId = null): static;
 
 	/**
 	 * Reserve the next ID that is available for a domain.
@@ -74,7 +74,7 @@ interface Catalog
 	/**
 	 * Register a reassignment listener.
 	 */
-	public function addReassignment(Reassignment $listener): Catalog;
+	public function addReassignment(Reassignment $listener): static;
 
 	/**
 	 * Get the version of the model package of this catalog.

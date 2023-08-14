@@ -16,12 +16,12 @@ interface Writer
 	/**
 	 * Set a filter for content output.
 	 */
-	public function setFilter(Filter $filter): Writer;
+	public function setFilter(Filter $filter): static;
 
 	/**
 	 * Render an entities' report.
 	 */
-	public function render(Id $entity): Writer;
+	public function render(Id $entity): static;
 
 	/**
 	 * Get the version of the package of this writer.

@@ -98,7 +98,7 @@ class Island
 		return null;
 	}
 
-	public function add(Coordinates $coordinates, Location $location): Island {
+	public function add(Coordinates $coordinates, Location $location): static {
 		if ($this->isMapped($coordinates)) {
 			$existing = $this->get($coordinates);
 			if ($existing === $location) {
@@ -181,7 +181,7 @@ class Island
 	 *
 	 * @throws LemuriaException
 	 */
-	public function merge(Island $island): Island {
+	public function merge(Island $island): static {
 		$locations = [];
 		$w       = $island->Origin()->X() + $island->Width();
 		$h       = $island->Origin()->Y() + $island->Height();

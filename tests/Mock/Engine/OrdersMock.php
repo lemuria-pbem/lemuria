@@ -17,15 +17,15 @@ class OrdersMock implements Orders
 		return new StringList();
 	}
 
-	public function load(): Orders {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Orders {
+	public function save(): static {
 		return $this;
 	}
 
-	public function clear(): Orders {
+	public function clear(): static {
 		return $this;
 	}
 }

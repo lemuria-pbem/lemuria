@@ -116,7 +116,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 *
 	 * @param array<int> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		if ($this->count > 0) {
 			$this->clear();
 		}
@@ -133,7 +133,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Clear the set.
 	 */
-	public function clear(): EntitySet {
+	public function clear(): static {
 		$this->indices  = [];
 		$this->entities = [];
 		$this->index    = 0;
@@ -141,7 +141,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 		return $this;
 	}
 
-	public function fill(EntitySet $set): EntitySet {
+	public function fill(EntitySet $set): static {
 		$this->indices  = $set->indices;
 		$this->entities = $set->entities;
 		$this->index    = 0;
@@ -152,7 +152,7 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	/**
 	 * Set the Collector in all entities.
 	 */
-	public function addCollectorsToAll(): EntitySet {
+	public function addCollectorsToAll(): static {
 		if ($this->hasCollector()) {
 			foreach ($this->entities as $id) {
 				/** @var Collectible $collectible */

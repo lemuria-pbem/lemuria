@@ -9,5 +9,5 @@ interface Data
 {
 	public function serialize(): mixed;
 
-	public function unserialize(mixed $data): Data;
+	public function unserialize(mixed $data): static;
 }

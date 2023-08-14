@@ -33,19 +33,19 @@ class ScoreMock implements Score
 		return [];
 	}
 
-	public function add(Identifiable $effect): Score {
+	public function add(Identifiable $effect): static {
 		return $this;
 	}
 
-	public function remove(Identifiable $effect): Score {
+	public function remove(Identifiable $effect): static {
 		return $this;
 	}
 
-	public function load(): Score {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Score {
+	public function save(): static {
 		return $this;
 	}
 }

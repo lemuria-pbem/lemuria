@@ -11,7 +11,7 @@ class Record
 {
 	private ?Data $data = null;
 
-	public static function from(Metrics $metrics): Record {
+	public static function from(Metrics $metrics): static {
 		return new self($metrics->Subject(), $metrics->Entity());
 	}
 
@@ -37,7 +37,7 @@ class Record
 		return $this->subject;
 	}
 
-	public function setData(?Data $data): Record {
+	public function setData(?Data $data): static {
 		$this->data = $data;
 		return $this;
 	}

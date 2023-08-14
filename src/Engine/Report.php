@@ -26,24 +26,24 @@ interface Report
 	/**
 	 * Load message data into report.
 	 */
-	public function load(): Report;
+	public function load(): static;
 
 	/**
 	 * Save message data from report.
 	 */
-	public function save(): Report;
+	public function save(): static;
 
 	/**
 	 * Clear all messages in preparation for a new turn.
 	 */
-	public function clear(): Report;
+	public function clear(): static;
 
 	/**
 	 * Register a message.
 	 *
 	 * @throws DuplicateIdException
 	 */
-	public function register(Message $message): Report;
+	public function register(Message $message): static;
 
 	/**
 	 * Reserve the next ID.

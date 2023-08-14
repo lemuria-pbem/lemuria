@@ -24,7 +24,7 @@ class CompositeFilter implements Filter
 		return false;
 	}
 
-	public function add(Filter $filter): CompositeFilter {
+	public function add(Filter $filter): static {
 		$this->filters[] = $filter;
 		return $this;
 	}

@@ -47,7 +47,7 @@ readonly class DefaultBuilder implements Builder
 		throw new LemuriaException($bug, new SingletonException($class));
 	}
 
-	public function register(SingletonCatalog $catalog): Builder {
+	public function register(SingletonCatalog $catalog): static {
 		foreach ($catalog->getGroups() as $group) {
 			$this->singletonMap->add($group);
 		}

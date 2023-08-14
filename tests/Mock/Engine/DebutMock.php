@@ -23,23 +23,23 @@ class DebutMock implements Debut
 		return [];
 	}
 
-	public function add(Newcomer $newcomer): Debut {
+	public function add(Newcomer $newcomer): static {
 		return $this;
 	}
 
-	public function remove(Newcomer $newcomer): Debut {
+	public function remove(Newcomer $newcomer): static {
 		return $this;
 	}
 
-	public function load(): Debut {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Debut {
+	public function save(): static {
 		return $this;
 	}
 
-	public function clear(): Debut {
+	public function clear(): static {
 		return $this;
 	}
 }

@@ -13,7 +13,6 @@ use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
 use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
-use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
 use Lemuria\Validate;
 
@@ -130,7 +129,7 @@ abstract class BaseMap implements Map, World
 	 * @param array<string, array> $data
 	 * @throws UnserializeException
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->validateSerializedData($data);
 		$this->origin->unserialize($data[self::ORIGIN]);
 		try {
@@ -208,7 +207,7 @@ abstract class BaseMap implements Map, World
 	/**
 	 * Load the world data.
 	 */
-	public function load(): World {
+	public function load(): static {
 		$this->unserialize(Lemuria::Game()->getWorld());
 		return $this;
 	}
@@ -216,7 +215,7 @@ abstract class BaseMap implements Map, World
 	/**
 	 * Save the world data.
 	 */
-	public function save(): World {
+	public function save(): static {
 		Lemuria::Game()->setWorld($this->serialize());
 		return $this;
 	}

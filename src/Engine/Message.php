@@ -23,7 +23,7 @@ interface Message extends \Stringable, Serializable
 
 	public function Section(): Section;
 
-	public function setId(Id $id): Message;
+	public function setId(Id $id): static;
 
 	public function __toString(): string;
 }

@@ -32,23 +32,23 @@ class CatalogMock implements Catalog
 		return [];
 	}
 
-	public function load(): Catalog {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Catalog {
+	public function save(): static {
 		return $this;
 	}
 
-	public function register(Identifiable $identifiable): Catalog {
+	public function register(Identifiable $identifiable): static {
 		return $this;
 	}
 
-	public function remove(Identifiable $identifiable): Catalog {
+	public function remove(Identifiable $identifiable): static {
 		return $this;
 	}
 
-	public function reassign(Identifiable $identifiable, ?Id $oldId = null): Catalog {
+	public function reassign(Identifiable $identifiable, ?Id $oldId = null): static {
 		return $this;
 	}
 
@@ -56,7 +56,7 @@ class CatalogMock implements Catalog
 		return new Id(1);
 	}
 
-	public function addReassignment(Reassignment $listener): Catalog {
+	public function addReassignment(Reassignment $listener): static {
 		return $this;
 	}
 

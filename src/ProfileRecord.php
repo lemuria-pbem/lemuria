@@ -42,7 +42,7 @@ class ProfileRecord implements \Stringable
 		return $this->timestamp;
 	}
 
-	public function setPrevious(float $timestamp): ProfileRecord {
+	public function setPrevious(float $timestamp): static {
 		$this->previous = $timestamp;
 		return $this;
 	}

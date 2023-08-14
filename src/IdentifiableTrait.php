@@ -13,7 +13,7 @@ trait IdentifiableTrait
 		return $this->id;
 	}
 
-	public function setId(Id $id): Identifiable {
+	public function setId(Id $id): static {
 		if ($this->id) {
 			Lemuria::Catalog()->remove($this);
 		}

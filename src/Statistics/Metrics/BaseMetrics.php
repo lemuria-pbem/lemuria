@@ -20,12 +20,12 @@ class BaseMetrics implements Metrics
 		return $this->subject;
 	}
 
-	public function setEntity(Identifiable $entity): BaseMetrics {
+	public function setEntity(Identifiable $entity): static {
 		$this->entity = $entity;
 		return $this;
 	}
 
-	public function setSubject(string $subject): BaseMetrics {
+	public function setSubject(string $subject): static {
 		$this->subject = $subject;
 		return $this;
 	}

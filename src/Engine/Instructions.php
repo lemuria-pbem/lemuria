@@ -9,5 +9,5 @@ interface Instructions extends \ArrayAccess, \Countable, \Iterator, Serializable
     /**
      * Clears the instruction list.
      */
-    public function clear(): Instructions;
+    public function clear(): static;
 }

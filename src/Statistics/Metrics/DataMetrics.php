@@ -13,7 +13,7 @@ class DataMetrics extends BaseMetrics
 		return $this->data;
 	}
 
-	public function setData(Data $data): DataMetrics {
+	public function setData(Data $data): static {
 		$this->data = $data;
 		return $this;
 	}

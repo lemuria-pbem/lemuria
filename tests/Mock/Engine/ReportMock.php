@@ -10,7 +10,6 @@ use Lemuria\Identifiable;
 
 class ReportMock implements Report
 {
-
 	public function get(Id $id): Message {
 		throw new NotRegisteredException($id);
 	}
@@ -19,19 +18,19 @@ class ReportMock implements Report
 		return [];
 	}
 
-	public function load(): Report {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Report {
+	public function save(): static {
 		return $this;
 	}
 
-	public function clear(): Report {
+	public function clear(): static {
 		return $this;
 	}
 
-	public function register(Message $message): Report {
+	public function register(Message $message): static {
 		return $this;
 	}
 

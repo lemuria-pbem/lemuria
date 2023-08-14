@@ -4,7 +4,6 @@ namespace Lemuria\Model\World;
 
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Model\Coordinates;
-use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
 use Lemuria\Validate;
 
@@ -43,7 +42,7 @@ final class MapCoordinates implements Coordinates
 	 *
 	 * @param array<string, int> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->validateSerializedData($data);
 		$this->x = $data[self::X];
 		$this->y = $data[self::Y];

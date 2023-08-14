@@ -17,7 +17,7 @@ class Number implements Data
 		return [$this->value, $this->change];
 	}
 
-	public function unserialize(mixed $data): Data {
+	public function unserialize(mixed $data): static {
 		if (is_array($data) && count($data) >= 2) {
 			if (array_key_exists(0, $data) && is_numeric(($data[0]))) {
 				$this->value = $data[0];

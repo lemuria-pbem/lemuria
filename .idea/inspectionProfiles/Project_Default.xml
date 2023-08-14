@@ -18,6 +18,9 @@
       </scope>
       <option name="PHP8_SEVERITY" value="WEAK WARNING" />
     </inspection_tool>
+    <inspection_tool class="PhpUnnecessaryStaticReferenceInspection" enabled="true" level="WEAK WARNING" enabled_by_default="false">
+      <scope name="All Changed Files" level="WEAK WARNING" enabled="true" />
+    </inspection_tool>
     <inspection_tool class="PhpUnused" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="RegExpSimplifiable" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="SpellCheckingInspection" enabled="true" level="INFORMATION" enabled_by_default="true">

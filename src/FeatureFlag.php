@@ -10,7 +10,7 @@ class FeatureFlag
 		return $this->isDevelopment;
 	}
 
-	public function setIsDevelopment(bool $isDevelopment): FeatureFlag {
+	public function setIsDevelopment(bool $isDevelopment): static {
 		$this->isDevelopment = $isDevelopment;
 		return $this;
 	}

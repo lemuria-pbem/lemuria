@@ -24,7 +24,7 @@ trait IteratorTrait
 		return $this->index < $this->count;
 	}
 
-	public function getIterator(): \Iterator {
+	public function getIterator(): static {
 		return clone $this;
 	}
 }

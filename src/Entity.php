@@ -54,7 +54,7 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 	 *
 	 * @param array<string, mixed> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->validateSerializedData($data);
 		return $this->setId(new Id($data[self::ID]))->setName($data[self::NAME])->setDescription($data[self::DESCRIPTION]);
 	}
@@ -67,12 +67,12 @@ abstract class Entity implements \Stringable, Identifiable, Serializable
 		return $this->description;
 	}
 
-	public function setName(string $name): Entity {
+	public function setName(string $name): static {
 		$this->name = $name;
 		return $this;
 	}
 
-	public function setDescription(string $description): Entity {
+	public function setDescription(string $description): static {
 		$this->description = $description;
 		return $this;
 	}

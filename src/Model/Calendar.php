@@ -38,12 +38,12 @@ interface Calendar extends Serializable
 	/**
 	 * Load game data.
 	 */
-	public function load(): Calendar;
+	public function load(): static;
 
 	/**
 	 * Save game data.
 	 */
-	public function save(): Calendar;
+	public function save(): static;
 
 	/**
 	 * Advance the Calendar to next round and return the new round.

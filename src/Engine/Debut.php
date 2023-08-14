@@ -28,27 +28,27 @@ interface Debut extends \Countable
 	 *
 	 * If a newcomer with the same UUID already exists, it is overwritten.
 	 */
-	public function add(Newcomer $newcomer): Debut;
+	public function add(Newcomer $newcomer): static;
 
 	/**
 	 * Remove a newcomer from the catalog.
 	 *
 	 * If there is no such newcomer registered nothing happens.
 	 */
-	public function remove(Newcomer $newcomer): Debut;
+	public function remove(Newcomer $newcomer): static;
 
 	/**
 	 * Load newcomers data.
 	 */
-	public function load(): Debut;
+	public function load(): static;
 
 	/**
 	 * Save newcomers data.
 	 */
-	public function save(): Debut;
+	public function save(): static;
 
 	/**
 	 * Clear all newcomers.
 	 */
-	public function clear(): Debut;
+	public function clear(): static;
 }

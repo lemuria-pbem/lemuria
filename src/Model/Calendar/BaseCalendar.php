@@ -5,7 +5,6 @@ namespace Lemuria\Model\Calendar;
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Lemuria;
 use Lemuria\Model\Calendar;
-use Lemuria\Serializable;
 use Lemuria\SerializableTrait;
 use Lemuria\Validate;
 
@@ -50,7 +49,7 @@ class BaseCalendar implements Calendar
 	 *
 	 * @param array<string, int> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->validateSerializedData($data);
 		$this->setRound($data[self::ROUND]);
 		$this->version = $data[self::VERSION];
@@ -93,12 +92,12 @@ class BaseCalendar implements Calendar
 		return (int)floor($this->r / ($this->seasons * $this->months * $this->weeks)) + 1;
 	}
 
-	public function load(): Calendar {
+	public function load(): static {
 		$this->unserialize(Lemuria::Game()->getCalendar());
 		return $this;
 	}
 
-	public function save(): Calendar {
+	public function save(): static {
 		Lemuria::Game()->setCalendar($this->serialize());
 		return $this;
 	}

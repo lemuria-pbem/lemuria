@@ -18,5 +18,5 @@ interface Builder
 	 */
 	public function create(string $class): Singleton;
 
-	public function register(SingletonCatalog $catalog): Builder;
+	public function register(SingletonCatalog $catalog): static;
 }

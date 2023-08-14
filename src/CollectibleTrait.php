@@ -14,13 +14,13 @@ trait CollectibleTrait
 	 */
 	private array $collectors = [];
 
-	public function addCollector(Collector $collector): Collectible {
+	public function addCollector(Collector $collector): static {
 		$this->collectors[$collector->getRelation()] = $collector;
 		/** @var Collectible $this */
 		return $this;
 	}
 
-	public function removeCollector(Collector $collector): Collectible {
+	public function removeCollector(Collector $collector): static {
 		$relation = $collector->getRelation();
 		if (isset($this->collectors[$relation])) {
 			$oldCollector = $this->collectors[$relation];

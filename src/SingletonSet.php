@@ -85,7 +85,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	 *
 	 * @param array<string> $data
 	 */
-	public function unserialize(array $data): Serializable {
+	public function unserialize(array $data): static {
 		$this->clear();
 		foreach ($data as $class) {
 			$singleton = Lemuria::Builder()->create($class);
@@ -130,7 +130,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	/**
 	 * Clear the set.
 	 */
-	public function clear(): SingletonSet {
+	public function clear(): static {
 		$this->indices    = [];
 		$this->singletons = [];
 		$this->index      = 0;
@@ -141,7 +141,7 @@ class SingletonSet implements \ArrayAccess, \Countable, \Iterator, Serializable
 	/**
 	 * Fill the set with a copy of the singletons of given set.
 	 */
-	public function fill(SingletonSet $set): SingletonSet {
+	public function fill(SingletonSet $set): static {
 		foreach ($set->singletons as $singleton) {
 			$this->validateSingleton($singleton);
 			$this->add($singleton);

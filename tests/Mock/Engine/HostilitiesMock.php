@@ -21,19 +21,19 @@ class HostilitiesMock implements Hostilities
 		return [];
 	}
 
-	public function add(Battle $battle): Hostilities {
+	public function add(Battle $battle): static {
 		return $this;
 	}
 
-	public function clear(): Hostilities {
+	public function clear(): static {
 		return $this;
 	}
 
-	public function load(): Hostilities {
+	public function load(): static {
 		return $this;
 	}
 
-	public function save(): Hostilities {
+	public function save(): static {
 		return $this;
 	}
 }

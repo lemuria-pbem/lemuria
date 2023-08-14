@@ -30,20 +30,20 @@ interface Hostilities
 	/**
 	 * Add a Battle to persistence.
 	 */
-	public function add(Battle $battle): Hostilities;
+	public function add(Battle $battle): static;
 
 	/**
 	 * Delete all battles as preparation for a new turn.
 	 */
-	public function clear(): Hostilities;
+	public function clear(): static;
 
 	/**
 	 * Load battles.
 	 */
-	public function load(): Hostilities;
+	public function load(): static;
 
 	/**
 	 * Save battles.
 	 */
-	public function save(): Hostilities;
+	public function save(): static;
 }

@@ -15,5 +15,5 @@ interface Serializable
 	/**
 	 * Restore the model's data from serialized data.
 	 */
-	public function unserialize(array $data): Serializable;
+	public function unserialize(array $data): static;
 }

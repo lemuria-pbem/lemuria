@@ -45,7 +45,7 @@ class SingletonMap
 		return $namespace . '\\' . $group . '\\' . $class;
 	}
 
-	public function add(SingletonGroup $group): SingletonMap {
+	public function add(SingletonGroup $group): static {
 		$groupId                = count($this->groups);
 		$this->groups[]         = $group->getGroup();
 		$this->namespaceIndex[] = $this->addNamespace($group->getNamespace());

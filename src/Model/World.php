@@ -51,10 +51,10 @@ interface World extends Serializable
 	/**
 	 * Load the world data.
 	 */
-	public function load(): World;
+	public function load(): static;
 
 	/**
 	 * Save the world data.
 	 */
-	public function save(): World;
+	public function save(): static;
 }

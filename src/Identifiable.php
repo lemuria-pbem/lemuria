@@ -22,5 +22,5 @@ interface Identifiable
 	/**
 	 * Set the ID.
 	 */
-	public function setId(Id $id): Identifiable;
+	public function setId(Id $id): static;
 }

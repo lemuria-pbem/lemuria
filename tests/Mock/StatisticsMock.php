@@ -17,15 +17,15 @@ class StatisticsMock implements Statistics
 	public function save(): void {
 	}
 
-	public function register(Officer $officer): Statistics {
+	public function register(Officer $officer): static {
 		return $this;
 	}
 
-	public function resign(Officer $officer): Statistics {
+	public function resign(Officer $officer): static {
 		return $this;
 	}
 
-	public function enqueue(Metrics $message): Statistics {
+	public function enqueue(Metrics $message): static {
 		return $this;
 	}
 
@@ -33,7 +33,7 @@ class StatisticsMock implements Statistics
 		return $record;
 	}
 
-	public function store(Record $record): Statistics {
+	public function store(Record $record): static {
 		return $this;
 	}
 

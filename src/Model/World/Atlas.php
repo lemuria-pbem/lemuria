@@ -20,12 +20,12 @@ use Lemuria\SortMode;
  */
 class Atlas extends EntitySet
 {
-	public function add(Location $location): self {
+	public function add(Location $location): static {
 		parent::addEntity($location->Id());
 		return $this;
 	}
 
-	public function remove(Location $location): self {
+	public function remove(Location $location): static {
 		parent::removeEntity($location->Id());
 		return $this;
 	}
@@ -33,7 +33,7 @@ class Atlas extends EntitySet
 	/**
 	 * Sort the locations.
 	 */
-	public function sort(SortMode $mode = SortMode::ById): self {
+	public function sort(SortMode $mode = SortMode::ById): static {
 		switch ($mode) {
 			case SortMode::ById :
 				$this->sortUsing(new ById());

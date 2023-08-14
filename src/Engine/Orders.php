@@ -19,15 +19,15 @@ interface Orders
 	/**
 	 * Load orders data.
 	 */
-	public function load(): Orders;
+	public function load(): static;
 
 	/**
 	 * Save orders data.
 	 */
-	public function save(): Orders;
+	public function save(): static;
 
 	/**
 	 * Clear all orders in preparation for a new turn.
 	 */
-	public function clear(): Orders;
+	public function clear(): static;
 }
