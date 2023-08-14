@@ -2,17 +2,19 @@
 declare(strict_types = 1);
 namespace Lemuria;
 
-readonly class ProfileRecord implements \Stringable
+class ProfileRecord implements \Stringable
 {
-	private int $memory;
+	protected float $previous = NAN;
 
-	private int $realMemory;
+	private readonly int $memory;
 
-	private int $peakMemory;
+	private readonly int $realMemory;
 
-	private int $realPeakMemory;
+	private readonly int $peakMemory;
 
-	public function __construct(private float $timestamp) {
+	private readonly int $realPeakMemory;
+
+	public function __construct(private readonly float $timestamp) {
 		$this->memory         = memory_get_usage();
 		$this->realMemory     = memory_get_usage(true);
 		$this->peakMemory     = memory_get_peak_usage();
@@ -40,11 +42,38 @@ readonly class ProfileRecord implements \Stringable
 		return $this->timestamp;
 	}
 
+	public function setPrevious(float $timestamp): ProfileRecord {
+		$this->previous = $timestamp;
+		return $this;
+	}
+
 	public function __toString(): string {
 		$timestamp  = date('Y-m-d H:i:s', (int)$this->timestamp);
 		$us         = (int)round(($this->timestamp - (int)$this->timestamp) * 1000000);
+		$duration   = $this->createDuration();
 		$memory     = memory($this->memory) . ' (' . memory($this->peakMemory) . ' peak)';
 		$realMemory = memory($this->realMemory) . ' (' . memory($this->realPeakMemory) . ' peak)';
-		return $timestamp . '.' . $us . ': ' . $memory . ', ' . $realMemory . ' real';
+		return $timestamp . '.' . $us . $duration . ': ' . $memory . ', ' . $realMemory . ' real';
+	}
+
+	protected function createDuration(): string {
+		if (is_nan($this->previous)) {
+			return '';
+		}
+		$duration = $this->timestamp - $this->previous;
+		if ($duration < 1.0)  {
+			$duration *= 1000.0;
+			if ($duration < 1.0) {
+				$duration *= 1000.0;
+				return ' (' . round($duration) . 'µs)';
+			}
+			return ' (' . round($duration) . 'ms)';
+		} elseif ($duration >= 60.0) {
+			$minutes = floor($duration / 60.0);
+			$seconds = round($duration - $minutes * 60.0);
+			$seconds = $seconds < 10.0 ? '0' . $seconds : (string)$seconds;
+			return ' (' . $minutes . ':' . $seconds . 'min)';
+		}
+		return ' (' . round($duration, 1) . 's)';
 	}
 }

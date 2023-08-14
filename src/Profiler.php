@@ -14,7 +14,11 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 
 	public final const RECORD_ZERO = __CLASS__ . '::RECORD_ZERO';
 
+	public final const RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
+
 	private readonly float $hourZero;
+
+	private float $previous = NAN;
 
 	private int $index = 0;
 
@@ -121,6 +125,11 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $record);
 	}
 
+	public function recordTotal(string $identifier = self::RECORD_TOTAL): void {
+		$record = $this->record($identifier);
+		Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $record->setPrevious($this->hourZero));
+	}
+
 	public function logTotalPeak(): void {
 		$peak = $this->getPeakMemory();
 		$realPeak = $this->getRealPeakMemory();
@@ -131,9 +140,9 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		if (isset($this->records[$identifier])) {
 			throw new LemuriaException('There is already a record with this identifier.');
 		}
-
 		$record                     = new ProfileRecord($timestamp);
-		$this->records[$identifier] = $record;
+		$this->records[$identifier] = $record->setPrevious($this->previous);
+		$this->previous             = $timestamp;
 		return $record;
 	}
 }
