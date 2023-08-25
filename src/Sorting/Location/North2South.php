@@ -5,6 +5,7 @@ namespace Lemuria\Sorting\Location;
 use Lemuria\EntityOrder;
 use Lemuria\EntitySet;
 use Lemuria\Lemuria;
+use Lemuria\Model\Location;
 use Lemuria\Model\World\Atlas;
 
 /**
@@ -20,6 +21,20 @@ class North2South implements EntityOrder
 	 */
 	public function sort(EntitySet $set): array {
 		$ids         = [];
+		$coordinates = $this->getSortedLocations($set);
+		foreach ($coordinates as $row) {
+			ksort($row);
+			foreach ($row as $id) {
+				$ids[] = $id->Id()->Id();
+			}
+		}
+		return $ids;
+	}
+
+	/**
+	 * @return array<int, array<int, Location>>
+	 */
+	protected function getSortedLocations(EntitySet $set): array {
 		$coordinates = [];
 		foreach ($set as $location) {
 			$coord = Lemuria::World()->getCoordinates($location);
@@ -28,15 +43,9 @@ class North2South implements EntityOrder
 			if (!isset($coordinates[$y])) {
 				$coordinates[$y] = [];
 			}
-			$coordinates[$y][$x] = $location->Id()->Id();
+			$coordinates[$y][$x] = $location;
 		}
 		ksort($coordinates);
-		foreach (array_reverse($coordinates, true) as $row) {
-			ksort($row);
-			foreach ($row as $id) {
-				$ids[] = $id;
-			}
-		}
-		return $ids;
+		return array_reverse($coordinates, true);
 	}
 }

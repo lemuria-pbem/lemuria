@@ -10,6 +10,8 @@ enum SortMode
 
 	case ByResidents;
 
+	case ByRealm;
+
 	case BySize;
 
 	case ByType;
