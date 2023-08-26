@@ -86,28 +86,28 @@ final class HexagonalMap extends BaseMap
 		$y           = $coordinates->Y();
 		return match ($direction) {
 			Direction::Northeast => [
-				Direction::Northwest->value => new MapCoordinates($x, ++$y),
-				Direction::East->value      => new MapCoordinates(++$x, --$y)
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1),
+				Direction::East->value      => new MapCoordinates($x + 1, $y)
 			],
 			Direction::East => [
-				Direction::Northeast->value => new MapCoordinates($x, ++$y),
-				Direction::Southeast->value => new MapCoordinates($x, --$y)
+				Direction::Northeast->value => new MapCoordinates($x, $y + 1),
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1)
 			],
 			Direction::Southeast => [
-				Direction::East->value      => new MapCoordinates(++$x, --$y),
-				Direction::Southwest->value => new MapCoordinates(--$x, $y)
+				Direction::East->value      => new MapCoordinates($x + 1, $y),
+				Direction::Southwest->value => new MapCoordinates($x, $y - 1)
 			],
 			Direction::Southwest => [
-				Direction::Southeast->value => new MapCoordinates($x, --$y),
-				Direction::West->value      => new MapCoordinates(--$x, ++$y)
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1),
+				Direction::West->value      => new MapCoordinates($x - 1, $y)
 			],
 			Direction::West => [
-				Direction::Southwest->value => new MapCoordinates(--$x, $y),
-				Direction::Northwest->value => new MapCoordinates($x, ++$y)
+				Direction::Southwest->value => new MapCoordinates($x, $y - 1),
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1)
 			],
 			Direction::Northwest => [
-				Direction::West->value      => new MapCoordinates(--$x, ++$y),
-				Direction::Northeast->value => new MapCoordinates($x, ++$y)
+				Direction::West->value      => new MapCoordinates($x - 1, $y),
+				Direction::Northeast->value => new MapCoordinates($x, $y + 1)
 			],
 			default => throw new LemuriaException()
 		};

@@ -67,52 +67,52 @@ final class OctagonalMap extends BaseMap
 		$y           = $coordinates->Y();
 		return match ($direction) {
 			Direction::North => [
-				Direction::Northwest->value => new MapCoordinates($x, ++$y),
-				Direction::Northeast->value => new MapCoordinates(++$x, $y),
-				Direction::West->value      => new MapCoordinates($x, ++$y),
-				Direction::East->value      => new MapCoordinates($x, --$y)
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1),
+				Direction::Northeast->value => new MapCoordinates($x + 1, $y + 1),
+				Direction::West->value      => new MapCoordinates($x - 1, $y),
+				Direction::East->value      => new MapCoordinates($x + 1, $y)
 			],
 			Direction::Northeast => [
-				Direction::North->value     => new MapCoordinates($x, ++$y),
-				Direction::East->value      => new MapCoordinates($x, --$y),
-				Direction::Northwest->value => new MapCoordinates($x, ++$y),
-				Direction::Southeast->value => new MapCoordinates($x, --$y)
+				Direction::North->value     => new MapCoordinates($x, $y + 1),
+				Direction::East->value      => new MapCoordinates($x + 1, $y),
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1),
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1)
 			],
 			Direction::East => [
-				Direction::Northeast->value => new MapCoordinates(++$x, $y),
-				Direction::Southeast->value => new MapCoordinates($x, --$y),
-				Direction::North->value     => new MapCoordinates($x, ++$y),
-				Direction::South->value     => new MapCoordinates(--$x, $y)
+				Direction::Northeast->value => new MapCoordinates($x + 1, $y + 1),
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1),
+				Direction::North->value     => new MapCoordinates($x, $y + 1),
+				Direction::South->value     => new MapCoordinates($x, $y - 1)
 			],
 			Direction::Southeast => [
-				Direction::East->value      => new MapCoordinates($x, --$y),
-				Direction::South->value     => new MapCoordinates(--$x, $y),
-				Direction::Northeast->value => new MapCoordinates(++$x, $y),
-				Direction::Southwest->value => new MapCoordinates(--$x, $y)
+				Direction::East->value      => new MapCoordinates($x + 1, $y),
+				Direction::South->value     => new MapCoordinates($x, $y - 1),
+				Direction::Northeast->value => new MapCoordinates($x + 1, $y + 1),
+				Direction::Southwest->value => new MapCoordinates($x - 1, $y - 1)
 			],
 			Direction::South => [
-				Direction::Southeast->value => new MapCoordinates($x, --$y),
-				Direction::Southwest->value => new MapCoordinates(--$x, $y),
-				Direction::East->value      => new MapCoordinates($x, --$y),
-				Direction::West->value      => new MapCoordinates($x, ++$y)
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1),
+				Direction::Southwest->value => new MapCoordinates($x - 1, $y - 1),
+				Direction::East->value      => new MapCoordinates($x + 1, $y),
+				Direction::West->value      => new MapCoordinates($x - 1, $y)
 			],
 			Direction::Southwest => [
-				Direction::South->value     => new MapCoordinates(--$x, $y),
-				Direction::West->value      => new MapCoordinates($x, ++$y),
-				Direction::Southeast->value => new MapCoordinates($x, --$y),
-				Direction::Northwest->value => new MapCoordinates($x, ++$y)
+				Direction::South->value     => new MapCoordinates($x, $y - 1),
+				Direction::West->value      => new MapCoordinates($x - 1, $y),
+				Direction::Southeast->value => new MapCoordinates($x + 1, $y - 1),
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1)
 			],
 			Direction::West => [
-				Direction::Southwest->value => new MapCoordinates(--$x, $y),
-				Direction::Northwest->value => new MapCoordinates($x, ++$y),
-				Direction::South->value     => new MapCoordinates(--$x, $y),
-				Direction::North->value     => new MapCoordinates($x, ++$y)
+				Direction::Southwest->value => new MapCoordinates($x - 1, $y - 1),
+				Direction::Northwest->value => new MapCoordinates($x - 1, $y + 1),
+				Direction::South->value     => new MapCoordinates($x, $y - 1),
+				Direction::North->value     => new MapCoordinates($x, $y + 1)
 			],
 			Direction::Northwest => [
-				Direction::West->value      => new MapCoordinates($x, ++$y),
-				Direction::North->value     => new MapCoordinates($x, ++$y),
-				Direction::Southwest->value => new MapCoordinates(--$x, $y),
-				Direction::Northeast->value => new MapCoordinates(++$x, $y)
+				Direction::West->value      => new MapCoordinates($x - 1, $y),
+				Direction::North->value     => new MapCoordinates($x, $y + 1),
+				Direction::Southwest->value => new MapCoordinates($x - 1, $y - 1),
+				Direction::Northeast->value => new MapCoordinates($x + 1, $y + 1)
 			],
 			default => throw new LemuriaException()
 		};
