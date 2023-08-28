@@ -93,6 +93,11 @@ interface Game
 	public function getStatistics(): array;
 
 	/**
+	 * Get NPC scripts data.
+	 */
+	public function getScripts(): array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -181,6 +186,11 @@ interface Game
 	 * Set statistical data.
 	 */
 	public function setStatistics(array $statistics): static;
+
+	/**
+	 * Set NPC scripts data.
+	 */
+	public function setScripts(array $scripts): static;
 
 	/**
 	 * Migrate entities if needed.

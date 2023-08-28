@@ -74,6 +74,10 @@ class GameMock implements Game
 		return [];
 	}
 
+	public function getScripts(): array {
+		return [];
+	}
+
 	public function getStrings(): array {
 		return [];
 	}
@@ -143,6 +147,10 @@ class GameMock implements Game
 	}
 
 	public function setStatistics(array $statistics): static {
+		return $this;
+	}
+
+	public function setScripts(array $scripts): static {
 		return $this;
 	}
 
