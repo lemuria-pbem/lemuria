@@ -5,6 +5,7 @@ namespace Lemuria\Storage;
 use Lemuria\Exception\DirectoryNotFoundException;
 use Lemuria\Exception\FileException;
 use Lemuria\Exception\FileNotFoundException;
+use Lemuria\Exception\MkdirException;
 use Lemuria\Exception\ReadException;
 use Lemuria\Exception\WriteException;
 
@@ -73,7 +74,7 @@ class FileProvider implements Provider
 			$directory = realpath($this->directory);
 			if (!$directory) {
 				if (!@mkdir($this->directory, 0775, true)) {
-					throw new FileException('Create directory failed: ' . $this->directory);
+					throw new MkdirException($this->directory);
 				}
 				$this->directory = realpath($this->directory);
 				if (!$this->directory) {
