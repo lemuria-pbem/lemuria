@@ -20,6 +20,18 @@ trait SerializableTrait
 	}
 
 	/**
+	 * Check that a serialized data array has key, and return the value.
+	 *
+	 * @throws UnserializeEntityException
+	 */
+	protected function validateDataKey(array $data, int|string $key): mixed {
+		if (array_key_exists($key, $data)) {
+			return $data[$key];
+		}
+		throw new UnserializeException('Serialized data has no ' . $key . '.');
+	}
+
+	/**
 	 * @throws UnserializeEntityException
 	 */
 	protected function validateIfExists(array $data, int|string $key, Validate $type): void {
