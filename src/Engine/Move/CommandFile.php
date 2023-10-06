@@ -10,7 +10,7 @@ use Lemuria\Engine\Exception\EngineException;
  */
 class CommandFile implements \Stringable, Move
 {
-	protected const REPLACE = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+	protected const REPLACE = ["\t", ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
 	private readonly string $path;
 
@@ -71,13 +71,13 @@ class CommandFile implements \Stringable, Move
 		while (!feof($this->file)) {
 			$next = @fgets($this->file);
 			if (is_string($next)) {
-				$line .= trim(str_replace(self::REPLACE, '', $next));
+				$line .= trim(str_replace(self::REPLACE, ' ', $next));
 			}
 			if (!$line) {
 				continue;
 			}
 			if (str_ends_with($line, '\\')) {
-				$line = substr($line, 0, strlen($line) - 1);
+				$line = trim(substr($line, 0, strlen($line) - 1));
 				continue;
 			}
 			if (strlen($line) > 2 && str_starts_with($line, '//') && $line[2] !== ' ') {
@@ -85,7 +85,7 @@ class CommandFile implements \Stringable, Move
 			}
 			$comment = strpos($line, ';');
 			if ($comment !== false) {
-				$line = substr($line, 0, $comment);
+				$line = trim(substr($line, 0, $comment));
 			}
 			if ($line) {
 				$this->line = $line;
