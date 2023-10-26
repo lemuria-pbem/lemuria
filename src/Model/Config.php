@@ -11,6 +11,7 @@ use Lemuria\Factory\Namer;
 use Lemuria\FeatureFlag;
 use Lemuria\Log;
 use Lemuria\Registry;
+use Lemuria\Scenario\Scripts;
 use Lemuria\Statistics;
 
 interface Config
@@ -44,4 +45,6 @@ interface Config
 	public function FeatureFlag(): FeatureFlag;
 
 	public function Namer(): Namer;
+
+	public function Scripts(): ?Scripts;
 }

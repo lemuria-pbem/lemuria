@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use Lemuria\Scenario\Scripts;
 use Psr\Log\LoggerInterface;
 use Random\Engine\Xoshiro256StarStar;
 use Random\Randomizer;
@@ -311,6 +312,8 @@ final class Lemuria
 
 	private readonly Namer $namer;
 
+	private readonly ?Scripts $scripts;
+
 	private readonly Version $version;
 
 	private readonly Profiler $profiler;
@@ -390,6 +393,10 @@ final class Lemuria
 		return self::getInstance()->namer;
 	}
 
+	public static function Scripts(): ?Scripts {
+		return self::getInstance()->scripts;
+	}
+
 	public static function Version(): Version {
 		return self::getInstance()->version;
 	}
@@ -406,10 +413,11 @@ final class Lemuria
 	}
 
 	public static function init(Config $config): void {
-		self::$instance         = new self($config);
-		self::$instance->orders = $config->Orders();
-		self::$instance->report = $config->Report();
-		self::$instance->score  = $config->Score();
+		self::$instance          = new self($config);
+		self::$instance->orders  = $config->Orders();
+		self::$instance->report  = $config->Report();
+		self::$instance->score   = $config->Score();
+		self::$instance->scripts = $config->Scripts();
 	}
 
 	/**
@@ -425,6 +433,7 @@ final class Lemuria
 		self::Score()->load();
 		self::Hostilities()->load();
 		self::World()->load();
+		self::Scripts()?->load();
 		self::Statistics()->load();
 	}
 
@@ -440,6 +449,7 @@ final class Lemuria
 		self::Score()->save();
 		self::Hostilities()->save();
 		self::World()->save();
+		self::Scripts()?->save();
 		self::Statistics()->save();
 	}
 
