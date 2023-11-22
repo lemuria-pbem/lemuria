@@ -10,9 +10,9 @@ use Lemuria\Storage\FileProvider;
 
 class FileProviderTest extends Base
 {
-	private const DIR = __DIR__ . '/../storage/root';
+	private const string DIR = __DIR__ . '/../storage/root';
 
-	private const FILE = '1.txt';
+	private const string FILE = '1.txt';
 
 	#[Test]
 	public function construct(): FileProvider {

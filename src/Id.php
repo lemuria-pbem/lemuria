@@ -9,7 +9,7 @@ use Lemuria\Exception\IdException;
  */
 final class Id implements \Stringable
 {
-	public final const REGEX = '[0-9a-z]+';
+	public final const string REGEX = '[0-9a-z]+';
 
 	/**
 	 * Convert a Base36 ID to its integer representation.

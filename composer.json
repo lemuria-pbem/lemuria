@@ -14,8 +14,8 @@
 	"time": "2023-12-17",
 
 	"require": {
-		"php": "~8.2",
-		"ext-mbstring": "~8.2",
+		"php": "~8.3",
+		"ext-mbstring": "~8.3",
 		"psr/log": "~3.0"
 	},
 	"require-dev": {

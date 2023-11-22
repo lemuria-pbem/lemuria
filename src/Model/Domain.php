@@ -4,7 +4,7 @@ namespace Lemuria\Model;
 
 enum Domain : int
 {
-	private const FACTOR = 100;
+	private const int FACTOR = 100;
 
 	case Party = 1;
 

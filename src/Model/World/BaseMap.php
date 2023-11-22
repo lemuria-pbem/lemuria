@@ -23,11 +23,11 @@ abstract class BaseMap implements Map, World
 {
 	use SerializableTrait;
 
-	private const ORIGIN = 'origin';
+	private const string ORIGIN = 'origin';
 
-	private const GEOMETRY = 'geometry';
+	private const string GEOMETRY = 'geometry';
 
-	private const MAP = 'map';
+	private const string MAP = 'map';
 
 	/**
 	 * @var array<string>

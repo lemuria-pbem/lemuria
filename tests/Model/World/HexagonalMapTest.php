@@ -12,7 +12,7 @@ use Lemuria\Model\World\HexagonalMap;
 
 class HexagonalMapTest extends Base
 {
-	protected const DATA = [
+	protected const array DATA = [
 		'origin'   => ['x' => 0, 'y' => 0],
 		'geometry' => Geometry::Flat->value,
 		'map'      => [[21, 22, 23, 24, 25], [16, 17, 18, 19, 20], [11, 12, 13, 14, 15], [6, 7, 8, 9, 10], [1, 2, 3, 4, 5]]

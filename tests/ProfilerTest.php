@@ -11,9 +11,9 @@ use Lemuria\ProfileRecord;
 
 class ProfilerTest extends Base
 {
-	private const ZERO_HOUR = 0.12345;
+	private const float ZERO_HOUR = 0.12345;
 
-	private const IDENTIFIER = 'MyOwnRecord';
+	private const string IDENTIFIER = 'MyOwnRecord';
 
 	private static float $now;
 

@@ -14,9 +14,9 @@ abstract class Annals extends EntitySet
 {
 	use SerializableTrait;
 
-	protected final const ENTITIES = 'entities';
+	protected final const string ENTITIES = 'entities';
 
-	protected final const ROUNDS = 'rounds';
+	protected final const string ROUNDS = 'rounds';
 
 	/**
 	 * @var array<int, int>

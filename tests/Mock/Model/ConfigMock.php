@@ -20,6 +20,7 @@ use Lemuria\Model\Config;
 use Lemuria\Model\Game;
 use Lemuria\Model\World;
 use Lemuria\Registry;
+use Lemuria\Scenario\Scripts;
 use Lemuria\Statistics;
 use Lemuria\Tests\Mock\Engine\DebutMock;
 use Lemuria\Tests\Mock\Engine\HostilitiesMock;
@@ -29,6 +30,7 @@ use Lemuria\Tests\Mock\Engine\ScoreMock;
 use Lemuria\Tests\Mock\Factory\NamerMock;
 use Lemuria\Tests\Mock\LogMock;
 use Lemuria\Tests\Mock\RegistryMock;
+use Lemuria\Tests\Mock\Scenario\ScriptsMock;
 use Lemuria\Tests\Mock\StatisticsMock;
 
 class ConfigMock implements Config
@@ -91,6 +93,10 @@ class ConfigMock implements Config
 
 	public function Namer(): Namer {
 		return new NamerMock();
+	}
+
+	public function Scripts(): ?Scripts {
+		return new ScriptsMock();
 	}
 
 	public function getStoragePath(): string {

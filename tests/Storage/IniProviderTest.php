@@ -12,19 +12,19 @@ use Lemuria\Storage\IniProvider;
 
 class IniProviderTest extends Base
 {
-	private const DIR = __DIR__ . '/../storage/scripts';
+	private const string DIR = __DIR__ . '/../storage/scripts';
 
-	private const EMPTY = 'empty.ini';
+	private const string EMPTY = 'empty.ini';
 
-	private const EMPTY_SECTION = 'empty-section.ini';
+	private const string EMPTY_SECTION = 'empty-section.ini';
 
-	private const NO_SECTION = 'no-section.ini';
+	private const string NO_SECTION = 'no-section.ini';
 
-	private const ONE = 'one.ini';
+	private const string ONE = 'one.ini';
 
-	private const THREE = 'three.ini';
+	private const string THREE = 'three.ini';
 
-	private const UNIT = 'unit.ini';
+	private const string UNIT = 'unit.ini';
 
 	#[Test]
 	public function emptyIni(): void {

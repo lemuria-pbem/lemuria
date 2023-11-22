@@ -10,7 +10,7 @@ use Lemuria\Storage\RecursiveProvider;
 
 class RecursiveProviderTest extends Base
 {
-	private const DIR = __DIR__ . '/../storage/root';
+	private const string DIR = __DIR__ . '/../storage/root';
 
 	#[Test]
 	public function construct(): RecursiveProvider {

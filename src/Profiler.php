@@ -8,13 +8,13 @@ use Lemuria\Exception\NotImplementedException;
 class Profiler implements \ArrayAccess, \Countable, \Iterator
 {
 	/**
-	 * The name of an environment variable that contains the zero hour timestamp.
+	 * The name of an environment variable that contains the zero-hour timestamp.
 	 */
-	public final const LEMURIA_ZERO_HOUR = 'LEMURIA_ZERO_HOUR';
+	public final const string LEMURIA_ZERO_HOUR = 'LEMURIA_ZERO_HOUR';
 
-	public final const RECORD_ZERO = __CLASS__ . '::RECORD_ZERO';
+	public final const string RECORD_ZERO = __CLASS__ . '::RECORD_ZERO';
 
-	public final const RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
+	public final const string RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
 
 	private readonly float $hourZero;
 

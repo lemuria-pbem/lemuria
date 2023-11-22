@@ -11,9 +11,12 @@ use Lemuria\Engine\Move\CommandFile;
 
 class CommandFileTest extends Base
 {
-	private const PATH = __DIR__ . '/../../storage/orders/test.order';
+	private const string PATH = __DIR__ . '/../../storage/orders/test.order';
 
-	private const ORDER = [
+	/**
+	 * @type array<string>
+	 */
+	private const array ORDER = [
 		'PARTEI test "Nur1Test!"',
 		'EINHEIT erste',
 		'NUMMER 1',

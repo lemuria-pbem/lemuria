@@ -11,7 +11,7 @@ use Lemuria\Id;
 
 class IdTest extends Base
 {
-	private const ID = 100;
+	private const int ID = 100;
 
 	#[Test]
 	public function construct(): Id {

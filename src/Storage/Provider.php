@@ -7,7 +7,7 @@ use Lemuria\Exception\FileException;
 
 interface Provider
 {
-	public const DEFAULT = '';
+	public const string DEFAULT = '';
 
 	public function __construct(string $directory);
 

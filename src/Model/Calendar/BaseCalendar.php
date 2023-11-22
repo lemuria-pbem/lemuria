@@ -19,9 +19,9 @@ class BaseCalendar implements Calendar
 {
 	use SerializableTrait;
 
-	private const ROUND = 'round';
+	private const string ROUND = 'round';
 
-	private const VERSION = 'version';
+	private const string VERSION = 'version';
 
 	protected int $weeks = 3;
 

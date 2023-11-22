@@ -14,9 +14,9 @@ final class MapCoordinates implements Coordinates
 {
 	use SerializableTrait;
 
-	private const X = 'x';
+	private const string X = 'x';
 
-	private const Y = 'y';
+	private const string Y = 'y';
 
 	public function __construct(private int $x = 0, private int $y = 0) {
 	}

@@ -4,9 +4,9 @@ namespace Lemuria\Model\World;
 
 enum Direction : string
 {
-	public final const IN_DOCK = self::None;
+	public final const self IN_DOCK = self::None;
 
-	public final const ROUTE_STOP = self::None;
+	public final const self ROUTE_STOP = self::None;
 
 	/**
 	 * Get the opposite direction.
