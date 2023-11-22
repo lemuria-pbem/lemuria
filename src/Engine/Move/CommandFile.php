@@ -10,7 +10,10 @@ use Lemuria\Engine\Exception\EngineException;
  */
 class CommandFile implements \Stringable, Move
 {
-	protected const REPLACE = ["\t", ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+	/**
+	 * @type array<string>
+	 */
+	protected const array REPLACE = ["\t", ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
 	private readonly string $path;
 
@@ -77,7 +80,7 @@ class CommandFile implements \Stringable, Move
 				continue;
 			}
 			if (str_ends_with($line, '\\')) {
-				$line = trim(substr($line, 0, strlen($line) - 1));
+				$line = substr($line, 0, strlen($line) - 1);
 				continue;
 			}
 			if (strlen($line) > 2 && str_starts_with($line, '//') && $line[2] !== ' ') {
