@@ -2,9 +2,9 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use Lemuria\Scenario\Scripts;
 use Psr\Log\LoggerInterface;
 use Random\Engine\Xoshiro256StarStar;
+use Random\IntervalBoundary;
 use Random\Randomizer;
 
 use Lemuria\Engine\Debut;
@@ -22,6 +22,7 @@ use Lemuria\Model\Catalog;
 use Lemuria\Model\Config;
 use Lemuria\Model\Game;
 use Lemuria\Model\World;
+use Lemuria\Scenario\Scripts;
 use Lemuria\Version\Module;
 use Lemuria\Version\VersionFinder;
 
@@ -194,7 +195,14 @@ function randInt(int $min = 0, int $max = PHP_INT_MAX): int {
  * Get a random float between 0 and 1.
  */
 function randFloat(): float {
-	return randInt() / PHP_INT_MAX;
+	return Lemuria::Random()->nextFloat();
+}
+
+/**
+ * Get a random float from given interval.
+ */
+function randFloatBetween(float $min, float $max): float {
+	return Lemuria::Random()->getFloat($min, $max, IntervalBoundary::ClosedClosed);
 }
 
 /**

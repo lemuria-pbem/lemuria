@@ -30,15 +30,17 @@ readonly class VersionFinder
 		if (!$json) {
 			throw new ReadException($this->composer);
 		}
-		$json = json_decode($json, true);
-		if (!$json) {
+		if (!json_validate($json)) {
 			throw new LemuriaException('Invalid composer.json file: ' . $this->composer);
 		}
+
+		$json    = json_decode($json, true);
 		$name    = $json['name'] ?? null;
 		$version = $json['version'] ?? null;
 		if (!is_string($name) || !is_string($version)) {
 			throw new LemuriaException('Invalid name or version in composer.json file: ' . $this->composer);
 		}
+
 		$names = explode('/', $name);
 		return new VersionTag(array_pop($names), $version);
 	}
