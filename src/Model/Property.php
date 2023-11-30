@@ -4,6 +4,7 @@ namespace Lemuria\Model;
 
 use Lemuria\Exception\LemuriaException;
 
+#[\AllowDynamicProperties]
 class Property
 {
 	public function __get(string $name): mixed {
