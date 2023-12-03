@@ -134,6 +134,13 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 * Clear the set.
 	 */
 	public function clear(): static {
+		if ($this->hasCollector()) {
+			foreach ($this->entities as $id) {
+				/** @var Collectible $entity */
+				$entity = $this->get($id);
+				$entity->removeCollector($this->collector());
+			}
+		}
 		$this->indices  = [];
 		$this->entities = [];
 		$this->index    = 0;
