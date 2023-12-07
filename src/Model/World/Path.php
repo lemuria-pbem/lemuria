@@ -2,13 +2,10 @@
 declare(strict_types = 1);
 namespace Lemuria\Model\World;
 
-use Lemuria\Exception\LemuriaException;
-use Lemuria\Model\Location;
-
 class Path implements \ArrayAccess, \Countable, \Iterator
 {
 	/**
-	 * @var array<array<Location>>
+	 * @var array<Way>
 	 */
 	protected array $ways = [];
 
@@ -25,20 +22,16 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 
 	/**
 	 * @param int $offset
-	 * @return array<Location>
 	 */
-	public function offsetGet(mixed $offset): array {
+	public function offsetGet(mixed $offset): Way {
 		return $this->ways[$offset];
 	}
 
 	/**
 	 * @param int $offset
-	 * @param array<Location> $value
+	 * @param Way $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
-		if (!is_array($value)) {
-			throw new LemuriaException();
-		}
 		if ($offset === null) {
 			$offset = $this->count;
 		}
@@ -59,10 +52,7 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 		return $this->count;
 	}
 
-	/**
-	 * @return array<Location>
-	 */
-	public function current(): array {
+	public function current(): Way {
 		return $this->ways[$this->index];
 	}
 

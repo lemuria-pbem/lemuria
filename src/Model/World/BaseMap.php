@@ -198,6 +198,13 @@ abstract class BaseMap implements Map, World
 	}
 
 	/**
+	 * Find a path between two locations.
+	 */
+	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy {
+		return $strategy->find($from, $to);
+	}
+
+	/**
 	 * Check if a direction is valid in this world.
 	 */
 	public function isDirection(Direction $direction): bool {

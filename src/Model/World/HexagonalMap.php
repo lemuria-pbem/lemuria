@@ -50,12 +50,12 @@ final class HexagonalMap extends BaseMap
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
 		return match ($direction) {
-			Direction::Northeast => $this->createDiagonalWays($start, $distance, 1, -1, 1, 0, 1),
+			Direction::Northeast => $this->createDiagonalWays($start, $distance, Direction::Northwest, $direction, 1, -1, 1, 0, 1),
 			Direction::East      => $this->createEastWays($start, $distance),
-			Direction::Southeast => $this->createDiagonalWays($start, $distance, -1, 0, -1, 1, 1),
-			Direction::Southwest => $this->createDiagonalWays($start, $distance, -1, 1, -1, 0, -1),
+			Direction::Southeast => $this->createDiagonalWays($start, $distance, Direction::Southwest, $direction, -1, 0, -1, 1, 1),
+			Direction::Southwest => $this->createDiagonalWays($start, $distance, Direction::Southeast, $direction, -1, 1, -1, 0, -1),
 			Direction::West      => $this->createWestWays($start, $distance),
-			Direction::Northwest => $this->createDiagonalWays($start, $distance, 1, 0, 1, -1, -1),
+			Direction::Northwest => $this->createDiagonalWays($start, $distance, Direction::Northeast, $direction, 1, 0, 1, -1, -1),
 			default              => throw new LemuriaException()
 		};
 	}
@@ -118,7 +118,8 @@ final class HexagonalMap extends BaseMap
 	 */
 	private function createEastWays(Location $location, int $distance): Path {
 		$path     = new Path();
-		$basicWay = [$location];
+		$basicWay = new Way();
+		$basicWay->offsetSet(Direction::None, $location);
 		while ($distance-- > 0) {
 			$next = $this->nextLocation($location, 0, 1);
 			if (!$next) {
@@ -126,19 +127,19 @@ final class HexagonalMap extends BaseMap
 			}
 
 			if ($distance > 0) {
-				$diagonals = $this->createDiagonalWays($next, $distance, 1, -1, 1, 0, 1);
+				$diagonals = $this->createDiagonalWays($next, $distance, Direction::Northwest, Direction::Northeast, 1, -1, 1, 0, 1, false);
 				foreach ($diagonals as $way) {
-					$path[] = array_merge($basicWay, $way);
+					$path[] = $basicWay->merge($way);
 				}
-				$diagonals = $this->createDiagonalWays($next, $distance, -1, 0, -1, 1, 1);
+				$diagonals = $this->createDiagonalWays($next, $distance, Direction::Southwest, Direction::Southeast, -1, 0, -1, 1, 1, false);
 				foreach ($diagonals as $way) {
-					$path[] = array_merge($basicWay, $way);
+					$path[] = $basicWay->merge($way);
 				}
-				$basicWay[] = $next;
-				$location   = $next;
+				$basicWay->offsetSet(Direction::East, $next);
+				$location = $next;
 			} else {
-				$basicWay[] = $next;
-				$path[]     = $basicWay;
+				$basicWay->offsetSet(Direction::East, $next);
+				$path[] = $basicWay;
 			}
 		}
 		return $path;
@@ -149,7 +150,8 @@ final class HexagonalMap extends BaseMap
 	 */
 	private function createWestWays(Location $location, int $distance): Path {
 		$path     = new Path();
-		$basicWay = [$location];
+		$basicWay = new Way();
+		$basicWay->offsetSet(Direction::None, $location);
 		while ($distance-- > 0) {
 			$next = $this->nextLocation($location, 0, -1);
 			if (!$next) {
@@ -157,19 +159,19 @@ final class HexagonalMap extends BaseMap
 			}
 
 			if ($distance > 0) {
-				$diagonals = $this->createDiagonalWays($next, $distance, 1, 0, 1, -1, -1);
+				$diagonals = $this->createDiagonalWays($next, $distance, Direction::Northeast, Direction::Northwest, 1, 0, 1, -1, -1 ,false);
 				foreach ($diagonals as $way) {
-					$path[] = array_merge($basicWay, $way);
+					$path[] = $basicWay->merge($way);
 				}
-				$diagonals = $this->createDiagonalWays($next, $distance, -1, 1, -1, 0, -1);
+				$diagonals = $this->createDiagonalWays($next, $distance, Direction::Southeast, Direction::Southwest, -1, 1, -1, 0, -1, false);
 				foreach ($diagonals as $way) {
-					$path[] = array_merge($basicWay, $way);
+					$path[] = $basicWay->merge($way);
 				}
-				$basicWay[] = $next;
-				$location   = $next;
+				$basicWay->offsetSet(Direction::West, $next);
+				$location = $next;
 			} else {
-				$basicWay[] = $next;
-				$path[]     = $basicWay;
+				$basicWay->offsetSet(Direction::West, $next);
+				$path[] = $basicWay;
 			}
 		}
 		return $path;
@@ -181,48 +183,54 @@ final class HexagonalMap extends BaseMap
 	 * @noinspection DuplicatedCode
 	 */
 	private function createDiagonalWays(Location $location, int $distance,
-		                                int $dy1, int $dx1, int $dy2, int $dx2, int $dx3): Path {
-		$path = $this->createWays($location, $dy2, $dx2);
+		                                Direction $direction1, Direction $direction2,
+		                                int $dy1, int $dx1, int $dy2, int $dx2, int $dx3,
+		                                bool $firstIsNone = true): Path {
+		$path = $this->createWays($location, $dy2, $dx2, $direction2, $firstIsNone);
 		if (!$path->count() || $distance <= 1) {
 			return $path;
 		}
 
-		$basicWay = $path[0];
-		$first    = $basicWay[1];
+		$basicWay = $path->offsetGet(0);
+		$first    = $basicWay->offsetGet(1);
 		$f        = 1;
 		$path->offsetUnset(0);
 
 		do {
-			$way  = $basicWay;
+			$way  = clone $basicWay;
 			$last = $first;
 			$i    = $f;
 			do {
 				if ($i++ % 2) {
-					$next = $this->nextLocation($last, $dy1, $dx1);
+					$next      = $this->nextLocation($last, $dy1, $dx1);
+					$direction = $direction1;
 				} else {
-					$next = $this->nextLocation($last, $dy2, $dx2);
+					$next      = $this->nextLocation($last, $dy2, $dx2);
+					$direction = $direction2;
 				}
 				if ($next) {
-					$way[] = $next;
-					$last  = $next;
+					$way->offsetSet($direction, $next);
+					$last = $next;
 				}
 			} while ($next && $i < $distance);
 			if ($next) {
 				$path[] = $way;
 			}
 
-			$way  = $basicWay;
+			$way  = clone $basicWay;
 			$last = $first;
 			$i    = $f;
 			do {
 				if ($i++ % 2) {
-					$next = $this->nextLocation($last, $dy2, $dx2);
+					$next      = $this->nextLocation($last, $dy2, $dx2);
+					$direction = $direction2;
 				} else {
-					$next = $this->nextLocation($last, $dy1, $dx1);
+					$next      = $this->nextLocation($last, $dy1, $dx1);
+					$direction = $direction1;
 				}
 				if ($next) {
-					$way[] = $next;
-					$last  = $next;
+					$way->offsetSet($direction, $next);
+					$last = $next;
 				}
 			} while ($next && $i < $distance);
 			if ($next) {
@@ -233,19 +241,21 @@ final class HexagonalMap extends BaseMap
 		} while (++$f < $distance);
 
 		if ($first) {
-			$way    = $basicWay;
-			$way[]  = $first;
-			$path[] = $way;
+			$basicWay->offsetSet($direction2, $first);
+			$path[] = $basicWay;
 		}
 
 		return $path;
 	}
 
-	private function createWays(Location $location, int $dY, int $dX): Path {
+	private function createWays(Location $location, int $dY, int $dX, Direction $direction, bool $firstIsNone): Path {
 		$path  = new Path();
 		$first = $this->nextLocation($location, $dY, $dX);
 		if ($first) {
-			$path[0] = [$location, $first];
+			$way = new Way();
+			$way->offsetSet($firstIsNone ? Direction::None : $direction, $location);
+			$way->offsetSet($direction, $first);
+			$path[0] = $way;
 		}
 		return $path;
 	}

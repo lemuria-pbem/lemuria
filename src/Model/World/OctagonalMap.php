@@ -27,14 +27,14 @@ final class OctagonalMap extends BaseMap
 	 */
 	public function getPath(Location $start, Direction $direction, int $distance): Path {
 		return match ($direction) {
-			Direction::North     => $this->createWay($start, 1, 0, $distance),
-			Direction::Northeast => $this->createWays($start, 1, 1, $distance),
-			Direction::East      => $this->createWay($start, 0, 1, $distance),
-			Direction::Southeast => $this->createWays($start, -1, 1, $distance),
-			Direction::South     => $this->createWay($start, -1, 0, $distance),
-			Direction::Southwest => $this->createWays($start, -1, -1, $distance),
-			Direction::West      => $this->createWay($start, 0, -1, $distance),
-			Direction::Northwest => $this->createWays($start, 1, -1, $distance),
+			Direction::North     => $this->createWay($start, 1, 0, $distance, $direction),
+			Direction::Northeast => $this->createWays($start, 1, 1, $distance, $direction),
+			Direction::East      => $this->createWay($start, 0, 1, $distance, $direction),
+			Direction::Southeast => $this->createWays($start, -1, 1, $distance, $direction),
+			Direction::South     => $this->createWay($start, -1, 0, $distance, $direction),
+			Direction::Southwest => $this->createWays($start, -1, -1, $distance, $direction),
+			Direction::West      => $this->createWay($start, 0, -1, $distance, $direction),
+			Direction::Northwest => $this->createWays($start, 1, -1, $distance, $direction),
 			default              => throw new LemuriaException('Direction ' . $direction->value . ' is not supported.')
 		};
 	}
@@ -118,9 +118,10 @@ final class OctagonalMap extends BaseMap
 		};
 	}
 
-	private function createWay(Location $location, int $dY, int $dX, int $distance): Path {
-		$path        = new Path();
-		$way         = [$location];
+	private function createWay(Location $location, int $dY, int $dX, int $distance, Direction $direction): Path {
+		$path = new Path();
+		$way  = new Way();
+		$way->offsetSet(Direction::None, $location);
 		$coordinates = $this->getCoordinates($location);
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
@@ -131,13 +132,13 @@ final class OctagonalMap extends BaseMap
 			if (!$location) {
 				return $path;
 			}
-			$way[] = $location;
+			$way->offsetSet($direction, $location);
 		}
 		$path[0] = $way;
 		return $path;
 	}
 
-	private function createWays(Location $location, int $dY, int $dX, int $distance): Path {
+	private function createWays(Location $location, int $dY, int $dX, int $distance, Direction $direction): Path {
 		$path        = new Path();
 		$i           = 0;
 		$coordinates = $this->getCoordinates($location);
@@ -145,8 +146,9 @@ final class OctagonalMap extends BaseMap
 		$y           = $coordinates->Y();
 		$nY          = 1;
 		do {
-			$way = [$location];
-			$nX  = 1;
+			$way = new Way();
+			$way->offsetSet(Direction::None, $location);
+			$nX = 1;
 			while (true) {
 				$d = (int)round(sqrt($nX ** 2 + $nY ** 2));
 				if ($d > $distance) {
@@ -154,13 +156,13 @@ final class OctagonalMap extends BaseMap
 				}
 				$next = $this->getByCoordinates($y + $nY * $dY, $x + $nX * $dX);
 				if ($next) {
-					$way[] = $next;
+					$way->offsetSet($direction, $next);
 					$nX++;
 				} else {
 					break;
 				}
 			}
-			if (count($way) >= 2) {
+			if ($way->count() >= 2) {
 				$path[$i++] = $way;
 			}
 			$nY++;

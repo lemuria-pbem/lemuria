@@ -5,6 +5,7 @@ namespace Lemuria\Model;
 use Lemuria\Model\Exception\MapException;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
+use Lemuria\Model\World\PathStrategy;
 use Lemuria\Serializable;
 
 /**
@@ -42,6 +43,11 @@ interface World extends Serializable
 	 * Get the neighbours of a region in alternative directions.
 	 */
 	public function getAlternatives(Location $location, Direction $direction): Neighbours;
+
+	/**
+	 * Find a path between two locations.
+	 */
+	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy;
 
 	/**
 	 * Check if a direction is valid in this world.
