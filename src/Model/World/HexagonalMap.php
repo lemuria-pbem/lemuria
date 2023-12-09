@@ -5,6 +5,7 @@ namespace Lemuria\Model\World;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
+use function Lemuria\sign;
 
 /**
  * Representation of a two-dimensional world with six directions.
@@ -30,9 +31,23 @@ final class HexagonalMap extends BaseMap
 			$left  = $toCoordinates;
 			$right = $fromCoordinates;
 		}
+
 		$distance = $right->X() - $left->X();
+		if ($this->geometry === Geometry::Spherical) {
+			$half = (int)ceil($this->width / 2);
+			if ($distance > $half) {
+				$distance = $this->width - $distance;
+			}
+		}
 
 		$dy = $right->Y() - $left->Y();
+		if ($this->geometry === Geometry::Spherical) {
+			$absDy = abs($dy);
+			$half  = (int)ceil($this->height / 2);
+			if ($absDy > $half) {
+				$dy = -1 * sign($dy) * ($this->height - $absDy);
+			}
+		}
 		if ($dy > 0) {
 			$distance += $dy;
 		} else {

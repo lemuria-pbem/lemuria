@@ -17,9 +17,21 @@ final class OctagonalMap extends BaseMap
 	public function getDistance(Location $from, Location $to): int {
 		$fromCoordinates = $this->getCoordinates($from);
 		$toCoordinates   = $this->getCoordinates($to);
-		$dx              = $toCoordinates->X() - $fromCoordinates->X();
-		$dy              = $toCoordinates->Y() - $fromCoordinates->Y();
-		return min(abs($dx), abs($dy));
+		$dx              = abs($toCoordinates->X() - $fromCoordinates->X());
+		$dy              = abs($toCoordinates->Y() - $fromCoordinates->Y());
+
+		if ($this->geometry === Geometry::Spherical) {
+			$half = (int)ceil($this->width / 2);
+			if ($dx > $half) {
+				$dx = $this->width - $dx;
+			}
+			$half = (int)ceil($this->height / 2);
+			if ($dy > $half) {
+				$dy = $this->height - $dy;
+			}
+		}
+
+		return max($dx, $dy);
 	}
 
 	/**

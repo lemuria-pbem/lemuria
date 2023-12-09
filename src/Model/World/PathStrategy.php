@@ -11,6 +11,8 @@ interface PathStrategy
 
 	public function find(Location $from, Location $to): static;
 
+	public function isViable(): bool;
+
 	public function getAll(): Path;
 
 	public function getBest(): Way;

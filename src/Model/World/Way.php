@@ -80,6 +80,14 @@ class Way implements \ArrayAccess, \Countable, \Iterator
 		return $this->index < $this->count;
 	}
 
+	public function clone(): static {
+		return clone $this;
+	}
+
+	public function last(): Location {
+		return $this->locations[$this->count - 1];
+	}
+
 	public function merge(Way $way): static {
 		$merged             = new self();
 		$merged->directions = array_merge($this->directions, $way->directions);

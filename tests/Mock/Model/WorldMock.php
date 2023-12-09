@@ -8,6 +8,7 @@ use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
+use Lemuria\Model\World\PathStrategy;
 
 class WorldMock implements World
 {
@@ -37,6 +38,10 @@ class WorldMock implements World
 
 	public function getAlternatives(Location $location, Direction $direction): Neighbours {
 		return new Neighbours();
+	}
+
+	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy {
+		return $strategy->find($from, $to);
 	}
 
 	public function isDirection(Direction $direction): bool {

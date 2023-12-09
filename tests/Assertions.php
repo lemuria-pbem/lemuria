@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
+use Lemuria\Model\Coordinates;
+use Lemuria\Model\Location;
 use PHPUnit\Framework\Assert;
 
 use function Lemuria\getClass;
@@ -22,5 +24,11 @@ trait Assertions
 			$class = get_class($item->getObject());
 			Assert::assertTrue(isset($expected[$class]), 'Item set has unexpected ' . $item . '.');
 		}
+	}
+
+	public static function assertCoordinates(int $x, int $y, mixed $coordinates): void {
+		Assert::assertInstanceOf(Coordinates::class, $coordinates);
+		Assert::assertSame($x, $coordinates->X(), 'Coordinate x = ' . $x . ' expected.');
+		Assert::assertSame($y, $coordinates->Y(), 'Coordinate y = ' . $y . ' expected.');
 	}
 }
