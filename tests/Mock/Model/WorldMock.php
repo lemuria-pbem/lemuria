@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Lemuria\Tests\Mock\Model;
 
+use Lemuria\Exception\InvalidClassTypeException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
 use Lemuria\Model\Neighbours;
@@ -40,7 +41,15 @@ class WorldMock implements World
 		return new Neighbours();
 	}
 
-	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy {
+	public function findPath(Location $from, Location $to, string $pathStrategy): PathStrategy {
+		try {
+			$strategy = new $pathStrategy($this);
+			if (!($strategy instanceof PathStrategy)) {
+				throw new InvalidClassTypeException($pathStrategy, PathStrategy::class);
+			}
+		} catch (\TypeError $e) {
+			throw new InvalidClassTypeException($pathStrategy, PathStrategy::class, $e);
+		}
 		return $strategy->find($from, $to);
 	}
 

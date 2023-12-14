@@ -16,9 +16,9 @@ class ShortestPath extends AbstractPathStrategy
 		while ($distance > 1) {
 			$d    = $distance - 1;
 			$ways = [];
-			$n    = 0;
 			foreach ($this->path as $way) {
 				$from = $way->last();
+				$n    = 0;
 				foreach ($this->world->getNeighbours($from) as $direction => $neighbour) {
 					if ($this->world->getDistance($neighbour, $to) === $d) {
 						$ways[] = [$direction, $neighbour, ++$n > 1 ? $way->clone() : $way];

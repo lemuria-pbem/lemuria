@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
+use Lemuria\Exception\InvalidClassTypeException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Exception\UnserializeException;
@@ -199,8 +200,18 @@ abstract class BaseMap implements Map, World
 
 	/**
 	 * Find a path between two locations.
+	 *
+	 * @throws InvalidClassTypeException
 	 */
-	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy {
+	public function findPath(Location $from, Location $to, string $pathStrategy): PathStrategy {
+		try {
+			$strategy = new $pathStrategy($this);
+			if (!($strategy instanceof PathStrategy)) {
+				throw new InvalidClassTypeException($pathStrategy, PathStrategy::class);
+			}
+		} catch (\TypeError $e) {
+			throw new InvalidClassTypeException($pathStrategy, PathStrategy::class, $e);
+		}
 		return $strategy->find($from, $to);
 	}
 

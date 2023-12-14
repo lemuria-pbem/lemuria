@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Exception\InvalidClassTypeException;
 use Lemuria\Model\Exception\MapException;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
@@ -46,8 +47,10 @@ interface World extends Serializable
 
 	/**
 	 * Find a path between two locations.
+	 *
+	 * @throws InvalidClassTypeException
 	 */
-	public function findPath(Location $from, Location $to, PathStrategy $strategy): PathStrategy;
+	public function findPath(Location $from, Location $to, string $pathStrategy): PathStrategy;
 
 	/**
 	 * Check if a direction is valid in this world.

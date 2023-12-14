@@ -70,9 +70,9 @@ class HexagonalMapTest extends Base
 	#[Test]
 	public function findPath(): void {
 		$map      = $this->getSut(Geometry::Flat);
-		$strategy = new ShortestPath($map);
+		$strategy = $map->findPath(new LocationMock(24), new LocationMock(24), ShortestPath::class);
 
-		$this->assertSame($strategy, $map->findPath(new LocationMock(24), new LocationMock(24), $strategy));
+		$this->assertInstanceOf(ShortestPath::class, $strategy);
 		$this->assertTrue($strategy->isViable());
 	}
 }
