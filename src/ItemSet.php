@@ -193,6 +193,19 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 	}
 
 	/**
+	 * Sort the set using specified order.
+	 */
+	protected function sortUsing(ItemOrder $order): void {
+		$this->indices = $order->sort($this);
+		$items         = [];
+		foreach ($this->indices as $key) {
+			$items[$key] = $this->items[$key];
+		}
+		$this->items = $items;
+		$this->rewind();
+	}
+
+	/**
 	 * Remove the item of the specified class from the set.
 	 */
 	private function delete(string $class): void {
