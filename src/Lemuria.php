@@ -452,12 +452,12 @@ final class Lemuria
 		self::Calendar()->save();
 		self::Catalog()->save();
 		self::Debut()->save();
+		self::Scripts()?->save();
 		self::Orders()->save();
 		self::Report()->save();
 		self::Score()->save();
 		self::Hostilities()->save();
 		self::World()->save();
-		self::Scripts()?->save();
 		self::Statistics()->save();
 	}
 
