@@ -6,6 +6,8 @@ use Lemuria\Exception\ItemSetException;
 use Lemuria\Exception\ItemSetFillException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeItemSetException;
+use Lemuria\Model\Fantasya\Sorting\ByCommodity;
+use Lemuria\Sorting\ByCount;
 
 /**
  * Implementation of a set of items, where an item is a quantity of something.
@@ -142,6 +144,20 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 				throw new ItemSetFillException($item, $this);
 			}
 			$this->addItem(clone $item);
+		}
+		return $this;
+	}
+
+	/**
+	 * Sort the items.
+	 */
+	public function sort(SortMode $mode = SortMode::ByCount): static {
+		switch ($mode) {
+			case SortMode::ByCount :
+				$this->sortUsing(new ByCount());
+				break;
+			default :
+				throw new LemuriaException('Unsupported sort mode: ' . $mode->name);
 		}
 		return $this;
 	}
