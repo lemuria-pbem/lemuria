@@ -44,17 +44,24 @@ class Values implements \ArrayAccess, \Countable, \Iterator
 	 * @param string $value
 	 */
 	public function offsetSet(mixed $offset, mixed $value): void {
-		if (!is_string($offset) || !is_string($value)) {
-			throw new LemuriaException('Only string offsets and values are allowed.');
+		if (!is_string($offset)) {
+			throw new LemuriaException('Only string offsets are allowed.');
 		}
 		$key = trim($offset);
 		if (!$key) {
 			throw new LemuriaException('Invalid empty offset used as key.');
 		}
-		if (isset($this->values[$key])) {
-			$this->values[$key]->add($value);
+		if ($value instanceof Value) {
+			$this->values[$key] = $value;
 		} else {
-			$this->values[$key] = new Value(trim($value));
+			if (!is_string($value)) {
+				throw new LemuriaException('Only Value objects or strings are allowed as value.');
+			}
+			if (isset($this->values[$key])) {
+				$this->values[$key]->add($value);
+			} else {
+				$this->values[$key] = new Value(trim($value));
+			}
 		}
 	}
 
