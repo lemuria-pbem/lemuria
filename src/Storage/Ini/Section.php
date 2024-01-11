@@ -6,17 +6,14 @@ use Lemuria\Exception\LemuriaException;
 
 class Section
 {
-	private readonly string $name;
+	private string $name;
 
 	private Lines $lines;
 
 	private Values $values;
 
 	public function __construct(string $name) {
-		if (str_contains($name, '[') || str_contains($name, ']')) {
-			throw new LemuriaException('Invalid name given.');
-		}
-		$this->name   = trim($name);
+		$this->setName($name);
 		$this->lines  = new Lines();
 		$this->values = new Values();
 	}
@@ -31,5 +28,13 @@ class Section
 
 	public function Values(): Values {
 		return $this->values;
+	}
+
+	public function setName(string $name): static {
+		if (str_contains($name, '[') || str_contains($name, ']')) {
+			throw new LemuriaException('Invalid name given.');
+		}
+		$this->name = trim($name);
+		return $this;
 	}
 }
