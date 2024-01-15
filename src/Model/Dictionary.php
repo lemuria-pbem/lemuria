@@ -6,6 +6,7 @@ use Lemuria\Model\Exception\KeyPathException;
 use function Lemuria\getClass;
 use Lemuria\Lemuria;
 use Lemuria\Singleton;
+use function Lemuria\randElement;
 
 final class Dictionary
 {
@@ -77,6 +78,26 @@ final class Dictionary
 			}
 			return $default;
 		}
+	}
+
+	public function random(string $keyPath, Singleton|\BackedEnum|string|int|null $index = null): string {
+		if ($index instanceof Singleton) {
+			$index = getClass($index);
+		} elseif ($index instanceof \BackedEnum) {
+			$index = $index->value;
+		}
+		$strings = $this->raw($index === null ? $keyPath : $keyPath . '.' . $index);
+		if (is_string($strings)) {
+			$strings = [$strings];
+		} elseif (!is_array($strings)) {
+			throw new KeyPathException($keyPath);
+		}
+
+		$random = randElement($strings);
+		if (is_string($random)) {
+			return $random;
+		}
+		throw new KeyPathException($keyPath);
 	}
 
 	public function raw(string $keyPath): mixed {
