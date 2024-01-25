@@ -98,6 +98,11 @@ interface Game
 	public function getScripts(): array;
 
 	/**
+	 * Get NPC quests data.
+	 */
+	public function getQuests() : array;
+
+	/**
 	 * Get string data.
 	 */
 	public function getStrings(): array;
@@ -191,6 +196,11 @@ interface Game
 	 * Set NPC scripts data.
 	 */
 	public function setScripts(array $scripts): static;
+
+	/**
+	 * Set NPC quests data.
+	 */
+	public function setQuests(array $quests): static;
 
 	/**
 	 * Migrate entities if needed.
