@@ -201,6 +201,15 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	}
 
 	/**
+	 * Reverse the order of the units.
+	 */
+	public function reverse(): static {
+		$this->indices  = array_reverse($this->indices);
+		$this->entities = array_reverse($this->entities, true);
+		return $this;
+	}
+
+	/**
 	 * Get a randomly selected Entity.
 	 *
 	 * @throws EmptySetException
