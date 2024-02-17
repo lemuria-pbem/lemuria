@@ -9,7 +9,9 @@ use Lemuria\Exception\IdException;
  */
 final class Id implements \Stringable
 {
-	public final const string REGEX = '[0-9a-z]+';
+	public final const int MAX_LENGTH = PHP_INT_SIZE === 8 ? 12 : 6;
+
+	public final const string REGEX = '[0-9a-z]{1,' . self::MAX_LENGTH . '}';
 
 	/**
 	 * Convert a Base36 ID to its integer representation.
