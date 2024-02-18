@@ -7,7 +7,7 @@ use Lemuria\Exception\MkdirException;
 
 class RecursiveProvider extends FileProvider
 {
-	public function glob(string $pattern = '*'): array {
+	public function glob(string $pattern = '*.txt'): array {
 		$dir = dirname($this->getPath($pattern));
 		return $this->getFiles($dir, $pattern);
 	}

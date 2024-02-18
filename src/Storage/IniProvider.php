@@ -99,7 +99,7 @@ final class IniProvider implements Provider
 		$this->provider->write($fileName, $list);
 	}
 
-	public function glob(string $pattern = '*'): array {
+	public function glob(string $pattern = '*.txt'): array {
 		return $this->provider->glob($pattern);
 	}
 
