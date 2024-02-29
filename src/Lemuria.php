@@ -2,11 +2,12 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
-use Psr\Log\LoggerInterface;
-use Random\Engine\Xoshiro256StarStar;
-use Random\IntervalBoundary;
-use Random\Randomizer;
-
+use Lemuria\Dispatcher\Dispatcher;
+use Lemuria\Dispatcher\Event\Initialized;
+use Lemuria\Dispatcher\Event\Loaded;
+use Lemuria\Dispatcher\Event\Saved;
+use Lemuria\Dispatcher\ListenerProvider;
+use Lemuria\Dispatcher\ListenerRegister;
 use Lemuria\Engine\Debut;
 use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
@@ -25,6 +26,10 @@ use Lemuria\Model\World;
 use Lemuria\Scenario\Scripts;
 use Lemuria\Version\Module;
 use Lemuria\Version\VersionFinder;
+use Psr\Log\LoggerInterface;
+use Random\Engine\Xoshiro256StarStar;
+use Random\IntervalBoundary;
+use Random\Randomizer;
 
 /**
  * Format a number.
@@ -300,6 +305,8 @@ final class Lemuria
 
 	private readonly Debut $debut;
 
+	private readonly Dispatcher $dispatcher;
+
 	private readonly Game $game;
 
 	private readonly LoggerInterface $log;
@@ -353,6 +360,14 @@ final class Lemuria
 
 	public static function Debut(): Debut {
 		return self::getInstance()->debut;
+	}
+
+	public static function Dispatcher(): Dispatcher {
+		return self::getInstance()->dispatcher;
+	}
+
+	public static function Register(): ListenerRegister {
+		return self::getInstance()->dispatcher->listenerProvider;
 	}
 
 	/**
@@ -427,6 +442,7 @@ final class Lemuria
 		self::$instance->report  = $config->Report();
 		self::$instance->score   = $config->Score();
 		self::$instance->scripts = $config->Scripts();
+		self::Dispatcher()->dispatch(new Initialized());
 	}
 
 	/**
@@ -444,6 +460,7 @@ final class Lemuria
 		self::World()->load();
 		self::Scripts()?->load();
 		self::Statistics()->load();
+		self::Dispatcher()->dispatch(new Loaded());
 	}
 
 	/**
@@ -460,6 +477,7 @@ final class Lemuria
 		self::Hostilities()->save();
 		self::World()->save();
 		self::Statistics()->save();
+		self::Dispatcher()->dispatch(new Saved());
 	}
 
 	private static function getInstance(): Lemuria {
@@ -472,6 +490,7 @@ final class Lemuria
 	private function __construct(Config $config) {
 		try {
 			$this->profiler    = new Profiler();
+			$this->dispatcher  = new Dispatcher(new ListenerProvider());
 			$this->featureFlag = $config->FeatureFlag();
 			$this->log         = $config->Log()->getLogger();
 			$this->builder     = $config->Builder();
