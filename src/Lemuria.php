@@ -2,6 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use Lemuria\Dispatcher\Dispatcher;
+use Lemuria\Dispatcher\ListenerProvider;
+use Lemuria\Event\Initialized;
+use Lemuria\Event\Loaded;
+use Lemuria\Event\Saved;
 use Psr\Log\LoggerInterface;
 use Random\Engine\Xoshiro256StarStar;
 use Random\IntervalBoundary;
@@ -300,6 +305,8 @@ final class Lemuria
 
 	private readonly Debut $debut;
 
+	private readonly Dispatcher $dispatcher;
+
 	private readonly Game $game;
 
 	private readonly LoggerInterface $log;
@@ -353,6 +360,10 @@ final class Lemuria
 
 	public static function Debut(): Debut {
 		return self::getInstance()->debut;
+	}
+
+	public static function Dispatcher(): Dispatcher {
+		return self::getInstance()->dispatcher;
 	}
 
 	/**
@@ -427,6 +438,7 @@ final class Lemuria
 		self::$instance->report  = $config->Report();
 		self::$instance->score   = $config->Score();
 		self::$instance->scripts = $config->Scripts();
+		self::Dispatcher()->dispatch(new Initialized());
 	}
 
 	/**
@@ -444,6 +456,7 @@ final class Lemuria
 		self::World()->load();
 		self::Scripts()?->load();
 		self::Statistics()->load();
+		self::Dispatcher()->dispatch(new Loaded());
 	}
 
 	/**
@@ -460,6 +473,7 @@ final class Lemuria
 		self::Hostilities()->save();
 		self::World()->save();
 		self::Statistics()->save();
+		self::Dispatcher()->dispatch(new Saved());
 	}
 
 	private static function getInstance(): Lemuria {
@@ -472,6 +486,7 @@ final class Lemuria
 	private function __construct(Config $config) {
 		try {
 			$this->profiler    = new Profiler();
+			$this->dispatcher  = new Dispatcher(new ListenerProvider());
 			$this->featureFlag = $config->FeatureFlag();
 			$this->log         = $config->Log()->getLogger();
 			$this->builder     = $config->Builder();
