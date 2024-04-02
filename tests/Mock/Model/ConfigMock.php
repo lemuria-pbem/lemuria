@@ -35,6 +35,10 @@ use Lemuria\Tests\Mock\StatisticsMock;
 
 class ConfigMock implements Config
 {
+	public function Locale(): string {
+		return '';
+	}
+
 	public function Builder(): Builder {
 		return new DefaultBuilder();
 	}

@@ -421,7 +421,8 @@ final class Lemuria
 	}
 
 	public static function init(Config $config): void {
-		self::$instance          = new self($config);
+		self::$instance = new self($config);
+		self::$instance->setLocale($config->Locale());
 		self::$instance->orders  = $config->Orders();
 		self::$instance->report  = $config->Report();
 		self::$instance->score   = $config->Score();
@@ -487,6 +488,16 @@ final class Lemuria
 			$this->addVersions();
 		} catch (\Exception $e) {
 			die((string)$e);
+		}
+	}
+
+	private function setLocale(string $locale): void {
+		if ($locale) {
+			if (setLocale(LC_ALL, $locale) !== $locale) {
+				$message = 'Could not set locale to ' . $locale . '.';
+				self::Log()->alert($message);
+				die($message);
+			}
 		}
 	}
 

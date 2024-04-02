@@ -16,6 +16,8 @@ use Lemuria\Statistics;
 
 interface Config
 {
+	public function Locale(): string;
+
 	public function Builder(): Builder;
 
 	public function Calendar(): Calendar;
