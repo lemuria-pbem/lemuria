@@ -4,6 +4,8 @@ namespace Lemuria;
 
 enum SortMode
 {
+	case Alphabetically;
+
 	case ByCount;
 
 	case ById;

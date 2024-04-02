@@ -9,6 +9,7 @@ use Lemuria\Lemuria;
 use Lemuria\Model\Domain;
 use Lemuria\Model\Location;
 use Lemuria\Sorting\ById;
+use Lemuria\Sorting\ByName;
 use Lemuria\Sorting\Location\North2South;
 use Lemuria\SortMode;
 
@@ -35,6 +36,9 @@ class Atlas extends EntitySet
 	 */
 	public function sort(SortMode $mode = SortMode::ById): static {
 		switch ($mode) {
+			case SortMode::Alphabetically :
+				$this->sortUsing(new ByName());
+				break;
 			case SortMode::ById :
 				$this->sortUsing(new ById());
 				break;
