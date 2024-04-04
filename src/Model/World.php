@@ -7,6 +7,7 @@ use Lemuria\Model\Exception\MapException;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
 use Lemuria\Model\World\PathStrategy;
+use Lemuria\Model\World\Way;
 use Lemuria\Serializable;
 
 /**
@@ -56,6 +57,11 @@ interface World extends Serializable
 	 * Check if a direction is valid in this world.
 	 */
 	public function isDirection(Direction $direction): bool;
+
+	/**
+	 * Get the average direction where given way leads to.
+	 */
+	public function getDirection(Way $way): Direction;
 
 	/**
 	 * Load the world data.

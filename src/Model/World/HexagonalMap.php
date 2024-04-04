@@ -12,6 +12,20 @@ use function Lemuria\sign;
  */
 final class HexagonalMap extends BaseMap
 {
+	private const array DIRECTION_ANGLE = [
+		Direction::None->value      => NAN,
+		Direction::North->value     => NAN,
+		Direction::Northeast->value => M_PI / 3.0,
+		Direction::East->value      => 0.0,
+		Direction::Southeast->value => -M_PI / 3.0,
+		Direction::South->value     => NAN,
+		Direction::Southwest->value => M_PI + M_PI / 3.0,
+		Direction::West->value      => M_PI,
+		Direction::Northwest->value => M_PI - M_PI / 3.0
+	];
+
+	private const float GRADIENT_THRESHOLD = 0.5;
+
 	/**
 	 * @var array<string>
 	 */
@@ -126,6 +140,28 @@ final class HexagonalMap extends BaseMap
 			],
 			default => throw new LemuriaException()
 		};
+	}
+
+	protected function calculate2DPosition(float &$x, float &$y, Direction $direction): float {
+		$angle = self::DIRECTION_ANGLE[$direction->value];
+		if (!is_nan($angle)) {
+			$x += cos($angle);
+			$y += sin($angle);
+		}
+		return $angle;
+	}
+
+	protected function calculateDirectionFrom2D(float $x, float $y): Direction {
+		if ($y >= 0) {
+			if ($x >= 0) {
+				return $this->calculateDirectionByGradient($x, $y, Direction::East, Direction::Northeast);
+			}
+			return $this->calculateDirectionByGradient(-$x, $y, Direction::West, Direction::Northwest);
+		}
+		if ($x >= 0) {
+			return $this->calculateDirectionByGradient($x, -$y, Direction::East, Direction::Southeast);
+		}
+		return $this->calculateDirectionByGradient(-$x, -$y, Direction::West, Direction::Southwest);
 	}
 
 	/**
@@ -280,5 +316,13 @@ final class HexagonalMap extends BaseMap
 		$x           = $coordinates->X();
 		$y           = $coordinates->Y();
 		return $this->getByCoordinates($y + $dY, $x + $dX);
+	}
+
+	private function calculateDirectionByGradient(float $x, float $y, Direction $lowGradient, Direction $highGradient): Direction {
+		if ($x > 0) {
+			$gradient = $y / $x;
+			return $gradient < self::GRADIENT_THRESHOLD ? $lowGradient : $highGradient;
+		}
+		return $highGradient;
 	}
 }

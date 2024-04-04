@@ -11,6 +11,22 @@ use Lemuria\Model\Location;
  */
 final class OctagonalMap extends BaseMap
 {
+	private const array DIRECTION_ANGLE = [
+		Direction::None->value      => NAN,
+		Direction::North->value     => M_PI_2,
+		Direction::Northeast->value => M_PI_4,
+		Direction::East->value      => 0.0,
+		Direction::Southeast->value => -M_PI_4,
+		Direction::South->value     => -M_PI_2,
+		Direction::Southwest->value => -M_PI_2 - M_PI_4,
+		Direction::West->value      => M_PI,
+		Direction::Northwest->value => M_PI_2 + M_PI_4
+	];
+
+	private const float GRADIENT_THRESHOLD_1 = 0.57735026919;
+
+	private const float GRADIENT_THRESHOLD_2 = 1.73205080757;
+
 	/**
 	 * Get the shortest distance between two regions.
 	 */
@@ -130,6 +146,28 @@ final class OctagonalMap extends BaseMap
 		};
 	}
 
+	protected function calculate2DPosition(float &$x, float &$y, Direction $direction): float {
+		$angle = self::DIRECTION_ANGLE[$direction->value];
+		if (!is_nan($angle)) {
+			$x += cos($angle);
+			$y += sin($angle);
+		}
+		return $angle;
+	}
+
+	protected function calculateDirectionFrom2D(float $x, float $y): Direction {
+		if ($y >= 0) {
+			if ($x >= 0) {
+				return $this->calculateDirectionByGradient($x, $y, Direction::East, Direction::Northeast, Direction::North);
+			}
+			return $this->calculateDirectionByGradient(-$x, $y, Direction::West, Direction::Northwest, Direction::North);
+		}
+		if ($x >= 0) {
+			return $this->calculateDirectionByGradient($x, -$y, Direction::East, Direction::Southeast, Direction::South);
+		}
+		return $this->calculateDirectionByGradient(-$x, -$y, Direction::West, Direction::Southwest, Direction::South);
+	}
+
 	private function createWay(Location $location, int $dY, int $dX, int $distance, Direction $direction): Path {
 		$path = new Path();
 		$way  = new Way();
@@ -180,5 +218,13 @@ final class OctagonalMap extends BaseMap
 			$nY++;
 		} while ($nY <= $distance);
 		return $path;
+	}
+
+	private function calculateDirectionByGradient(float $x, float $y, Direction $lowGradient, Direction $mediumGradient, Direction $highGradient): Direction {
+		if ($x > 0) {
+			$gradient = $y / $x;
+			return $gradient < self::GRADIENT_THRESHOLD_1 ? $lowGradient : ($gradient < self::GRADIENT_THRESHOLD_2 ? $mediumGradient : $highGradient);
+		}
+		return $highGradient;
 	}
 }

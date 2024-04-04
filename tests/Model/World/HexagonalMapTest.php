@@ -2,6 +2,8 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests\Model\World;
 
+use Lemuria\Model\World\Direction;
+use Lemuria\Model\World\Way;
 use PHPUnit\Framework\Attributes\Test;
 use SATHub\PHPUnit\Base;
 
@@ -74,5 +76,26 @@ class HexagonalMapTest extends Base
 
 		$this->assertInstanceOf(ShortestPath::class, $strategy);
 		$this->assertTrue($strategy->isViable());
+	}
+
+	#[Test]
+	public function getDirection(): void {
+		$map = $this->getSut(Geometry::Flat);
+		$way = new Way();
+		$way[Direction::None]      = new LocationMock(1);
+		$way[Direction::Northwest] = new LocationMock(2);
+		$this->assertSame(Direction::Northwest, $map->getDirection($way));
+
+		$way[Direction::Southwest] = new LocationMock(3);
+		$this->assertSame(Direction::West, $map->getDirection($way));
+
+		$way[Direction::Southeast] = new LocationMock(4);
+		$this->assertSame(Direction::Southwest, $map->getDirection($way));
+
+		$way[Direction::East] = new LocationMock(5);
+		$this->assertSame(Direction::Southeast, $map->getDirection($way));
+
+		$way[Direction::Northeast] = new LocationMock(6);
+		$this->assertSame(Direction::East, $map->getDirection($way));
 	}
 }

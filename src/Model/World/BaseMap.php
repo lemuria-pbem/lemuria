@@ -73,6 +73,18 @@ abstract class BaseMap implements Map, World
 		return $this->height;
 	}
 
+	/**
+	 * Get the average direction where given way leads to.
+	 */
+	public function getDirection(Way $way): Direction {
+		$x = 0.0;
+		$y = 0.0;
+		foreach ($way as $direction => $unused) {
+			$this->calculate2DPosition($x, $y, $direction);
+		}
+		return $this->calculateDirectionFrom2D($x, $y);
+	}
+
 	public function isEdge(Location $location): bool {
 		$coordinates = $this->getCoordinates($location);
 
@@ -247,6 +259,10 @@ abstract class BaseMap implements Map, World
 	 * @return array<string, Coordinates>
 	 */
 	abstract protected function getAlternativeCoordinates(Location $location, Direction $direction): array;
+
+	abstract protected function calculate2DPosition(float &$x, float &$y, Direction $direction): float;
+
+	abstract protected function calculateDirectionFrom2D(float $x, float $y): Direction;
 
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {

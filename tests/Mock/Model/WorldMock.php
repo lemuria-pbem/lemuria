@@ -10,6 +10,7 @@ use Lemuria\Model\World;
 use Lemuria\Model\World\Direction;
 use Lemuria\Model\World\Path;
 use Lemuria\Model\World\PathStrategy;
+use Lemuria\Model\World\Way;
 
 class WorldMock implements World
 {
@@ -55,6 +56,10 @@ class WorldMock implements World
 
 	public function isDirection(Direction $direction): bool {
 		return true;
+	}
+
+	public function getDirection(Way $way): Direction {
+		return Direction::None;
 	}
 
 	public function load(): static {
