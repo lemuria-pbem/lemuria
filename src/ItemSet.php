@@ -155,6 +155,7 @@ abstract class ItemSet implements \ArrayAccess, \Countable, \Iterator, Serializa
 		switch ($mode) {
 			case SortMode::Alphabetically :
 				$this->sortUsing(new BySingleton());
+				break;
 			case SortMode::ByCount :
 				$this->sortUsing(new ByCount());
 				break;
