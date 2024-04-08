@@ -2,10 +2,10 @@
 declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
+use function Lemuria\sign;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
-use function Lemuria\sign;
 
 /**
  * Representation of a two-dimensional world with six directions.

@@ -2,12 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria\Tests;
 
-use Lemuria\Model\Coordinates;
-use Lemuria\Model\Location;
 use PHPUnit\Framework\Assert;
 
 use function Lemuria\getClass;
 use Lemuria\ItemSet;
+use Lemuria\Model\Coordinates;
 
 trait Assertions
 {

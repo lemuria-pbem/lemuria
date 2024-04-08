@@ -55,10 +55,6 @@ class Atlas extends EntitySet
 	 * Get an Entity by ID.
 	 */
 	protected function get(Id $id): Location {
-		$location = Lemuria::Catalog()->get($id, Domain::Location);
-		if ($location instanceof Location) {
-			return $location;
-		}
-		throw new LemuriaException('Location ' . $id . ' is not an Entity.');
+		return Lemuria::Catalog()->get($id, Domain::Location);
 	}
 }

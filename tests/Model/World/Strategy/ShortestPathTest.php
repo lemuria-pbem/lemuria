@@ -72,6 +72,9 @@ class ShortestPathTest extends Base
 		$this->assertSame($way, $strategy->getBest());
 	}
 
+	/**
+	 * @noinspection PhpUnreachableStatementInspection
+	 */
 	#[Test]
 	public function findPathOfLengthOne(): void {
 		$this->markTestSkipped('This test needs a full Lemuria model.');

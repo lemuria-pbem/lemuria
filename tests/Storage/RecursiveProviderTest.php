@@ -24,7 +24,7 @@ class RecursiveProviderTest extends Base
 	#[Test]
 	#[Depends('construct')]
 	public function glob(RecursiveProvider $provider): void {
-		$files = $provider->glob('*.txt');
+		$files = $provider->glob();
 
 		$this->assertArray($files, 3, 'string');
 		foreach ($files as $path) {

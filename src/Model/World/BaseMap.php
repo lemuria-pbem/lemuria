@@ -3,7 +3,6 @@ declare (strict_types = 1);
 namespace Lemuria\Model\World;
 
 use Lemuria\Exception\InvalidClassTypeException;
-use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\UnserializeEntityException;
 use Lemuria\Exception\UnserializeException;
 use Lemuria\Id;
@@ -266,12 +265,8 @@ abstract class BaseMap implements Map, World
 
 	protected function getLocation(?int $id): ?Location {
 		if ($id) {
-			$id       = new Id($id);
-			$location = Lemuria::Catalog()->get($id, Domain::Location);
-			if ($location instanceof Location) {
-				return $location;
-			}
-			throw new LemuriaException('Invalid location ' . $id . '.');
+			$id = new Id($id);
+			return Lemuria::Catalog()->get($id, Domain::Location);
 		}
 		return null;
 	}
@@ -318,7 +313,7 @@ abstract class BaseMap implements Map, World
 	 * @param array<string, array> $data
 	 * @throws UnserializeEntityException
 	 */
-	private function validateSerializedData($data): void {
+	protected function validateSerializedData(array $data): void {
 		$this->validate($data, self::ORIGIN, Validate::Array);
 		$this->validateEnum($data, self::GEOMETRY, Geometry::class);
 		$this->validate($data, self::MAP, Validate::Array);
