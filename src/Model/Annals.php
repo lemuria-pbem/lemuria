@@ -90,7 +90,7 @@ abstract class Annals extends EntitySet
 		throw new \InvalidArgumentException();
 	}
 
-	protected function addEntity(Id $id, int $round = null): void {
+	protected function addEntity(Id $id, ?int $round = null): void {
 		parent::addEntity($id);
 		$this->round[$id->Id()] = $round ?: Lemuria::Calendar()->Round();
 	}
