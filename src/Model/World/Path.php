@@ -71,4 +71,10 @@ class Path implements \ArrayAccess, \Countable, \Iterator
 	public function valid(): bool {
 		return $this->index < $this->count;
 	}
+
+	public function clear(): void {
+		$this->ways  = [];
+		$this->index = 0;
+		$this->count = 0;
+	}
 }

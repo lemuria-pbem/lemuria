@@ -14,6 +14,10 @@ abstract class AbstractPathStrategy implements PathStrategy
 {
 	protected Path $path;
 
+	protected Location $start;
+
+	protected Location $end;
+
 	public function __construct(protected World $world) {
 		$this->path = new Path();
 	}
@@ -33,7 +37,13 @@ abstract class AbstractPathStrategy implements PathStrategy
 		throw new LemuriaException('This strategy has not found a way.');
 	}
 
+	protected function setStartEnd(Location $start, Location $end): void {
+		$this->start = $start;
+		$this->end   = $end;
+	}
+
 	protected function isSameLocation(Location $from, Location $to): bool {
+		$this->setStartEnd($from, $to);
 		$way = new Way();
 		$way->offsetSet(Direction::None, $from);
 		$this->path->offsetSet(0, $way);

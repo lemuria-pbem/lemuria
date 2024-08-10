@@ -3,25 +3,31 @@ declare(strict_types = 1);
 namespace Lemuria\Model\World\Strategy;
 
 use Lemuria\Model\Location;
+use Lemuria\Model\World\Direction;
 
 class ShortestPath extends AbstractPathStrategy
 {
+	protected int $d;
+
+	protected Location $current;
+
 	public function find(Location $from, Location $to): static {
 		if ($this->isSameLocation($from, $to)) {
 			return $this;
 		}
-		$t        = $to->Id()->Id();
-		$distance = $this->world->getDistance($from, $to);
+		$t             = $to->Id()->Id();
+		$this->current = $from;
+		$distance      = $this->world->getDistance($from, $to);
 
 		while ($distance > 1) {
-			$d    = $distance - 1;
-			$ways = [];
-			$n    = 0;
+			$this->d = $distance - 1;
+			$ways    = [];
+			$n       = 0;
 			foreach ($this->path as $way) {
-				$from = $way->last();
-				$n    = 0;
-				foreach ($this->world->getNeighbours($from) as $direction => $neighbour) {
-					if ($this->world->getDistance($neighbour, $to) === $d) {
+				$this->current = $way->last();
+				$n             = 0;
+				foreach ($this->world->getNeighbours($this->current) as $direction => $neighbour) {
+					if ($this->isValidNeighbour($direction, $neighbour)) {
 						$ways[] = [$direction, $neighbour, ++$n > 1 ? $way->clone() : $way];
 					}
 				}
@@ -34,7 +40,12 @@ class ShortestPath extends AbstractPathStrategy
 					$this->path[] = $way;
 				}
 			}
-			$distance = $d;
+			$distance = $this->d;
+
+			if (empty($ways)) {
+				$this->path->clear();
+				return $this;
+			}
 		}
 
 		foreach ($this->path as $way) {
@@ -48,5 +59,12 @@ class ShortestPath extends AbstractPathStrategy
 		}
 
 		return $this;
+	}
+
+	/**
+	 * @noinspection PhpUnusedParameterInspection
+	 */
+	protected function isValidNeighbour(Direction $direction, Location $neighbour): bool {
+		return $this->world->getDistance($neighbour, $this->end) === $this->d;
 	}
 }
