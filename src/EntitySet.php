@@ -30,6 +30,9 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 * Init the set for a Collector.
 	 */
 	public function __construct(private readonly ?Collector $collector = null) {
+		if ($collector) {
+			Lemuria::Register()->addListener($collector->getCollectAllEvent(), $this->addCollectorsToAll(...));
+		}
 	}
 
 	/**
@@ -157,20 +160,6 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	}
 
 	/**
-	 * Set the Collector in all entities.
-	 */
-	public function addCollectorsToAll(): static {
-		if ($this->hasCollector()) {
-			foreach ($this->entities as $id) {
-				/** @var Collectible $collectible */
-				$collectible = $this->get($id);
-				$collectible->addCollector($this->collector());
-			}
-		}
-		return $this;
-	}
-
-	/**
 	 * Replace an entity in the set with another one that is not part of the set.
 	 *
 	 * @throws EntitySetException The entity is not part of the set.
@@ -239,6 +228,20 @@ abstract class EntitySet implements \ArrayAccess, \Countable, \Iterator, EntityC
 	 */
 	protected function collector(): Collector {
 		return $this->collector;
+	}
+
+	/**
+	 * Set the Collector in all entities.
+	 */
+	protected function addCollectorsToAll(): static {
+		if ($this->hasCollector()) {
+			foreach ($this->entities as $id) {
+				/** @var Collectible $collectible */
+				$collectible = $this->get($id);
+				$collectible->addCollector($this->collector());
+			}
+		}
+		return $this;
 	}
 
 	/**

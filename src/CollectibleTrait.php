@@ -15,13 +15,13 @@ trait CollectibleTrait
 	private array $collectors = [];
 
 	public function addCollector(Collector $collector): static {
-		$this->collectors[$collector->getRelation()] = $collector;
+		$this->collectors[getClass($collector)] = $collector;
 		/** @var Collectible $this */
 		return $this;
 	}
 
 	public function removeCollector(Collector $collector): static {
-		$relation = $collector->getRelation();
+		$relation = getClass($collector);
 		if (isset($this->collectors[$relation])) {
 			$oldCollector = $this->collectors[$relation];
 			if ($oldCollector->Id()->Id() === $collector->Id()->Id()) {
