@@ -19,7 +19,7 @@ class RecursiveProvider extends FileProvider
 		$fileName = trim($fileName, DIRECTORY_SEPARATOR);
 		$path     = parent::setPath($fileName);
 		if (str_contains($fileName, DIRECTORY_SEPARATOR)) {
-			$dirPath = dirname($fileName);
+			$dirPath = $this->getPath(dirname($fileName));
 			if (!is_dir($dirPath)) {
 				if (!@mkdir($dirPath, recursive: true)) {
 					throw new MkdirException($dirPath);
