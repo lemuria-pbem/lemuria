@@ -30,7 +30,9 @@ class ListenerProvider implements ListenerProviderInterface, ListenerRegister
 
 	public function addListener(AbstractEvent $event, callable $listener): void {
 		if (!isset($this->family[$event->family])) {
-			$this->family[$event->family] = $this->nextFamily++;
+			$this->eventMapping[$this->nextFamily] = [];
+			$this->nextId[$this->nextFamily]       = 1;
+			$this->family[$event->family]          = $this->nextFamily++;
 		}
 		$f = $this->family[$event->family];
 
