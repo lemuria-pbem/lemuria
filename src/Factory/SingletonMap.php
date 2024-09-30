@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria\Factory;
 
+use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\SingletonException;
 
 /**
@@ -50,6 +51,9 @@ class SingletonMap
 		$this->groups[]         = $group->getGroup();
 		$this->namespaceIndex[] = $this->addNamespace($group->getNamespace());
 		foreach ($group->getSingletons() as $singleton) {
+			if (isset($this->map[$singleton])) {
+				throw new LemuriaException('There already is a mapping for the singleton ' . $singleton . '.');
+			}
 			$this->map[$singleton] = $groupId;
 		}
 		return $this;
