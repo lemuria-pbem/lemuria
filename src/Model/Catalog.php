@@ -2,6 +2,9 @@
 declare (strict_types = 1);
 namespace Lemuria\Model;
 
+use Lemuria\Dispatcher\Attribute\Emit;
+use Lemuria\Dispatcher\Event\Catalog\Loaded;
+use Lemuria\Dispatcher\Event\Catalog\Saved;
 use Lemuria\Id;
 use Lemuria\Identifiable;
 use Lemuria\Model\Exception\DuplicateIdException;
@@ -38,11 +41,13 @@ interface Catalog
 	/**
 	 * Load game data into catalog.
 	 */
+	#[Emit(Loaded::class)]
 	public function load(): static;
 
 	/**
 	 * Save game data from catalog.
 	 */
+	#[Emit(Saved::class)]
 	public function save(): static;
 
 	/**
