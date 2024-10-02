@@ -2,6 +2,8 @@
 declare(strict_types = 1);
 namespace Lemuria\Renderer;
 
+use Lemuria\Dispatcher\Attribute\Emit;
+use Lemuria\Dispatcher\Event\Renderer\Written;
 use Lemuria\Engine\Message\Filter;
 use Lemuria\Id;
 use Lemuria\Version\VersionTag;
@@ -21,6 +23,7 @@ interface Writer
 	/**
 	 * Render an entities' report.
 	 */
+	#[Emit(Written::class)]
 	public function render(Id $entity): static;
 
 	/**
