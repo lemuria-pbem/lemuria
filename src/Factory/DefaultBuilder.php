@@ -4,7 +4,9 @@ namespace Lemuria\Factory;
 
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\SingletonException;
+use Lemuria\Lemuria;
 use Lemuria\Model\Builder;
+use Lemuria\Profiler;
 use Lemuria\Singleton;
 
 /**
@@ -51,6 +53,11 @@ readonly class DefaultBuilder implements Builder
 		foreach ($catalog->getGroups() as $group) {
 			$this->singletonMap->add($group);
 		}
+		return $this;
+	}
+
+	public function profileRegistrationDone(): static {
+		Lemuria::Profiler()->record(Profiler::RECORD_BUILDER);
 		return $this;
 	}
 }

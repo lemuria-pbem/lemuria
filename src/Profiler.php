@@ -4,6 +4,7 @@ namespace Lemuria;
 
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\NotImplementedException;
+use Lemuria\Model\Builder;
 
 class Profiler implements \ArrayAccess, \Countable, \Iterator
 {
@@ -13,6 +14,8 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 	public final const string LEMURIA_ZERO_HOUR = 'LEMURIA_ZERO_HOUR';
 
 	public final const string RECORD_ZERO = __CLASS__ . '::RECORD_ZERO';
+
+	public final const string RECORD_BUILDER = Builder::class . '::REGISTRATION_DONE';
 
 	public final const string RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
 
