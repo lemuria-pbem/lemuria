@@ -2,6 +2,7 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use Lemuria\Dispatcher\Attribute\Emit;
 use Lemuria\Dispatcher\Dispatcher;
 use Lemuria\Dispatcher\Event\Initialized;
 use Lemuria\Dispatcher\Event\Loaded;
@@ -435,6 +436,7 @@ final class Lemuria
 		return self::$random;
 	}
 
+	#[Emit(Initialized::class)]
 	public static function init(Config $config): void {
 		self::$instance = new self($config);
 		self::$instance->setLocale($config->Locale());
@@ -448,6 +450,7 @@ final class Lemuria
 	/**
 	 * Init Lemuria for the current Game.
 	 */
+	#[Emit(Loaded::class)]
 	public static function load(): void {
 		self::Calendar()->load();
 		self::validateVersion();
@@ -466,6 +469,7 @@ final class Lemuria
 	/**
 	 * Save the current Game.
 	 */
+	#[Emit(Saved::class)]
 	public static function save(): void {
 		self::Calendar()->save();
 		self::Catalog()->save();
