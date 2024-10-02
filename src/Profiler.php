@@ -133,6 +133,16 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $record->setPrevious($this->hourZero));
 	}
 
+	public function logRecord(string|array $identifier): void {
+		if (is_string($identifier)) {
+			Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $this->getRecord($identifier));
+		} else {
+			foreach ($identifier as $current) {
+				Lemuria::Log()->debug('Profiler [' . $current . ']: ' . $this->getRecord($current));
+			}
+		}
+	}
+
 	public function logTotalPeak(): void {
 		$peak = $this->getPeakMemory();
 		$realPeak = $this->getRealPeakMemory();
