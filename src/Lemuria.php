@@ -438,12 +438,8 @@ final class Lemuria
 
 	#[Emit(Initialized::class)]
 	public static function init(Config $config): void {
-		self::$instance = new self($config);
-		self::$instance->setLocale($config->Locale());
-		self::$instance->orders  = $config->Orders();
-		self::$instance->report  = $config->Report();
-		self::$instance->score   = $config->Score();
-		self::$instance->scripts = $config->Scripts();
+		self::$instance = new self();
+		self::$instance->initFrom($config);
 		self::Dispatcher()->dispatch(new Initialized());
 	}
 
@@ -491,27 +487,42 @@ final class Lemuria
 		return self::$instance;
 	}
 
-	private function __construct(Config $config) {
+	private function __construct() {
 		try {
-			$this->profiler    = new Profiler();
-			$this->dispatcher  = new Dispatcher(new ListenerProvider());
-			$this->featureFlag = $config->FeatureFlag();
-			$this->log         = $config->Log()->getLogger();
-			$this->builder     = $config->Builder();
-			$this->game        = $config->Game();
-			$this->calendar    = $config->Calendar();
-			$this->catalog     = $config->Catalog();
-			$this->debut       = $config->Debut();
-			$this->world       = $config->World();
-			$this->hostilities = $config->Hostilities();
-			$this->registry    = $config->Registry();
-			$this->statistics  = $config->Statistics();
-			$this->namer       = $config->Namer();
-			$this->version     = new Version();
-			$this->addVersions();
+			$this->profiler   = new Profiler();
+			$this->dispatcher = new Dispatcher(new ListenerProvider());
+			$this->version    = new Version();
 		} catch (\Exception $e) {
 			die((string)$e);
 		}
+	}
+
+	private function initFrom(Config $config): void {
+		$this->addVersion();
+		$this->setLocale($config->Locale());
+
+		$this->featureFlag = $config->FeatureFlag();
+		$this->log         = $config->Log()->getLogger();
+		$this->builder     = $config->Builder();
+		$this->game        = $config->Game();
+		$this->calendar    = $config->Calendar();
+
+		$this->catalog                = $config->Catalog();
+		$this->version[Module::Model] = $this->catalog->getVersion();
+
+		$this->debut       = $config->Debut();
+		$this->world       = $config->World();
+		$this->hostilities = $config->Hostilities();
+		$this->registry    = $config->Registry();
+
+		$this->statistics                  = $config->Statistics();
+		$this->version[Module::Statistics] = $this->statistics->getVersion();
+
+		$this->namer   = $config->Namer();
+		$this->orders  = $config->Orders();
+		$this->report  = $config->Report();
+		$this->score   = $config->Score();
+		$this->scripts = $config->Scripts();
 	}
 
 	private function setLocale(string $locale): void {
@@ -524,11 +535,9 @@ final class Lemuria
 		}
 	}
 
-	private function addVersions(): void {
-		$versionFinder                     = new VersionFinder(__DIR__ . '/..');
-		$this->version[Module::Base]       = $versionFinder->get();
-		$this->version[Module::Model]      = $this->catalog->getVersion();
-		$this->version[Module::Statistics] = $this->statistics->getVersion();
+	private function addVersion(): void {
+		$versionFinder               = new VersionFinder(__DIR__ . '/..');
+		$this->version[Module::Base] = $versionFinder->get();
 	}
 
 	private static function validateVersion(): void {
