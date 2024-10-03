@@ -6,6 +6,8 @@ class ProfileRecord implements \Stringable
 {
 	protected float $previous = NAN;
 
+	protected float $sumBase = NAN;
+
 	private readonly int $memory;
 
 	private readonly int $realMemory;
@@ -47,6 +49,11 @@ class ProfileRecord implements \Stringable
 		return $this;
 	}
 
+	public function setSumBase(float $timestamp): static {
+		$this->sumBase = $timestamp;
+		return $this;
+	}
+
 	public function __toString(): string {
 		$timestamp  = date('Y-m-d H:i:s', (int)$this->timestamp);
 		$us         = (int)round(($this->timestamp - (int)$this->timestamp) * 1000000);
@@ -61,19 +68,27 @@ class ProfileRecord implements \Stringable
 			return '';
 		}
 		$duration = $this->timestamp - $this->previous;
+		if (is_nan($this->sumBase)) {
+			return ' (' . $this->convertDuration($duration) . ')';
+		}
+		$sum = $this->timestamp - $this->sumBase;
+		return ' (' . $this->convertDuration($duration) . '/' . $this->convertDuration($sum) . ')';
+	}
+
+	protected function convertDuration(float $duration): string {
 		if ($duration < 1.0)  {
 			$duration *= 1000.0;
 			if ($duration < 1.0) {
 				$duration *= 1000.0;
-				return ' (' . round($duration) . 'µs)';
+				return round($duration) . 'µs';
 			}
-			return ' (' . round($duration) . 'ms)';
+			return round($duration) . 'ms';
 		} elseif ($duration >= 60.0) {
 			$minutes = floor($duration / 60.0);
 			$seconds = round($duration - $minutes * 60.0);
 			$seconds = $seconds < 10.0 ? '0' . $seconds : (string)$seconds;
-			return ' (' . $minutes . ':' . $seconds . 'min)';
+			return $minutes . ':' . $seconds . 'min';
 		}
-		return ' (' . round($duration, 1) . 's)';
+		return round($duration, 1) . 's';
 	}
 }

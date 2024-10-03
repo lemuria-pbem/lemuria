@@ -57,7 +57,7 @@ readonly class DefaultBuilder implements Builder
 	}
 
 	public function profileRegistrationDone(): static {
-		Lemuria::Profiler()->record(Profiler::RECORD_BUILDER);
+		Lemuria::Profiler()->record(Profiler::RECORD_BUILDER)->resetSum();
 		return $this;
 	}
 }

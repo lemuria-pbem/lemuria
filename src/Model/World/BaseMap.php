@@ -238,8 +238,7 @@ abstract class BaseMap implements Map, World
 	 */
 	public function load(): static {
 		$this->unserialize(Lemuria::Game()->getWorld());
-		Lemuria::Profiler()->recordAndLog(__METHOD__);
-		return $this;
+		return $this->profileAndLog(__METHOD__);
 	}
 
 	/**
@@ -247,8 +246,7 @@ abstract class BaseMap implements Map, World
 	 */
 	public function save(): static {
 		Lemuria::Game()->setWorld($this->serialize());
-		Lemuria::Profiler()->recordAndLog(__METHOD__);
-		return $this;
+		return $this->profileAndLog(__METHOD__);
 	}
 
 	/**
@@ -319,5 +317,13 @@ abstract class BaseMap implements Map, World
 		$this->validate($data, self::ORIGIN, Validate::Array);
 		$this->validateEnum($data, self::GEOMETRY, Geometry::class);
 		$this->validate($data, self::MAP, Validate::Array);
+	}
+
+	private function profileAndLog(string $identifier): static {
+		$profiler = Lemuria::Profiler();
+		if ($profiler->isEnabled()) {
+			$profiler->recordAndLog($identifier);
+		}
+		return $this;
 	}
 }

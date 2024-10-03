@@ -28,6 +28,19 @@ class ProfilerTest extends Base
 
 	#[Test]
 	#[Depends('construct')]
+	public function isEnabled(Profiler $profiler): void {
+		$this->assertFalse($profiler->isEnabled());
+	}
+
+	#[Test]
+	#[Depends('construct')]
+	public function setEnabled(Profiler $profiler): void {
+		$this->assertSame($profiler, $profiler->setEnabled(true));
+		$this->assertTrue($profiler->isEnabled());
+	}
+
+	#[Test]
+	#[Depends('construct')]
 	public function hasZeroHourRecord(Profiler $profiler): Profiler {
 		$record = $profiler->getRecord(Profiler::RECORD_ZERO);
 
@@ -41,9 +54,8 @@ class ProfilerTest extends Base
 	#[Depends('hasZeroHourRecord')]
 	public function record(Profiler $profiler): Profiler {
 		self::$now = microtime(true);
-		$record    = $profiler->record(self::IDENTIFIER);
 
-		$this->assertInstanceOf(ProfileRecord::class, $record);
+		$this->assertSame($profiler, $profiler->record(self::IDENTIFIER));
 
 		return $profiler;
 	}

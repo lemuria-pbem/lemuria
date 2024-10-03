@@ -19,9 +19,13 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 
 	public final const string RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
 
+	private bool $isEnabled = false;
+
 	private readonly float $hourZero;
 
 	private float $previous = NAN;
+
+	private float $sumBase;
 
 	private int $index = 0;
 
@@ -29,6 +33,8 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 	 * @var array<string, ProfileRecord>
 	 */
 	protected array $records = [];
+
+	private bool $withSum = false;
 
 	public function __construct() {
 		$now      = microtime(true);
@@ -41,6 +47,7 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		}
 		$this->hourZero = $now;
 		$this->createRecord(self::RECORD_ZERO, $this->hourZero);
+		$this->resetSum();
 	}
 
 	/**
@@ -96,6 +103,15 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		return $this->index < $this->count();
 	}
 
+	public function isEnabled(): bool {
+		return $this->isEnabled;
+	}
+
+	public function setEnabled(bool $enabled): static {
+		$this->isEnabled = $enabled;
+		return $this;
+	}
+
 	public function getRecord(string $identifier): ProfileRecord {
 		if (!isset($this->records[$identifier])) {
 			throw new LemuriaException('There is no record with this identifier.');
@@ -119,21 +135,29 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		return $peak;
 	}
 
-	public function record(string $identifier): ProfileRecord {
-		return $this->createRecord($identifier, microtime(true));
+	public function sum(): static {
+		$this->withSum = true;
+		return $this;
 	}
 
-	public function recordAndLog(string $identifier): void {
-		$record = $this->record($identifier);
+	public function record(string $identifier): static {
+		$this->createRecord($identifier, microtime(true));
+		return $this;
+	}
+
+	public function recordAndLog(string $identifier): static {
+		$record = $this->createRecord($identifier, microtime(true));
 		Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $record);
+		return $this;
 	}
 
-	public function recordTotal(string $identifier = self::RECORD_TOTAL): void {
-		$record = $this->record($identifier);
+	public function recordTotal(string $identifier = self::RECORD_TOTAL): static {
+		$record = $this->createRecord($identifier, microtime(true));
 		Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $record->setPrevious($this->hourZero));
+		return $this;
 	}
 
-	public function logRecord(string|array $identifier): void {
+	public function logRecord(string|array $identifier): static {
 		if (is_string($identifier)) {
 			Lemuria::Log()->debug('Profiler [' . $identifier . ']: ' . $this->getRecord($identifier));
 		} else {
@@ -141,12 +165,19 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 				Lemuria::Log()->debug('Profiler [' . $current . ']: ' . $this->getRecord($current));
 			}
 		}
+		return $this;
 	}
 
-	public function logTotalPeak(): void {
+	public function logTotalPeak(): static {
 		$peak = $this->getPeakMemory();
 		$realPeak = $this->getRealPeakMemory();
 		Lemuria::Log()->debug('Profiler: Peak memory ' . memory($peak) . ' (' . memory($realPeak) . ' real).');
+		return $this;
+	}
+
+	public function resetSum(): static {
+		$this->sumBase = $this->previous;
+		return $this;
 	}
 
 	protected function createRecord(string $identifier, float $timestamp): ProfileRecord {
@@ -156,6 +187,10 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 		$record                     = new ProfileRecord($timestamp);
 		$this->records[$identifier] = $record->setPrevious($this->previous);
 		$this->previous             = $timestamp;
+		if ($this->withSum) {
+			$record->setSumBase($this->sumBase);
+			$this->withSum = false;
+		}
 		return $record;
 	}
 }
