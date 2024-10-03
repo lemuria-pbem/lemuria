@@ -238,6 +238,7 @@ abstract class BaseMap implements Map, World
 	 */
 	public function load(): static {
 		$this->unserialize(Lemuria::Game()->getWorld());
+		Lemuria::Profiler()->recordAndLog(__METHOD__);
 		return $this;
 	}
 
@@ -246,6 +247,7 @@ abstract class BaseMap implements Map, World
 	 */
 	public function save(): static {
 		Lemuria::Game()->setWorld($this->serialize());
+		Lemuria::Profiler()->recordAndLog(__METHOD__);
 		return $this;
 	}
 
