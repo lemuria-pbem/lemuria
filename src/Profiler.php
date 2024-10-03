@@ -19,7 +19,7 @@ class Profiler implements \ArrayAccess, \Countable, \Iterator
 
 	public final const string RECORD_TOTAL = __CLASS__ . '::RECORD_TOTAL';
 
-	private bool $isEnabled = false;
+	private bool $isEnabled = true;
 
 	private readonly float $hourZero;
 

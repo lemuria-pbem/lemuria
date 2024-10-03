@@ -28,15 +28,17 @@ class ProfilerTest extends Base
 
 	#[Test]
 	#[Depends('construct')]
-	public function isEnabled(Profiler $profiler): void {
-		$this->assertFalse($profiler->isEnabled());
+	public function isEnabled(Profiler $profiler): Profiler {
+		$this->assertTrue($profiler->isEnabled());
+
+		return $profiler;
 	}
 
 	#[Test]
-	#[Depends('construct')]
+	#[Depends('isEnabled')]
 	public function setEnabled(Profiler $profiler): void {
-		$this->assertSame($profiler, $profiler->setEnabled(true));
-		$this->assertTrue($profiler->isEnabled());
+		$this->assertSame($profiler, $profiler->setEnabled(false));
+		$this->assertFalse($profiler->isEnabled());
 	}
 
 	#[Test]

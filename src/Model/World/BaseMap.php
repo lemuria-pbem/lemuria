@@ -13,6 +13,7 @@ use Lemuria\Model\Coordinates;
 use Lemuria\Model\Location;
 use Lemuria\Model\Neighbours;
 use Lemuria\Model\World;
+use Lemuria\ProfileTrait;
 use Lemuria\SerializableTrait;
 use Lemuria\Validate;
 
@@ -21,6 +22,7 @@ use Lemuria\Validate;
  */
 abstract class BaseMap implements Map, World
 {
+	use ProfileTrait;
 	use SerializableTrait;
 
 	private const string ORIGIN = 'origin';
@@ -317,13 +319,5 @@ abstract class BaseMap implements Map, World
 		$this->validate($data, self::ORIGIN, Validate::Array);
 		$this->validateEnum($data, self::GEOMETRY, Geometry::class);
 		$this->validate($data, self::MAP, Validate::Array);
-	}
-
-	private function profileAndLog(string $identifier): static {
-		$profiler = Lemuria::Profiler();
-		if ($profiler->isEnabled()) {
-			$profiler->recordAndLog($identifier);
-		}
-		return $this;
 	}
 }
