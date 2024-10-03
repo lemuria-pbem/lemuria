@@ -7,4 +7,6 @@ interface ListenerRegister
 	public function addListener(AbstractEvent $event, callable $listener): void;
 
 	public function removeListener(AbstractEvent $event, callable $listener): void;
+
+	public function moveListeners(self $from): void;
 }

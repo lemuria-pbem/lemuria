@@ -300,6 +300,8 @@ final class Lemuria
 
 	private static ?Randomizer $random = null;
 
+	private readonly Config $config;
+
 	private readonly FeatureFlag $featureFlag;
 
 	private readonly Builder $builder;
@@ -314,7 +316,7 @@ final class Lemuria
 
 	private readonly Game $game;
 
-	private readonly LoggerInterface $log;
+	private LoggerInterface $log;
 
 	private readonly Orders $orders;
 
@@ -334,9 +336,9 @@ final class Lemuria
 
 	private readonly ?Scripts $scripts;
 
-	private readonly Version $version;
+	private Version $version;
 
-	private readonly Profiler $profiler;
+	private Profiler $profiler;
 
 	public static function FeatureFlag(): FeatureFlag {
 		return self::getInstance()->featureFlag;
@@ -500,11 +502,14 @@ final class Lemuria
 		}
 		$fastCache = new FastCache(self::$instance);
 		try {
-			$instance = $fastCache->setStorage($cacheDirectory)->restore();
-			$instance->profiler   = self::$instance->profiler;
-			$instance->dispatcher = self::$instance->dispatcher;
-			$instance->version    = self::$instance->version;
-			self::$instance       = $instance;
+			$instance           = $fastCache->setStorage($cacheDirectory)->restore();
+			$instance->profiler = self::$instance->profiler;
+			$instance->version  = self::$instance->version;
+			$instance->getRegister()->moveListeners(self::$instance->getRegister());
+			self::$instance      = $instance;
+			self::$instance->log = self::$instance->config->Log()->getLogger();
+			self::Dispatcher()->dispatch(new Restored($fastCache));
+			self::Log()->debug('Lemuria restored from FastCache.');
 		} catch (FileException) {
 		}
 	}
@@ -518,7 +523,10 @@ final class Lemuria
 			throw new LemuriaException('You have to call init() first.');
 		}
 		$fastCache = new FastCache(self::$instance);
-		$fastCache->setStorage($cacheDirectory)->persist();
+		$fastCache->setStorage($cacheDirectory);
+		self::Dispatcher()->dispatch(new Persisting($fastCache));
+		$fastCache->persist();
+		self::Log()->debug('Lemuria persisted to FastCache.');
 	}
 
 	private static function getInstance(): Lemuria {
@@ -526,6 +534,15 @@ final class Lemuria
 			throw new InitializationException();
 		}
 		return self::$instance;
+	}
+
+	private static function validateVersion(): void {
+		$version       = self::Version();
+		$tag           = $version[Module::Model][0];
+		$compatibility = self::Calendar()->getCompatibility();
+		if (version_compare($compatibility, $tag->version) > 0) {
+			throw new VersionTooLowException($compatibility);
+		}
 	}
 
 	private function __construct() {
@@ -539,6 +556,7 @@ final class Lemuria
 	}
 
 	private function initFrom(Config $config): void {
+		$this->config = $config;
 		$this->addVersion();
 		$this->setLocale($config->Locale());
 
@@ -581,12 +599,7 @@ final class Lemuria
 		$this->version[Module::Base] = $versionFinder->get();
 	}
 
-	private static function validateVersion(): void {
-		$version       = self::Version();
-		$tag           = $version[Module::Model][0];
-		$compatibility = self::Calendar()->getCompatibility();
-		if (version_compare($compatibility, $tag->version) > 0) {
-			throw new VersionTooLowException($compatibility);
-		}
+	private function getRegister(): ListenerRegister {
+		return $this->dispatcher->listenerProvider;
 	}
 }

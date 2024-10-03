@@ -75,6 +75,6 @@ final class FastCache
 	}
 
 	private function path(): string {
-		return $this->directory . DIRECTORY_SEPARATOR .  md5(__CLASS__);
+		return $this->directory . DIRECTORY_SEPARATOR . 'FC_' . md5(__CLASS__) . '.bin';
 	}
 }

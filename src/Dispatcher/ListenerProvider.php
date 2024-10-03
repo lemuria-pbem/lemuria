@@ -66,4 +66,49 @@ class ListenerProvider implements ListenerProviderInterface, ListenerRegister
 		}
 		return [];
 	}
+
+	public function moveListeners(ListenerRegister $from): void {
+		$families = array_combine(array_values($from->family), array_keys($from->family));
+		$mappings = [];
+		foreach ($from->family as $f) {
+			$mapping      = $from->eventMapping[$f];
+			$mappings[$f] = array_combine(array_values($mapping), array_keys($mapping));
+		}
+
+		foreach ($from->listener as $f => $familyListeners) {
+			$family  = $families[$f];
+			$mapping = $mappings[$f];
+			if (!isset($this->family[$family])) {
+				$this->eventMapping[$this->nextFamily] = [];
+				$this->nextId[$this->nextFamily]       = 1;
+				$this->family[$family]                 = $this->nextFamily++;
+			}
+			$newF = $this->family[$family];
+
+			foreach ($familyListeners as $id => $listeners) {
+				$class = $mapping[$id];
+				if (!isset($this->eventMapping[$newF][$class])) {
+					$newId = $this->nextId[$newF];
+					$this->nextId[$newF]++;
+					$this->eventMapping[$newF][$class] = $newId;
+				}
+				$newId = $this->eventMapping[$newF][$class];
+
+				foreach ($listeners as $listener) {
+					$this->listener[$newF][$newId][] = $listener;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	public function __sleep(): array {
+		return ['family', 'nextFamily', 'eventMapping', 'nextId'];
+	}
+
+	public function __wakeup(): void {
+		$this->listener = [];
+	}
 }
