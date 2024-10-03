@@ -2,8 +2,11 @@
 declare (strict_types = 1);
 namespace Lemuria;
 
+use Lemuria\Cache\FastCache;
 use Lemuria\Dispatcher\Attribute\Emit;
 use Lemuria\Dispatcher\Dispatcher;
+use Lemuria\Dispatcher\Event\FastCache\Persisting;
+use Lemuria\Dispatcher\Event\FastCache\Restored;
 use Lemuria\Dispatcher\Event\Initialized;
 use Lemuria\Dispatcher\Event\Loaded;
 use Lemuria\Dispatcher\Event\Saved;
@@ -14,6 +17,7 @@ use Lemuria\Engine\Hostilities;
 use Lemuria\Engine\Orders;
 use Lemuria\Engine\Report;
 use Lemuria\Engine\Score;
+use Lemuria\Exception\FileException;
 use Lemuria\Exception\InitializationException;
 use Lemuria\Exception\LemuriaException;
 use Lemuria\Exception\VersionTooLowException;
@@ -436,9 +440,15 @@ final class Lemuria
 		return self::$random;
 	}
 
+	public static function boot(): void {
+		if (!self::$instance) {
+			self::$instance = new self();
+		}
+	}
+
 	#[Emit(Initialized::class)]
 	public static function init(Config $config): void {
-		self::$instance = new self();
+		self::boot();
 		self::$instance->initFrom($config);
 		self::Dispatcher()->dispatch(new Initialized());
 	}
@@ -478,6 +488,37 @@ final class Lemuria
 		self::World()->save();
 		self::Statistics()->save();
 		self::Dispatcher()->dispatch(new Saved());
+	}
+
+	/**
+	 * Try to fast-restore Lemuria from a FastCache in given directory.
+	 */
+	#[Emit(Restored::class)]
+	public static function restoreFrom(string $cacheDirectory): void {
+		if (!self::$instance) {
+			throw new LemuriaException('You have to call boot() first.');
+		}
+		$fastCache = new FastCache(self::$instance);
+		try {
+			$instance = $fastCache->setStorage($cacheDirectory)->restore();
+			$instance->profiler   = self::$instance->profiler;
+			$instance->dispatcher = self::$instance->dispatcher;
+			$instance->version    = self::$instance->version;
+			self::$instance       = $instance;
+		} catch (FileException) {
+		}
+	}
+
+	/**
+	 * Store Lemuria to a FastCache in given directory.
+	 */
+	#[Emit(Persisting::class, Emit::ON_BEGIN)]
+	public static function storeTo(string $cacheDirectory): void {
+		if (!self::$instance) {
+			throw new LemuriaException('You have to call init() first.');
+		}
+		$fastCache = new FastCache(self::$instance);
+		$fastCache->setStorage($cacheDirectory)->persist();
 	}
 
 	private static function getInstance(): Lemuria {
