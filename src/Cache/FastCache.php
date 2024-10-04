@@ -10,14 +10,32 @@ use Lemuria\Lemuria;
 
 final class FastCache
 {
+	private const string IDENTIFIER_HASH = '%IDENTIFIER_HASH%';
+
+	private const string CACHE_FILE_TEMPLATE = 'FC_' . self::IDENTIFIER_HASH . '.bin';
+
 	private string $directory;
 
+	private string $fileIdentifier = __CLASS__;
+
 	private array $cache;
+
+	public static function delete(string $storageDirectory, ?string $fileIdentifier = null): bool {
+		if (!$fileIdentifier) {
+			$fileIdentifier = __CLASS__;
+		}
+		$path = self::path($storageDirectory, $fileIdentifier);
+		return is_file($path) && @unlink($path);
+	}
 
 	public function __construct(?Lemuria $lemuria = null) {
 		if ($lemuria) {
 			$this->cache = [$lemuria::class => $lemuria];
 		}
+	}
+
+	public function FileIdentifier(): string {
+		return $this->fileIdentifier;
 	}
 
 	public function get(string $class): ?object {
@@ -26,6 +44,11 @@ final class FastCache
 
 	public function set(object $object): self {
 		$this->cache[$object::class] = $object;
+		return $this;
+	}
+
+	public function setFileIdentifier(string $identifier): self {
+		$this->fileIdentifier = strlen($identifier) > 0 ? $identifier : __CLASS__;
 		return $this;
 	}
 
@@ -49,8 +72,9 @@ final class FastCache
 		if (!$content) {
 			throw new LemuriaException('Cache serialization error.');
 		}
-		if (!file_put_contents($this->path(), $content)) {
-			throw new FileException('Could not write cache to ' . $this->path() . '.');
+		$path = self::path($this->directory, $this->fileIdentifier);
+		if (!file_put_contents($path, $content)) {
+			throw new FileException('Could not write cache to ' . $path . '.');
 		}
 		return $this;
 	}
@@ -59,7 +83,7 @@ final class FastCache
 	 * @throws FileException
 	 */
 	public function restore(): Lemuria {
-		$path = $this->path();
+		$path = $this->path($this->directory, $this->fileIdentifier);
 		if (is_file($path)) {
 			$content = file_get_contents($path);
 			if ($content) {
@@ -74,7 +98,9 @@ final class FastCache
 		throw new FileNotFoundException($path);
 	}
 
-	private function path(): string {
-		return $this->directory . DIRECTORY_SEPARATOR . 'FC_' . md5(__CLASS__) . '.bin';
+	private static function path(string $directory, string $fileIdentifier): string {
+		$hash     = md5($fileIdentifier);
+		$fileName = str_replace(self::IDENTIFIER_HASH, $hash, self::CACHE_FILE_TEMPLATE);
+		return $directory . DIRECTORY_SEPARATOR . $fileName;
 	}
 }

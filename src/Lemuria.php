@@ -496,11 +496,14 @@ final class Lemuria
 	 * Try to fast-restore Lemuria from a FastCache in given directory.
 	 */
 	#[Emit(Restored::class)]
-	public static function restoreFrom(string $cacheDirectory): void {
+	public static function restoreFrom(string $cacheDirectory, ?string $fileIdentifier = null): void {
 		if (!self::$instance) {
 			throw new LemuriaException('You have to call boot() first.');
 		}
 		$fastCache = new FastCache(self::$instance);
+		if ($fileIdentifier) {
+			$fastCache->setFileIdentifier($fileIdentifier);
+		}
 		try {
 			$instance           = $fastCache->setStorage($cacheDirectory)->restore();
 			$instance->profiler = self::$instance->profiler;
@@ -518,11 +521,14 @@ final class Lemuria
 	 * Store Lemuria to a FastCache in given directory.
 	 */
 	#[Emit(Persisting::class, Emit::ON_BEGIN)]
-	public static function storeTo(string $cacheDirectory): void {
+	public static function storeTo(string $cacheDirectory, ?string $fileIdentifier = null): void {
 		if (!self::$instance) {
 			throw new LemuriaException('You have to call init() first.');
 		}
 		$fastCache = new FastCache(self::$instance);
+		if ($fileIdentifier) {
+			$fastCache->setFileIdentifier($fileIdentifier);
+		}
 		$fastCache->setStorage($cacheDirectory);
 		self::Dispatcher()->dispatch(new Persisting($fastCache));
 		$fastCache->persist();
