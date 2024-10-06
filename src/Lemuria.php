@@ -300,41 +300,41 @@ final class Lemuria
 
 	private static ?Randomizer $random = null;
 
-	private readonly Config $config;
+	private Config $config;
 
-	private readonly FeatureFlag $featureFlag;
+	private FeatureFlag $featureFlag;
 
-	private readonly Builder $builder;
+	private Builder $builder;
 
-	private readonly Calendar $calendar;
+	private Calendar $calendar;
 
-	private readonly Catalog $catalog;
+	private Catalog $catalog;
 
-	private readonly Debut $debut;
+	private Debut $debut;
 
 	private readonly Dispatcher $dispatcher;
 
-	private readonly Game $game;
+	private Game $game;
 
 	private LoggerInterface $log;
 
-	private readonly Orders $orders;
+	private Orders $orders;
 
-	private readonly Report $report;
+	private Report $report;
 
-	private readonly World $world;
+	private World $world;
 
-	private readonly Score $score;
+	private Score $score;
 
-	private readonly Hostilities $hostilities;
+	private Hostilities $hostilities;
 
-	private readonly Registry $registry;
+	private Registry $registry;
 
-	private readonly Statistics $statistics;
+	private Statistics $statistics;
 
-	private readonly Namer $namer;
+	private Namer $namer;
 
-	private readonly ?Scripts $scripts;
+	private ?Scripts $scripts;
 
 	private Version $version;
 
